@@ -1,13 +1,14 @@
-#+title: Emacs Config
-#+author: Arian
+#+title: Arian's Emacs Config
 #+startup: fold
+
+This config has grown over the years, and it will continue to
+grow. Feel free to look around.
 
 * Understanding this
 ** Literate
 This configuration is [[https://en.wikipedia.org/wiki/Literate_programming][literate]], as in, the file you're reading /is/ the
-actual program. Running ~M-x org-babel-tangle~, or if you trusted the
-local variables in Emacs, saving the file would create *and* load the
-config for you. Pretty neat, huh?
+actual program. Instead of tangling, I load it from [[./.emacs.d/init.el][the init file]]
+directly, which is slower, but more convenient.
 
 ** Inspiration
 Although this is a custom config from scratch, a lot of it is heavily
@@ -19,14 +20,6 @@ inspired by many other people such as:
   
 * Essentials
 Just simple stuff to get the ball rolling.
-** Lexical binding
-I like my programs to be sane, so gotta disable this shit.
-- [[https://www.emacswiki.org/emacs/LexicalBinding][Emacs wiki page for it]]
-- [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Lexical-Binding.html][Elisp docs for it]]
-  
-#+begin_src emacs-lisp
-;;; -*- lexical-binding: t -*-
-#+end_src
 ** Backup
 Following [[https://www.emacswiki.org/emacs/BackupDirectory][this]], I'm moving the save files to one location rather than
 cluttering the system.
@@ -74,13 +67,13 @@ it's made for Emacs.
 #+end_src
 
 ** Keys
-What is EMACS without the /MACS/.
+What is EMACS without the /MACroS/.
 *** General
 Just trying it out for now
 #+begin_src emacs-lisp
   (use-package general)
 #+end_src
-*** Evil
+*** 😈 Evil
 [[https://github.com/emacs-evil/evil][Evil]], along with some cool keybindings.
 - [[https://evil.readthedocs.io/en/latest/overview.html][docs]] 
 #+begin_src emacs-lisp
@@ -151,6 +144,7 @@ Rather than cluttering the ~init.el~ file, this uses a separte file for customs.
 ** Notification
 #+begin_src emacs-lisp
   (use-package alert
+    :disabled
     :custom
     (alert-default-style 'notifications))
 #+end_src
@@ -402,7 +396,8 @@ use [[https://github.com/company-mode/company-mode][company-mode]] but this seem
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
 
-** Encryption and authentication
+** 🔒 Encryption and authentication
+*** Keychain
 Keychain for saving the ssh-passphrase
 #+begin_src emacs-lisp
   (use-package keychain-environment
@@ -410,7 +405,7 @@ Keychain for saving the ssh-passphrase
     :config (keychain-refresh-environment))
 #+end_src
 
-pinentry
+*** Pinentry
 #+begin_src emacs-lisp
   (use-package pinentry
     :custom
@@ -419,7 +414,8 @@ pinentry
     (pinentry-start))
 #+end_src
 
-The main source of truth
+*** Auth Info
+The main source of security
 #+begin_src emacs-lisp
   (use-package auth-source
     :when (executable-find "gpg")
@@ -436,37 +432,8 @@ we can disable:
   ;; (setq byte-compile-warnings nil)
 #+end_src
 
-
-** Early init
-- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html][The docs]]
-- [[https://github.com/hlissner/doom-emacs/blob/master/early-init.el][Doom's early-init]]
-#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
-  (setq package-enable-at-startup nil
-        gc-cons-threshold most-positive-fixnum
-        load-prefer-newer noninteractive
-        default-input-method nil)
-  (set-language-environment "UTF-8")
-#+end_src
 * Appearance
-** Defaults
-The defaults that come with Emacs are pretty ugly. These settings make
-them tolerable.
-*** Toolbar
-#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
-  (tool-bar-mode -1)
-#+end_src
-
-*** Menu bar
-#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
-  (menu-bar-mode -1)
-#+end_src
-
-*** Scroll bar
-#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
-  (set-scroll-bar-mode nil)
-#+end_src
-
-*** Splash screen
+** Splash screen
 Replace the default splash screen with an org buffer
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t
@@ -520,7 +487,7 @@ Doom themes are very nice.
 
 
 ** Modeline
-This is also doom.
+This also comes from the nice doom people
 #+begin_src emacs-lisp
   (use-package doom-modeline
     :after all-the-icons
@@ -574,12 +541,6 @@ Display battery in modeline.
   (display-battery-mode 1)
 #+end_src
 
-*** Time
-Display time in modeline.
-#+begin_src emacs-lisp
-  (display-time-mode 1)
-#+end_src
-
 ** Shorter boolean prompt
 Instead of having to type =yes=, you can just say =y=.
 #+begin_src emacs-lisp
@@ -593,6 +554,7 @@ Afterall, Emacs is a text editor.
   (setq-default indent-tabs-mode nil
                 tab-width 2)
 #+end_src
+
 ** Tree Sitter
 *** Tree sitter itself
 All the cool kids are using this for nice incremental parsing.
@@ -624,10 +586,11 @@ the fact that it only supports ~elisp-tree-sitter~ ([[https://github.com/meain/e
 Put line numbers for buffers that should have it.
 #+begin_src emacs-lisp
   (use-package display-line-numbers
-    :when (not (version< emacs-version "26.1"))
+    :unless (version< emacs-version "26.1")
     :custom (display-line-numbers-type 'relative)
     :hook (prog-mode . display-line-numbers-mode))
 #+end_src
+
 ** Electric pair
 #+begin_src emacs-lisp
   (use-package elec-pair
@@ -1041,6 +1004,7 @@ This is the core config.
      "M-J" #'org-metadown
      "<tab>" #'org-cycle))
 #+end_src
+
 ** Capture
 #+begin_src emacs-lisp
   (setq org-capture-templates
@@ -1059,6 +1023,7 @@ This is the core config.
            "* %?
   %^{When? }t")))
 #+end_src
+
 ** Transclusion
 #+begin_src emacs-lisp
   (use-package org-transclusion
@@ -1211,7 +1176,7 @@ Org-roam might actually help me be able to think eventually
     (org-roam-db-autosync-mode))
 #+end_src
 
-A really nice web UI for org-roam.
+This is a really nice web UI for org-roam.
 #+begin_src emacs-lisp
   (use-package org-roam-ui
     :after org-roam
@@ -1250,12 +1215,6 @@ package:
     :hook
     (org-mode . org-indent-mode)
     (org-indent-mode . org-modern-indent-mode))
-#+end_src
-
-** Evil
-#+begin_src emacs-lisp
-  ;; (use-package org-evil
-  ;;   :after (org evil))
 #+end_src
 
 ** Markdown
@@ -1310,6 +1269,7 @@ Org mode, but for the average pleb.
 #+begin_src emacs-lisp
   (use-package ox-hugo)
 #+end_src
+
 * Misc
 ** Dired
 #+begin_src emacs-lisp
@@ -1338,18 +1298,14 @@ I may be illiterate, but I still read children's books.
 *** PDF
 [[https://github.com/politza/pdf-tools][This package]] makes dealing with PDFs easier than the built-in [[https://www.emacswiki.org/emacs/DocViewMode][DocView]].
 #+begin_src emacs-lisp
-  (use-package pdf-tools
-    :config
-    (pdf-tools-install)
-    )
+  (use-package pdf-tools)
 #+end_src
 
 ** Pwetty screenshots
 #+begin_src emacs-lisp
   (use-package screenshot
     :straight
-    (screenshot :host github :repo "tecosaur/screenshot")
-    )
+    (screenshot :host github :repo "tecosaur/screenshot"))
 #+end_src
 ** Elfeed
 Daily dose of rabbit holes.
@@ -1547,13 +1503,14 @@ I need a fast terminal like [[https://github.com/akermu/emacs-libvterm][this]].
 
 * My content
 #+begin_src emacs-lisp
-  (defun my/config (&optional config)
+  (defun edit-my-config (&optional config)
     "Edit my config"
     (interactive)
-    (find-file (or config "~/.emacs.d/README.org")))
+    (find-file (or config
+                   (expand-file-name "config.org" user-emacs-directory))))
 
 
-  (general-def "<leader> ." #'my/config)
+  (general-def "<leader> ." #'edit-my-config)
 
   (defun vine-boom ()
     (interactive)
