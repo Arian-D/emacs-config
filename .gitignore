@@ -1,0 +1,5 @@
+.emacs.d/*
+!.emacs.d/init.el
+!.emacs.d/early-init.el
+!.emacs.d/config.org
+!.emacs.d/feeds.el
