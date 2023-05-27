@@ -452,7 +452,8 @@ check if they're there or not before loading them.
 #+begin_src emacs-lisp
   (defun font-exists-p (font)
     "check if font exists"
-    (not (null (x-list-fonts font))))
+    (and (display-graphic-p)
+         (x-list-fonts font)))
 
   (let ((font "FantasqueSansMono Nerd Font"))
     (when (font-exists-p font)
@@ -1280,13 +1281,6 @@ Org mode, but for the average pleb.
     :states '(normal)
      "<leader>" #'evil-send-leader))
 #+end_src
-** Bangs
-#+begin_src emacs-lisp
-  (use-package bang
-    :straight
-    (bang :local-repo "~/src/emacs/bang.el")
-    :general ("<leader> !" #'!))
-#+end_src
 ** Readin'
 *** Novel
 I may be illiterate, but I still read children's books.
@@ -1390,19 +1384,6 @@ I have a function to garbage-collect Nix.
     (interactive (list (yes-or-no-p "-d?")))
     (async-shell-command (concat "nix-collect-garbage" (if deep " -d" ""))
                          "*Nix Collect Garbage*"))
-#+end_src
-
-** Virtual Machines
-Long story...
-#+begin_src emacs-lisp
-  (straight-use-package
-   '(evmm :type git :host github :repo "arian-d/evmm"))
-#+end_src
-
-#+begin_src emacs-lisp
-  (use-package qemu
-    :straight
-    (qemu :local-repo "~/src/universe/qemu.el/"))
 #+end_src
 
 ** mpv
