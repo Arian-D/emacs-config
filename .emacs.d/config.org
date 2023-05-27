@@ -1,4 +1,5 @@
 #+title: Arian's Emacs Config
+#+property: header-args :results silent
 #+startup: fold
 
 This config has grown over the years, and it will continue to
@@ -1284,8 +1285,10 @@ Org mode, but for the average pleb.
 I may be illiterate, but I still read children's books.
 #+begin_src emacs-lisp
   (use-package nov
-    :mode "\\.epub\\'")
+    :straight (nov :host nil :type git :repo "https://depp.brause.cc/nov.el.git")
+    :mode ("\\.epub\\'" . nov-mode))
 #+end_src
+
 
 *** PDF
 [[https://github.com/politza/pdf-tools][This package]] makes dealing with PDFs easier than the built-in [[https://www.emacswiki.org/emacs/DocViewMode][DocView]].
