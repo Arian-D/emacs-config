@@ -1,11 +1,11 @@
-FROM docker.io/silex/emacs:master-alpine
+FROM docker.io/silex/emacs:master
 
 # TODO: Add more needed packages
-RUN apk add --no-cache git
+RUN apt-get update && apt-get install -y git
 
 WORKDIR /home/me/
 
-RUN adduser -D me
+RUN useradd -m me
 USER me
 COPY --chown=me:me .emacs.d .emacs.d
 
