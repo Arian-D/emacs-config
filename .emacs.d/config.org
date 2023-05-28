@@ -480,11 +480,10 @@ Doom themes are very nice.
 #+begin_src emacs-lisp
   (use-package doom-themes
     :init
-    (load-theme 'doom-rouge t)
+    (load-theme 'doom-feather-dark t)
     (doom-themes-visual-bell-config)
     (doom-themes-org-config))
 #+end_src
-
 
 ** Modeline
 This also comes from the nice doom people
