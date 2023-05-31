@@ -714,8 +714,10 @@ useful for that.
 ** Go
 lol no generics
 #+begin_src emacs-lisp
-  (use-package go-mode
-    :when (executable-find "go"))
+  (use-package go-ts-mode
+    :when (and (executable-find "go")
+               (featurep 'go-ts-mode))
+    :straight (:type built-in))
 #+end_src
 
 ** Rust
@@ -726,7 +728,8 @@ lol no generics
     :when (executable-find "cargo")
     :mode ((rx ".rs") . rust-ts-mode)
     :custom (rustic-lsp-client 'eglot)
-    :general ("<leader> SPC" #' rustic-cargo-build))
+    :general (rust-ts-mode-map rust-mode-map
+              "<leader> SPC" #' rustic-cargo-build))
 #+end_src
 
 ** Python
