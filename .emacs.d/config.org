@@ -662,19 +662,20 @@ and counsel
 #+end_src
 
 ** LSP
-Eglot, which will soon become built-in.
+All thanks to eglot
 #+begin_src emacs-lisp
   (use-package eglot
-    :unless (version< emacs-version "30")
     :mode ("\\.tsx\\'" . tsx-ts-mode)
     :config
+    ;; TODO: write a loop to check if the LSPs exist
     (add-to-list 'eglot-server-programs `(rust-ts-mode . ("rust-analyzer")))
     (add-to-list 'eglot-server-programs `(nix-mode . ("nil")))
     (add-to-list 'eglot-server-programs `(tsx-ts-mode . ("typescript-language-server" "--stdio")))
     (when (file-executable-p "~/go/bin/gopls")
       (add-to-list 'eglot-server-programs `(go-mode . ("~/go/bin/gopls"))))
     :general ("<leader> l r" #'eglot-rename
-              "<leader> l f" #'eglot-format))
+              "<leader> l f" #'eglot-format
+              "<leader> l c a" #'eglot-code-actions))
 #+end_src
 
 ** Templating
@@ -717,7 +718,8 @@ lol no generics
   (use-package go-ts-mode
     :when (and (executable-find "go")
                (featurep 'go-ts-mode))
-    :straight (:type built-in))
+    :straight (:type built-in)
+    :mode ((rx ".go") . go-ts-mode))
 #+end_src
 
 ** Rust
@@ -729,7 +731,7 @@ lol no generics
     :mode ((rx ".rs") . rust-ts-mode)
     :custom (rustic-lsp-client 'eglot)
     :general (rust-ts-mode-map rust-mode-map
-              "<leader> SPC" #' rustic-cargo-build))
+              "<leader> SPC" #'rustic-cargo-build))
 #+end_src
 
 ** Python
