@@ -1367,8 +1367,13 @@ A function to shut down the machine.
     "Shutdown the machine"
     (interactive (list (yes-or-no-p "Are you sure?")))
     (save-some-buffers)
-    (if sure (let ((default-directory "/sudo::"))
-               (shell-command (if reboot "reboot" "shutdown")))))
+    (when sure
+      (when-let* ((default-directory "/sudo::")
+                  (systemctl-path (executable-find "systemctl"))
+                  (command (concat systemctl-path
+                                   " "
+                                   (if reboot "reboot" "poweroff"))))
+        (shell-command command))))
 
   (defun reboot (sure)
     "Reboot the machine"
