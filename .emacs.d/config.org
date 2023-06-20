@@ -5,6 +5,14 @@
 This config has grown over the years, and it will continue to
 grow. Feel free to look around.
 
+It only works on the master branch of Emacs right now. Until
+I get [[./flake.nix]] to be as I want it to be, it'll break pretty much
+every time.
+
+* TLDR
+#+begin_src shell
+  podman build -t my-emacs 
+#+end_src
 * Understanding this
 ** Literate
 This configuration is [[https://en.wikipedia.org/wiki/Literate_programming][literate]], as in, the file you're reading /is/ the
@@ -107,8 +115,6 @@ Along with surroud
 [[https://github.com/emacs-evil/evil-collection][evil-collection]] provides more bindings for specific modes.
 #+begin_src emacs-lisp
   (use-package evil-collection
-    ;; :straight
-    ;; (evil-collection :local-repo "~/src/all/evil-collection/")
     :after evil
     :custom (evil-want-keybinding nil)
     :config
@@ -156,10 +162,10 @@ I started using [[https://github.com/minad/vertico][vertico]] after using [[http
 more minimalistic, and it relies on the built-in Emacs completion framework.
 #+begin_src emacs-lisp
   (use-package vertico
-    :straight (vertico :host github
-                       :repo "minad/vertico"
-                       :includes vertico-mouse
-                       :files (:defaults "extensions/vertico-mouse.el"))
+    :straight (:host github
+                     :repo "minad/vertico"
+                     :includes vertico-mouse
+                     :files (:defaults "extensions/vertico-mouse.el"))
     :after evil
     :init
     (vertico-mode)
@@ -340,8 +346,7 @@ eyes wouldn't focus the bottom of the window.
 use [[https://github.com/company-mode/company-mode][company-mode]] but this seems more zoomery.
 #+begin_src emacs-lisp
   (use-package corfu
-    :straight (corfu :host github :repo "minad/corfu"
-                     :files (:defaults "extensions/corfu-popupinfo.el"))
+    :straight (:host github :repo "minad/corfu" :files (:defaults "extensions/corfu-popupinfo.el"))
     ;; Optional customizations
     :custom
     (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
@@ -418,7 +423,7 @@ The main source of security
 #+begin_src emacs-lisp
   (use-package auth-source
     :when (executable-find "gpg")
-    :straight (auth-source :type built-in)
+    :straight (:type built-in)
     :custom
     (auth-sources (list
                    (expand-file-name ".authinfo.gpg" (getenv "HOME")))))
@@ -573,10 +578,7 @@ the fact that it only supports ~elisp-tree-sitter~ ([[https://github.com/meain/e
   (use-package evil-textobj-tree-sitter
     :disabled
     :after evil
-    :straight (evil-textobj-tree-sitter
-               :host github
-               :repo "meain/evil-textobj-tree-sitter"
-               :files (:defaults "queries"))
+    :straight (:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries"))
     :general (evil-outer-text-objects-map
               "f" (evil-textobj-tree-sitter-get-textobj "function.outer")
               "a" (evil-textobj-tree-sitter-get-textobj ("conditional.outer" "loop.outer"))))
@@ -593,14 +595,14 @@ Put line numbers for buffers that should have it.
 ** Electric pair
 #+begin_src emacs-lisp
   (use-package elec-pair
-    :straight (elec-pair :type built-in)
+    :straight (:type built-in)
     :config (electric-pair-mode))
 #+end_src
 ** Zen
 Is this the cure for ADHD?
 #+begin_src emacs-lisp
   (use-package zen-mode
-    :straight (zen-mode :host github :repo "aki237/zen-mode"))
+    :straight (:host github :repo "aki237/zen-mode"))
 #+end_src
 
 ** Git
@@ -608,7 +610,7 @@ Is this the cure for ADHD?
 #+begin_src emacs-lisp
   (use-package magit
     :when (executable-find "git")
-    :straight (magit :host github :repo "magit/magit" :branch "main")
+    :straight (:host github :repo "magit/magit" :branch "main")
     :general
     ("C-x g" #'magit-status)
     ("<leader> g" #'magit-status))
@@ -666,9 +668,9 @@ All thanks to eglot
 #+begin_src emacs-lisp
   (use-package eglot
     :mode ("\\.tsx\\'" . tsx-ts-mode)
+    :straight (:type built-in)
     :config
     ;; TODO: write a loop to check if the LSPs exist
-    (add-to-list 'eglot-server-programs `(rust-ts-mode . ("rust-analyzer")))
     (add-to-list 'eglot-server-programs `(nix-mode . ("nil")))
     (add-to-list 'eglot-server-programs `(tsx-ts-mode . ("typescript-language-server" "--stdio")))
     (when (file-executable-p "~/go/bin/gopls")
@@ -725,13 +727,13 @@ lol no generics
 ** Rust
 🚀
 #+begin_src emacs-lisp
-  (use-package rustic
+  (use-package rust-ts-mode
+    :when (and (executable-find "cargo") (featurep 'rust-ts-mode))
+    :straight (:type built-in)
     :after eglot
-    :when (executable-find "cargo")
     :mode ((rx ".rs") . rust-ts-mode)
-    :custom (rustic-lsp-client 'eglot)
-    :general (rust-ts-mode-map rust-mode-map
-              "<leader> SPC" #'rustic-cargo-build))
+    :config
+    (add-to-list 'eglot-server-programs `(rust-ts-mode . ("rust-analyzer"))))
 #+end_src
 
 ** Python
@@ -755,7 +757,7 @@ Python in +a trench coat+ parentheses
   (use-package svg-lib)
   (use-package exercism-modern
     :when (executable-find "exercism")
-    :straight (exercism-modern :host github :repo "elken/exercism-modern"))
+    :straight (:host github :repo "elken/exercism-modern"))
 #+end_src
 ** (J|T)S
 For old versions of Emacs
@@ -940,7 +942,7 @@ You oughtta be sure the org-mode syntax is correct:
 This is the core config.
 #+begin_src emacs-lisp :noweb yes
   (use-package org
-    :straight (org :type built-in)
+    :straight (:type built-in)
     :custom
     (org-directory "~/Org")
       ;;; Cute lil rice
@@ -1031,7 +1033,7 @@ This is the core config.
 ** Transclusion
 #+begin_src emacs-lisp
   (use-package org-transclusion
-    :straight (org-transclusion :host github :repo "nobiot/org-transclusion"))
+    :straight (:host github :repo "nobiot/org-transclusion"))
 #+end_src
 
 ** QL
@@ -1065,7 +1067,7 @@ Tempo provides nice shortcuts for inserting structures.
 
 #+begin_src emacs-lisp
   (use-package org-agenda
-    :straight (org-agenda :type built-in)
+    :straight (:type built-in)
     :custom
     (org-agenda-files (cl-remove-if-not
                        #'file-directory-p
@@ -1213,7 +1215,7 @@ Along with this, [[https://github.com/jdtsmith/org-modern-indent][org-modern-ind
 package:
 #+begin_src emacs-lisp
   (use-package org-modern-indent
-    :straight (org-modern-indent :host github :repo "jdtsmith/org-modern-indent")
+    :straight (:host github :repo "jdtsmith/org-modern-indent")
     :after (org org-modern)
     :init (org-indent-mode +1)
     :hook
@@ -1278,7 +1280,7 @@ Org mode, but for the average pleb.
 ** Dired
 #+begin_src emacs-lisp
   (use-package dired
-    :straight (dired :type built-in)
+    :straight (:type built-in)
     :general
     (dired-mode-map
     :states '(normal)
@@ -1290,7 +1292,7 @@ I may be illiterate, but I still read children's books.
 #+begin_src emacs-lisp
   (use-package nov
     :when (executable-find "unzip")
-    :straight (nov :host nil :type git :repo "https://depp.brause.cc/nov.el.git")
+    :straight (:host nil :type git :repo "https://depp.brause.cc/nov.el.git")
     :mode ("\\.epub\\'" . nov-mode))
 #+end_src
 
