@@ -1010,7 +1010,13 @@ This is the core config.
      "M-J" #'org-metadown
      "<tab>" #'org-cycle))
 #+end_src
-
+** Contrib
+There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in the main org repo.
+#+begin_src emacs-lisp
+  (use-package org-contrib
+    :after org
+    :straight (:type git :repo "https://git.sr.ht/~bzg/org-contrib"))
+#+end_src
 ** Capture
 #+begin_src emacs-lisp
   (setq org-capture-templates
@@ -1077,6 +1083,7 @@ Tempo provides nice shortcuts for inserting structures.
                                 "agenda"      ; Some old file(s)
                                 "shared"      ; Syncthing
                                 "nextcloud"   ; org-caldav files
+                                "Finance"     ; GNU Ledger literate journals
                                 ))))
     ;; A simple regex to bring gpg-encrypted files into agenda
     (org-agenda-file-regexp (rx (seq ".org" (? ".gpg") eol)))
@@ -1277,6 +1284,19 @@ Org mode, but for the average pleb.
 #+end_src
 
 * Misc
+
+** Ledger
+Crypto-bros don't look in here:
+#+begin_src emacs-lisp
+  (use-package ledger-mode
+    :when (executable-find "ledger")
+    :after org-contrib
+    :straight (:host github :repo "ledger/ledger-mode")
+    :config
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((ledger . t))))
+#+end_src
 ** Dired
 #+begin_src emacs-lisp
   (use-package dired
