@@ -1285,7 +1285,14 @@ Ement
     :general
     (ement-room-mode-map
      :states '(normal visual)
-     "RET" #'ement-room-send-message))
+     "RET" #'ement-room-send-message
+     "j" #'ement-room-goto-next
+     "k" #'ement-room-goto-prev
+     "r" #'ement-notify-reply
+     "e" #'ement-room-send-reaction)
+    (ement-room-list-mode-map
+     :states '(normal visual)
+     "RET" #'ement-room-list-RET))
 #+end_src
 ** Ledger
 Crypto-bros don't look in here:
