@@ -9,12 +9,8 @@ It only works on the master branch of Emacs right now. Until
 I get [[./flake.nix]] to be as I want it to be, it'll break pretty much
 every time.
 
-* TLDR
-#+begin_src shell
-  podman build -t my-emacs 
-#+end_src
-* Understanding this
-** Literate
+* *🤔 Understanding this
+** 🤓 Literate
 This configuration is [[https://en.wikipedia.org/wiki/Literate_programming][literate]], as in, the file you're reading /is/ the
 actual program. Instead of tangling, I load it from [[./.emacs.d/init.el][the init file]]
 directly, which is slower, but more convenient.
@@ -27,9 +23,9 @@ inspired by many other people such as:
 - [[https://github.com/daviwil][daviwil]]'s [[https://www.youtube.com/playlist?list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ][Emacs from scratch]] Youtube series, and his [[https://github.com/daviwil/dotfiles][config]] 
 - [[https://github.com/joseph8th/literatemacs][joseph8th]]'s config
   
-* Essentials
+* 🧱 Foundation
 Just simple stuff to get the ball rolling.
-** Backup
+** © Backup
 Following [[https://www.emacswiki.org/emacs/BackupDirectory][this]], I'm moving the save files to one location rather than
 cluttering the system.
 #+begin_src emacs-lisp
@@ -53,7 +49,7 @@ Emacs also creates [[https://www.emacswiki.org/emacs/LockFiles][lock files]], wh
 (setq create-lockfiles nil)
 #+end_src
 
-** Straight
+** 📦 Straight
 [[https://github.com/raxod502/straight.el][Straight]] is my package manager. It's functional like Nix or Guix, but
 it's made for Emacs.
 
@@ -75,7 +71,7 @@ it's made for Emacs.
     (setq straight-use-package-by-default t))
 #+end_src
 
-** Keys
+** ⌨ Keys
 What is EMACS without the /MACroS/.
 *** General
 Just trying it out for now
@@ -111,7 +107,7 @@ Along with surroud
   (global-evil-surround-mode 1))
 #+end_src
 
-*** Collection
+**** Collection
 [[https://github.com/emacs-evil/evil-collection][evil-collection]] provides more bindings for specific modes.
 #+begin_src emacs-lisp
   (use-package evil-collection
@@ -121,7 +117,7 @@ Along with surroud
     (evil-collection-init))
 #+end_src
 
-** Which key
+*** Which key
 [[https://github.com/justbur/emacs-which-key][Which-key]] tells me which key to press... hehe
 
 #+begin_src emacs-lisp
@@ -131,7 +127,7 @@ Along with surroud
     :hook (after-init . which-key-mode))
 #+end_src
 
-** Server
+** 🔄 Server
 This turns on the server so that there would only be one instance of
 Emacs running.
 - [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html][The docs]] 
@@ -142,13 +138,13 @@ Emacs running.
       (server-start)))
 #+end_src
 
-** Separate ~custom.el~
+** 📂 Separate ~custom.el~
 Rather than cluttering the ~init.el~ file, this uses a separte file for customs.
 #+begin_src emacs-lisp
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 #+end_src
 
-** Notification
+** 📱 Notification
 #+begin_src emacs-lisp
   (use-package alert
     :disabled
@@ -156,7 +152,7 @@ Rather than cluttering the ~init.el~ file, this uses a separte file for customs.
     (alert-default-style 'notifications))
 #+end_src
 
-** Completion
+** 💔 Completion
 *** Vertico
 I started using [[https://github.com/minad/vertico][vertico]] after using [[https://github.com/abo-abo/swiper][Ivy]] and [[https://emacs-helm.github.io/helm/][helm]] prior. It is much
 more minimalistic, and it relies on the built-in Emacs completion framework.
@@ -429,15 +425,15 @@ The main source of security
                    (expand-file-name ".authinfo.gpg" (getenv "HOME")))))
 #+end_src
 
-** Inhibit warnings
+** ⚠ Inhibit warnings
 Emacs on master gives too many warnings for a bunch of packages, which
 we can disable:
 #+begin_src emacs-lisp
   ;; (setq byte-compile-warnings nil)
 #+end_src
 
-* Appearance
-** Splash screen
+* 🌈 Appearance
+** ⃢ Splash screen
 Replace the default splash screen with an org buffer
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t
@@ -446,7 +442,7 @@ Replace the default splash screen with an org buffer
         initial-scratch-message "#+TITLE: Arian's Emacs ")
 #+end_src
 
-** Face
+** 🥰 Face
 This the default [[https://www.emacswiki.org/emacs/Face][face]]. It uses a patched version of [[https://fontlibrary.org/en/font/fantasque-sans-mono][Fantasque]] from
 [[https://github.com/ryanoasis/nerd-fonts][nerd fonts]].
 
@@ -468,7 +464,7 @@ check if they're there or not before loading them.
        :weight 'semibold)))
 #+end_src
 
-** Theme
+** 🎨Theme
 Doom themes are very nice. 
 #+begin_src emacs-lisp
   (use-package doom-themes
@@ -478,7 +474,7 @@ Doom themes are very nice.
     (doom-themes-org-config))
 #+end_src
 
-** Modeline
+** → Modeline
 This also comes from the nice doom people
 #+begin_src emacs-lisp
   (use-package doom-modeline
@@ -539,7 +535,7 @@ Instead of having to type =yes=, you can just say =y=.
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-* Development
+* 💻 Development
 Afterall, Emacs is a text editor.
 
 #+begin_src emacs-lisp
@@ -547,7 +543,7 @@ Afterall, Emacs is a text editor.
                 tab-width 2)
 #+end_src
 
-** Tree Sitter
+** 🌳 Tree Sitter
 *** Tree sitter itself
 All the cool kids are using this for nice incremental parsing.
 #+begin_src emacs-lisp
@@ -571,7 +567,7 @@ the fact that it only supports ~elisp-tree-sitter~ ([[https://github.com/meain/e
               "f" (evil-textobj-tree-sitter-get-textobj "function.outer")
               "a" (evil-textobj-tree-sitter-get-textobj ("conditional.outer" "loop.outer"))))
 #+end_src
-** Line numbers
+** 🔢 Line numbers
 Put line numbers for buffers that should have it.
 #+begin_src emacs-lisp
   (use-package display-line-numbers
@@ -580,13 +576,13 @@ Put line numbers for buffers that should have it.
     :hook (prog-mode . display-line-numbers-mode))
 #+end_src
 
-** Electric pair
+** ⌁ Electric pair
 #+begin_src emacs-lisp
   (use-package elec-pair
     :straight (:type built-in)
     :config (electric-pair-mode))
 #+end_src
-** Zen
+** ☮ Zen
 Is this the cure for ADHD?
 #+begin_src emacs-lisp
   (use-package zen-mode
@@ -668,7 +664,7 @@ All thanks to eglot
               "<leader> l c a" #'eglot-code-actions))
 #+end_src
 
-** Templating
+** 🛕 Tempel 
 [[https://github.com/minad/tempel][Tempel]] is what I use instead of [[https://github.com/joaotavora/yasnippet][Yasnippet]] since it's lispy.
 #+begin_src emacs-lisp
   (use-package tempel
@@ -712,7 +708,7 @@ lol no generics
     :mode ((rx ".go") . go-ts-mode))
 #+end_src
 
-** Rust
+** 🦀 Rust
 🚀
 #+begin_src emacs-lisp
   (use-package rust-ts-mode
@@ -888,7 +884,7 @@ Soon...
 
 #+end_src
 
-* Org
+* 📔Org
 I use [[https://orgmode.org][org-mode]] for pretty much everything.
 ** Core
 [[https://gitlab.com/jabranham/mixed-pitch][Mixed-pitch]] tries to be smart about how the whole monospaced fonts and
@@ -1061,10 +1057,11 @@ Tempo provides nice shortcuts for inserting structures.
     (add-to-list 'org-structure-template-alist structure))
 #+end_src
 
-** TODO Agenda
+** TODO 📆 Agenda
 
 #+begin_src emacs-lisp
   (use-package org-agenda
+    :after org
     :straight (:type built-in)
     :custom
     (org-agenda-files (cl-remove-if-not
@@ -1149,7 +1146,7 @@ Sync the calendar with my online one. The settings are in =caldav.el=.
      (expand-file-name "caldav.el" user-emacs-directory)))
 #+end_src
 
-** Roam
+** 🧠 Roam
 Org-roam might actually help me be able to think eventually
 
 #+begin_src emacs-lisp
@@ -1275,7 +1272,7 @@ Org mode, but for the average pleb.
   (use-package ox-hugo)
 #+end_src
 
-* Misc
+* 🧰Misc
 
 ** Matrix
 Ement
@@ -1294,7 +1291,7 @@ Ement
      :states '(normal visual)
      "RET" #'ement-room-list-RET))
 #+end_src
-** Ledger
+** 📒Ledger
 Crypto-bros don't look in here:
 #+begin_src emacs-lisp
   (use-package ledger-mode
@@ -1306,7 +1303,7 @@ Crypto-bros don't look in here:
      'org-babel-load-languages
      '((ledger . t))))
 #+end_src
-** Dired
+** 📁 Dired
 #+begin_src emacs-lisp
   (use-package dired
     :straight (:type built-in)
@@ -1315,8 +1312,8 @@ Crypto-bros don't look in here:
     :states '(normal)
      "<leader>" #'evil-send-leader))
 #+end_src
-** Readin'
-*** Novel
+** 👓 Readin'
+*** 📚 Novel
 I may be illiterate, but I still read children's books.
 #+begin_src emacs-lisp
   (use-package nov
@@ -1331,13 +1328,13 @@ I may be illiterate, but I still read children's books.
   (use-package pdf-tools)
 #+end_src
 
-** Pwetty screenshots
+** 📸 Pwetty screenshots
 #+begin_src emacs-lisp
   (use-package screenshot
     :straight
     (screenshot :host github :repo "tecosaur/screenshot"))
 #+end_src
-** Elfeed
+** 📰 Elfeed
 Daily dose of rabbit holes.
 #+begin_src emacs-lisp
   (use-package elfeed
@@ -1375,7 +1372,7 @@ These are some interactive functions that I use occasionally.
       (async-shell-command "who -u")))
 #+end_src
 
-** Docker
+** 🐋 Docker
 Docker do be cool.
 #+begin_src emacs-lisp
   ;; (use-package docker
