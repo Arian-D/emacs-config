@@ -1289,6 +1289,16 @@ Org mode, but for the average pleb.
 
 * Misc
 
+** Matrix
+Ement
+#+begin_src emacs-lisp
+  (use-package ement
+    :straight (:host github :repo "alphapapa/ement.el")
+    :general
+    (ement-room-mode-map
+     :states '(normal visual)
+     "RET" #'ement-room-send-message))
+#+end_src
 ** Ledger
 Crypto-bros don't look in here:
 #+begin_src emacs-lisp
