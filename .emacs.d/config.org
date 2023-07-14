@@ -992,13 +992,15 @@ This is the core config.
     :general
     ("<leader> a" #'org-agenda
      "<leader> c" #'org-capture)
+    (org-src-mode-map
+     "<leader> '" #'org-edit-src-exit)
     (org-mode-map
      "<leader> '" #'org-edit-special
      "<leader> C t" #'org-babel-tangle
      "<leader> C s" #'org-insert-structure-template
      "<leader> l" #'org-insert-link
      "<leader> t" #'org-todo
-     "<leader> S s" #'org-schedule
+     "<leader> S" #'org-schedule
      "<leader> d" #'org-deadline
      "<leader> SPC" #'org-ctrl-c-ctrl-c
      :states '(normal visual)
@@ -1008,6 +1010,8 @@ This is the core config.
      "M-j" #'org-shiftdown
      "M-K" #'org-metaup
      "M-J" #'org-metadown
+     "M-L" #'org-metaright
+     "M-H" #'org-metaleft
      "<tab>" #'org-cycle))
 #+end_src
 ** Contrib
