@@ -1084,52 +1084,6 @@ Tempo provides nice shortcuts for inserting structures.
     (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled))
 #+end_src
 
-[[https://github.com/alphapapa/org-super-agenda][org-super-agenda]] supposedly makes org-agenda look nicer
-#+begin_src emacs-lisp
-  (use-package org-super-agenda
-    :after org-caldav
-    :disabled
-    :config
-    (org-super-agenda-mode +1)	
-    :custom
-    ;; org-super-agenda layout
-    (org-super-agenda-groups
-     '(
-       (:name "  Important"
-              :and (:todo "TODO"
-                          :priority "A")
-              )
-       (:name "  Finance"
-              :tag "finance")
-       (:name " Dev"
-              :tag "dev")
-       (:name "  Home Lab"
-              :tag "homelab")
-       (:name " Travel"
-              :tag "travel")
-       (:name " Chores"
-              :tag "chore")
-       (:name " Work"
-              :tag "career")
-       ))
-    ;; accumulate org-agenda files
-    (org-agenda-files (cl-remove-if-not
-                       #'file-directory-p
-                       (mapcar (lambda (directory)
-                                 (expand-file-name directory org-directory))
-                               (list
-                                "agenda"      ; Some old file(s)
-                                "shared"      ; Syncthing
-                                "nextcloud"   ; org-caldav files
-                                ))))
-    ;; Hide useless stuff
-    (org-agenda-skip-scheduled-if-done t)
-    (org-agenda-skip-timestamp-if-done t)
-    (org-agenda-remove-tags t)
-    (org-agenda-skip-deadline-if-done t)
-    (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled))
-#+end_src
-
 ** TODO Calendar
 Sync the calendar with my online one. The settings are in =caldav.el=.
 #+begin_src emacs-lisp
