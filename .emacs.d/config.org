@@ -1007,21 +1007,20 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
 #+end_src
 ** Capture
 #+begin_src emacs-lisp
-  (setq org-capture-templates
-        '(("t"
-           "✅ Todo"
-           entry
-           (file+headline "~/Org/agenda/life.org.gpg" "🤔 Tasks") "** TODO %?\n%t"
-           :empty-lines 1)
-          ("T" "🧠 Thought" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %?\n%U %i\n")
-          ("?" "❓ Question" entry (file+headline "~/Org/shared/tmp.org" "❓ Questions") "* %?\n%U %i\n")
-          ("i" "💡 Idea" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %? :idea:\n%U %i\n")
-          ("e"
-           "📅 Calendar Event (Shared with NextCloud)"
-           entry
-           (file "~/Org/nextcloud/caldav.org")
-           "* %?
-  %^{When? }t")))
+  (use-package org-capture
+    :after org
+    :when (file-directory-p org-directory)
+    :config
+    (setq org-capture-templates
+          '(("t"
+             "✅ Todo"
+             entry
+             (file+headline "~/Org/agenda/life.org.gpg" "🤔 Tasks") "** TODO %?\n%t"
+             :empty-lines 1)
+            ("T" "🧠 Thought" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %?\n%U %i\n")
+            ("?" "❓ Question" entry (file+headline "~/Org/shared/tmp.org" "❓ Questions") "* %?\n%U %i\n")
+            ("i" "💡 Idea" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %? :idea:\n%U %i\n")))
+    :straight (:type built-in))
 #+end_src
 
 ** Transclusion
@@ -1091,10 +1090,17 @@ Sync the calendar with my online one. The settings are in =caldav.el=.
     :when (and
            (file-readable-p (expand-file-name "caldav.el" user-emacs-directory))
            (not (version< emacs-version "26.1")))
-    :after org
+    :after org-capture
     :custom
     (org-caldav-inbox (file-truename "~/Org/nextcloud/caldav.org"))
     (org-caldav-files (list (file-truename "~/Org/nextcloud/nextcloud.org")))
+    :config
+    (add-to-list 'org-capture-templates
+                 '("e"
+                   "📅 Calendar Event (Shared with NextCloud)"
+                   entry
+                   (file "~/Org/nextcloud/caldav.org")
+                   "* %?\n%^{When? }t"))
     :init
     (load-file
      (expand-file-name "caldav.el" user-emacs-directory)))
