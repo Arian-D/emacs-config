@@ -1045,17 +1045,6 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
 
 #+end_src
 
-** Tempo...
-Tempo provides nice shortcuts for inserting structures.
-#+begin_src emacs-lisp
-  (require 'org-tempo)
-  (dolist (structure '(("sh" . "src shell")
-                       ("el" . "src emacs-lisp")
-                       ("py" . "src python")
-                       ("hs" . "src haskell")))
-    (add-to-list 'org-structure-template-alist structure))
-#+end_src
-
 ** TODO 📆 Agenda
 
 #+begin_src emacs-lisp
