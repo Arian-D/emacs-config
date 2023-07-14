@@ -454,30 +454,18 @@ These fonts may not always be available, so there's [[https://www.reddit.com/r/e
 check if they're there or not before loading them.
 
 #+begin_src emacs-lisp
-  (defun font-exists-p (font)
-    "check if font exists"
-    (and (display-graphic-p)
-         (x-list-fonts font)))
-
-  (let ((font "FantasqueSansMono Nerd Font"))
-    (when (font-exists-p font)
+  (let ((default-font "Fantasque Sans Mono")
+        (variable-font "ETBembo"))
+    (when (x-list-fonts default-font)
       (set-face-attribute
        'default nil
-       :width 'expanded
        :family font
-       :weight 'ultra-light
-       :height 150
-       )))
-
-  (let ((font "ETBembo"))
-    (when (font-exists-p font)
+       :height 200))
+    (when (x-list-fonts variable-font)
       (set-face-attribute
        'variable-pitch nil
-       :width 'expanded
        :family font
-       :weight 'normal
-       :height 300
-       )))
+       :weight 'semibold)))
 #+end_src
 
 ** Theme
