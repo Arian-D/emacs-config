@@ -657,8 +657,7 @@ All thanks to eglot
     ;; TODO: write a loop to check if the LSPs exist
     (add-to-list 'eglot-server-programs `(nix-mode . ("nil")))
     (add-to-list 'eglot-server-programs `(tsx-ts-mode . ("typescript-language-server" "--stdio")))
-    (when (file-executable-p "~/go/bin/gopls")
-      (add-to-list 'eglot-server-programs `(go-mode . ("~/go/bin/gopls"))))
+    :hook (prog-mode . eglot-ensure)
     :general ("<leader> l r" #'eglot-rename
               "<leader> l f" #'eglot-format
               "<leader> l c a" #'eglot-code-actions))
@@ -691,9 +690,8 @@ All thanks to eglot
 
 #+end_src
 
-** Dataaaa
-Sometimes, a fella gotta learn [[https://www.r-project.org/][R]] to pay the bills. [[https://ess.r-project.org/][ESS]] is apparently
-useful for that.
+** Data science
+AI-accelerated GPT-powered lisp???
 #+begin_src emacs-lisp
   (use-package ess)
 #+end_src
@@ -703,19 +701,22 @@ lol no generics
 #+begin_src emacs-lisp
   (use-package go-ts-mode
     :when (and (executable-find "go")
-               (featurep 'go-ts-mode))
+               (file-executable-p "~/go/bin/gopls"))
+    :after eglot
+    :config
+    (add-to-list 'eglot-server-programs `(go-ts-mode . ("~/go/bin/gopls")))
     :straight (:type built-in)
-    :mode ((rx ".go") . go-ts-mode))
+    :mode ((rx ".go" string-end) . go-ts-mode))
 #+end_src
 
 ** 🦀 Rust
-🚀
+🚀Blazing 🚀fast🚀zero🚀cost🚀abstraction🚀fearless🚀concurrency🚀🚀🚀
 #+begin_src emacs-lisp
   (use-package rust-ts-mode
-    :when (and (executable-find "cargo") (featurep 'rust-ts-mode))
+    :when (executable-find "cargo")
     :straight (:type built-in)
     :after eglot
-    :mode ((rx ".rs") . rust-ts-mode)
+    :mode ((rx ".rs" string-end) . rust-ts-mode)
     :config
     (add-to-list 'eglot-server-programs `(rust-ts-mode . ("rust-analyzer"))))
 #+end_src
