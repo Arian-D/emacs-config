@@ -9,7 +9,7 @@ It only works on the master branch of Emacs right now. Until
 I get [[./flake.nix]] to be as I want it to be, it'll break pretty much
 every time.
 
-* *🤔 Understanding this
+* 🤔 Understanding this
 ** 🤓 Literate
 This configuration is [[https://en.wikipedia.org/wiki/Literate_programming][literate]], as in, the file you're reading /is/ the
 actual program. Instead of tangling, I load it from [[./.emacs.d/init.el][the init file]]
@@ -451,16 +451,16 @@ check if they're there or not before loading them.
 
 #+begin_src emacs-lisp
   (let ((default-font "Fantasque Sans Mono")
-        (variable-font "ETBembo"))
+	(variable-font "ETBembo"))
     (when (x-list-fonts default-font)
       (set-face-attribute
        'default nil
-       :family font
+       :family default-font
        :height 200))
     (when (x-list-fonts variable-font)
       (set-face-attribute
        'variable-pitch nil
-       :family font
+       :family variable-font
        :weight 'semibold)))
 #+end_src
 
