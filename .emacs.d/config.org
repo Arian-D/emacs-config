@@ -651,7 +651,6 @@ and counsel
 All thanks to eglot
 #+begin_src emacs-lisp
   (use-package eglot
-    :mode ("\\.tsx\\'" . tsx-ts-mode)
     :straight (:type built-in)
     :config
     ;; TODO: write a loop to check if the LSPs exist
@@ -719,6 +718,21 @@ lol no generics
     :mode ((rx ".rs" string-end) . rust-ts-mode)
     :config
     (add-to-list 'eglot-server-programs `(rust-ts-mode . ("rust-analyzer"))))
+#+end_src
+
+** Elixir
+
+#+begin_src emacs-lisp
+  (use-package elixir-ts-mode
+    :when (and (featurep 'elixir-ts-mode)
+               (executable-find "elixir-ls"))
+    :straight (:type built-in)
+    :mode ((rx (or ".ex" ".exs") string-end) . elixir-ts-mode)
+    :hook (elixir-ts-mode . eglot-ensure)
+    :config
+
+    (add-to-list 'eglot-server-programs `(elixir-ts-mode . ("elixir-ls")))
+    )
 #+end_src
 
 ** Python
