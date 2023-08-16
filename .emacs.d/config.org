@@ -1317,6 +1317,14 @@ Daily dose of rabbit holes.
       (when (file-exists-p feeds-file)
         (load-file feeds-file))))
 #+end_src
+** 📧 Gnus
+#+begin_src emacs-lisp
+  (use-package gnus
+    :straight (:type built-in)
+    :custom
+    (gnus-summary-line-format "%o%U%R%z%I%(%[%f%]%) %s\n")
+    (gnus-select-method '(nnimap "imap.gmail.com")))
+#+end_src
 ** Graphviz
 The Graphviz [[https://graphviz.org/doc/info/lang.html][dot]] language, which I mostly use in org-mode.
 #+begin_src emacs-lisp
