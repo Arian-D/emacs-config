@@ -452,6 +452,7 @@ check if they're there or not before loading them.
 #+begin_src emacs-lisp
   (let ((default-font "Fantasque Sans Mono")
 	(variable-font "ETBembo"))
+    (when window-system
     (when (x-list-fonts default-font)
       (set-face-attribute
        'default nil
@@ -460,8 +461,7 @@ check if they're there or not before loading them.
     (when (x-list-fonts variable-font)
       (set-face-attribute
        'variable-pitch nil
-       :family variable-font
-       :weight 'semibold)))
+       :family variable-font))))
 #+end_src
 
 ** 🎨Theme
