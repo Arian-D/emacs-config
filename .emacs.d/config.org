@@ -808,6 +808,7 @@ S-expressions.
 *** Lispyville
 #+begin_src emacs-lisp
   (use-package lispy
+    :disabled
     :hook
     (lisp-mode . lispy-mode)
     (emacs-lisp-mode . lispy-mode))
@@ -899,7 +900,7 @@ Soon...
 
 #+end_src
 
-* 📔Org
+* 📔 Org
 I use [[https://orgmode.org][org-mode]] for pretty much everything.
 ** Core
 [[https://gitlab.com/jabranham/mixed-pitch][Mixed-pitch]] tries to be smart about how the whole monospaced fonts and
@@ -949,6 +950,7 @@ This is the core config.
     (org-todo-keywords '((sequence "TODO" "IN-PROGRESS" "|" "DONE")))
     ;; (org-hidden-keywords '(title author email date))
     (org-highlight-latex-and-related '(native))
+    (org-startup-with-latex-preview 't)
     (org-pretty-entities t)
     (org-imenu-depth 5)
     (org-hide-emphasis-markers t)
@@ -992,6 +994,7 @@ This is the core config.
     ("<leader> a" #'org-agenda
      "<leader> c" #'org-capture)
     (org-src-mode-map
+     "<leader> k" #'org-edit-src-abort
      "<leader> '" #'org-edit-src-exit)
     (org-mode-map
      "<leader> '" #'org-edit-special
@@ -1025,6 +1028,10 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
   (use-package org-capture
     :after org
     :when (file-directory-p org-directory)
+    :general
+    (org-capture-mode-map
+     "<leader> c" #'org-capture-finalize
+     "<leader> k" #'org-capture-kill)
     :config
     (setq org-capture-templates
           '(("t"
@@ -1084,7 +1091,8 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
     (org-agenda-skip-timestamp-if-done t)
     (org-agenda-remove-tags t)
     (org-agenda-skip-deadline-if-done t)
-    (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled))
+    (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
+    (org-log-done 'time))
 #+end_src
 
 ** TODO Calendar
@@ -1236,7 +1244,7 @@ Org mode, but for the average pleb.
   (use-package ox-hugo)
 #+end_src
 
-* 🧰Misc
+* 🧰 Misc
 
 ** Matrix
 Ement
@@ -1249,6 +1257,7 @@ Ement
      "RET" #'ement-room-send-message
      "j" #'ement-room-goto-next
      "k" #'ement-room-goto-prev
+     "q" #'quit-window
      "r" #'ement-notify-reply
      "e" #'ement-room-send-reaction)
     (ement-room-list-mode-map
