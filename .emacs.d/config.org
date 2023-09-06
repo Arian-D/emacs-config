@@ -96,8 +96,9 @@ Just trying it out for now
     (evil-set-leader '(normal visual) (kbd "SPC"))
     (general-def "<leader> q" #'kill-current-buffer
       "<leader> ;" #'comment-line
-      "<leader> s" #'save-buffer))
-
+      "<leader> s" #'save-buffer
+      "<leader> h v" #'describe-variable
+      "<leader> h f" #'describe-function))
     #+end_src
 
 Along with surroud
