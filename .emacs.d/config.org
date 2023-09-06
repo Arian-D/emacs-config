@@ -617,7 +617,8 @@ I use [[https://github.com/ajc/nginx-mode][this]] to edit nginx config files
 ** Yaml
 DevOps is the future, amirite?
 #+begin_src emacs-lisp
-  (use-package yaml-mode)
+  (use-package yaml-ts-mode
+    :straight (:type built-in))
 #+end_src
 
 ** K8s
@@ -652,10 +653,6 @@ All thanks to eglot
 #+begin_src emacs-lisp
   (use-package eglot
     :straight (:type built-in)
-    :config
-    ;; TODO: write a loop to check if the LSPs exist
-    (add-to-list 'eglot-server-programs `(nix-mode . ("nil")))
-    (add-to-list 'eglot-server-programs `(tsx-ts-mode . ("typescript-language-server" "--stdio")))
     :hook (prog-mode . eglot-ensure)
     :general ("<leader> l r" #'eglot-rename
               "<leader> l f" #'eglot-format
@@ -730,16 +727,16 @@ lol no generics
     :mode ((rx (or ".ex" ".exs") string-end) . elixir-ts-mode)
     :hook (elixir-ts-mode . eglot-ensure)
     :config
-
-    (add-to-list 'eglot-server-programs `(elixir-ts-mode . ("elixir-ls")))
-    )
+    (add-to-list 'eglot-server-programs `(elixir-ts-mode . ("elixir-ls"))))
 #+end_src
 
 ** Python
 Things have changed...
 #+begin_src emacs-lisp
   (use-package pyvenv
-    :when (executable-find "python3"))
+    :when (executable-find "pyright-langserver")
+    :mode ((rx ".py" string-end) . python-ts-mode)
+    :hook (python-ts-mode . eglot-ensure))
 #+end_src
 
 ** Hy
@@ -876,10 +873,11 @@ And just when you thought I could learn useful languages.
     ;; :custom (idris-interpreter-path "idris2")
     )
 #+end_src
-** Nix
+** ❄ Nix
 #+begin_src emacs-lisp
   (use-package nix-mode
-    :when (executable-find "nix"))
+    :when (executable-find "nil")
+    :hook (nix-mode . eglot-ensure))
 #+end_src
 
 *** Direnv
