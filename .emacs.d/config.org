@@ -1031,13 +1031,14 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
     (org-capture-mode-map
      "<leader> c" #'org-capture-finalize
      "<leader> k" #'org-capture-kill)
-    :config
-    (setq org-capture-templates
+    :custom
+    (org-capture-templates
           '(("t"
              "✅ Todo"
              entry
-             (file+headline "~/Org/agenda/life.org.gpg" "🤔 Tasks") "** TODO %?\n%t"
+             (file+headline "~/Org/shared/tasks.org" "🤔 Tasks") "** TODO %?\n%t"
              :empty-lines 1)
+            ("p" "🔒 Private Todo" entry (file+headline "~/Org/agenda/life.org.gpg" "💡 Thoughts") "* %?\n%U %i\n")
             ("T" "🧠 Thought" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %?\n%U %i\n")
             ("?" "❓ Question" entry (file+headline "~/Org/shared/tmp.org" "❓ Questions") "* %?\n%U %i\n")
             ("i" "💡 Idea" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %? :idea:\n%U %i\n")))
