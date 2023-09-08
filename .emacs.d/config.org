@@ -1405,17 +1405,7 @@ A [[https://github.com/cbowdon/daemons.el][package]] for controlling services.
   (use-package daemons)
 #+end_src
 
-** Nix
-I have a function to garbage-collect Nix.
-#+begin_src emacs-lisp
-  (defun nix-collect-garbage (deep)
-    "Collect nixos garbage"
-    (interactive (list (yes-or-no-p "-d?")))
-    (async-shell-command (concat "nix-collect-garbage" (if deep " -d" ""))
-                         "*Nix Collect Garbage*"))
-#+end_src
-
-** mpv
+** 🎵 mpv
 Playing music has never been easier.
 #+begin_src emacs-lisp
   (use-package empv
