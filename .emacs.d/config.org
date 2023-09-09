@@ -479,7 +479,7 @@ Doom themes are very nice.
 This also comes from the nice doom people
 #+begin_src emacs-lisp
   (use-package doom-modeline
-    :after all-the-icons
+    :after nerd-icons
     :hook (after-init . doom-modeline-mode)
     :config
     (setq doom-modeline-height 1
@@ -502,6 +502,11 @@ As you see, this package requires ~all-the-icons~ for pretty icons.
     :init
     (unless (file-readable-p "~/.local/share/fonts/all-the-icons.ttf")
       (all-the-icons-install-fonts)))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package nerd-icons
+    :straight (:host github :repo "rainstormstudio/nerd-icons.el"))
 #+end_src
 
 Use it for dired
