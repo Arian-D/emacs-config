@@ -1100,6 +1100,12 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
     (org-log-done 'time))
 #+end_src
 
+** EDNA
+This is just too much
+#+begin_src emacs-lisp
+  (use-package org-edna
+    :after org)
+#+end_src
 ** TODO Calendar
 Sync the calendar with my online one. The settings are in =caldav.el=.
 #+begin_src emacs-lisp
@@ -1176,7 +1182,7 @@ This is a really nice web UI for org-roam.
 #+begin_src emacs-lisp
   (use-package org-modern
     :straight
-    (org-modern :host github :repo "minad/org-modern")
+    (:host github :repo "minad/org-modern")
     :hook
     (org-mode . org-modern-mode)
     (org-agenda-finalize . org-modern-agenda)
