@@ -74,7 +74,6 @@ it's made for Emacs.
 ** ⌨ Keys
 What is EMACS without the /MACroS/.
 *** General
-Just trying it out for now
 #+begin_src emacs-lisp
   (use-package general)
 #+end_src
