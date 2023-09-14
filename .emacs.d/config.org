@@ -1322,7 +1322,7 @@ Daily dose of rabbit holes.
 #+begin_src emacs-lisp
   (use-package nnhackernews
     :after gnus
-    :straight (:type git :host "https://gitawonk.com/dickmao/nnhackernews.git")
+    :straight (:type git :host nil :repo "https://gitawonk.com/dickmao/nnhackernews.git")
     :config
      (add-to-list 'gnus-secondary-select-methods '(nnhackernews "")))
 #+end_src
