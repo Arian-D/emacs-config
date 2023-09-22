@@ -782,8 +782,6 @@ Have you read your SICP today?
     :when (executable-find "guile"))
   (use-package geiser-chez
     :when (executable-find "scheme"))
-  (use-package geiser-racket
-    :when (executable-find "racket"))
 #+end_src
 
 *** Common Lisp
