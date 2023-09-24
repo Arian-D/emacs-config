@@ -548,30 +548,6 @@ Afterall, Emacs is a text editor.
                 tab-width 2)
 #+end_src
 
-** 🌳 Tree Sitter
-*** Tree sitter itself
-All the cool kids are using this for nice incremental parsing.
-#+begin_src emacs-lisp
-  (use-package tree-sitter
-    :when (and (or (functionp 'module-load) module-file-suffix)
-               (version< emacs-version "30"))
-    :config
-    (use-package tree-sitter-langs
-      :config
-      (tree-sitter-require 'typescript)))
-#+end_src
-*** Tree-sitter textobjects
-The holy tool to edit structurally. Currently, I can't use it due to
-the fact that it only supports ~elisp-tree-sitter~ ([[https://github.com/meain/evil-textobj-tree-sitter/issues/76][issue #76]])
-#+begin_src emacs-lisp
-  (use-package evil-textobj-tree-sitter
-    :disabled
-    :after evil
-    :straight (:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries"))
-    :general (evil-outer-text-objects-map
-              "f" (evil-textobj-tree-sitter-get-textobj "function.outer")
-              "a" (evil-textobj-tree-sitter-get-textobj ("conditional.outer" "loop.outer"))))
-#+end_src
 ** 🔢 Line numbers
 Put line numbers for buffers that should have it.
 #+begin_src emacs-lisp
@@ -783,7 +759,6 @@ Have you read your SICP today?
   (use-package geiser-chez
     :when (executable-find "scheme"))
 #+end_src
-
 *** Common Lisp
 This is mostly for configuring Nyxt browser. I don't use CL for
 anything else.
