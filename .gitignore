@@ -3,3 +3,4 @@
 !.emacs.d/early-init.el
 !.emacs.d/config.org
 !.emacs.d/feeds.el
+!.emacs.d/templates
