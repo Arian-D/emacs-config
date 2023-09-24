@@ -1414,7 +1414,8 @@ Playing music has never been easier.
 ** Terminal
 I need a fast terminal like [[https://github.com/akermu/emacs-libvterm][this]].
 #+begin_src emacs-lisp
-  (use-package vterm)
+    (use-package vterm
+      :disabled)
 #+end_src
 
 ** Shell
