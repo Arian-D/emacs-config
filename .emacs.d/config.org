@@ -634,7 +634,6 @@ All thanks to eglot
 #+begin_src emacs-lisp
   (use-package eglot
     :straight (:type built-in)
-    :hook (prog-mode . eglot-ensure)
     :general ("<leader> l r" #'eglot-rename
               "<leader> l f" #'eglot-format
               "<leader> l c a" #'eglot-code-actions))
