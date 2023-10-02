@@ -995,6 +995,7 @@ This is the core config.
 There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in the main org repo.
 #+begin_src emacs-lisp
   (use-package org-contrib
+    :disabled
     :after org
     :straight (:type git :repo "https://git.sr.ht/~bzg/org-contrib"))
 #+end_src
