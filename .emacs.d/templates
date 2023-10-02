@@ -1,0 +1,125 @@
+;; -*- mode: lisp -*-
+
+emacs-lisp-mode
+
+(up "(use-package " p n> ")")
+(fun "(defun " (p "function-name")
+     " (" (p "args") ")" n> "\"" p "\"" n> r> ")")
+(new-bang "(\"" (p "acronym") "\" . (\"" (p "bang-name") "\" . \"" (p "url") "\" ))")
+
+
+rust-mode
+(actixget "#[get(\"/" (s fn) "\")]" n
+           "async fn " (s fn) "() -> impl Responder {"
+           n> "HttpResponse::NotImplemented().finish()" n
+           "}")
+(fn "fn " p "() {"
+    n> p
+    n "}")
+
+
+latex-mode
+
+(skel "\\documentclass{article}" n
+      "\\usepackage{amsmath}" n
+      "\\usepackage{amssymb}" n
+      "\\usepackage{graphicx}" n
+      "\\title{" p "}" n
+      "\\author{" p "}" n
+      "\\begin{document}" n
+      "\\maketitle" n
+      > p n
+      "\\end{document}")
+
+(enum "\\begin{enumerate}"
+      n> "\\item " p n
+      "\\end{enumerate}")
+
+(textbf "\\textbf{" r "}")
+
+;; Org-mode typical stuff
+org-mode
+(underline "_" r "_")
+(italic "/" r "/")
+(bold "*" r "*")
+
+;; Org-mode headers
+org-mode
+(title "#+title: " p n)
+(startup "#+startup: " (p "fold latexpreview") n)
+(options "#+options: " (p "toc:nil num:nil") n)
+(description "#+description: " p n)
+(src "#+begin_src " p n> r> n> "#+end_src")
+(ledger "#+begin_src ledger" n> r> n> "#+end_src")
+(quote "#+begin_quote" n> r> n> "#+end_quote")
+(author "#+author: " (p "Arian"))
+
+(header-args ":PROPERTIES:" n>
+             ":header-args: " p n>
+             ":END:")
+
+(use-package
+  "#+begin_src emacs-lisp" n> r>
+  "(use-package " p ")" n>
+  "#+end_src")
+
+;; LaTeX
+latex-mode
+(begin "\\begin{" (s env) "}" > n> r> "\\end{" (s env) "}")
+(la "\\begin{align*}" > n r> "\\end{align*}")
+(im "\\(" p "\\)")
+(frac "\\frac{" p "}{" p "}")
+(choose "{" p " \\choose " p "}")
+(underline "\\underline{" p "}")
+(boxed "\\boxed{" r "}")
+(hat "\\hat{" r "}")
+(sum "\\sum_" "{" p "}" "^" "{" p "}" )
+(prod "\\prod_" "{" p "}" "^" "{" p "}" )
+(partial-derivative
+ "\\frac{\\partial}{\\partial " (p "x") "}")
+
+;; Ox-hugo
+org-mode 
+(blog-post
+ "#+TITLE:" (p (file-name-base (buffer-file-name))) n
+ "#+DATE: " (format-time-string "%Y-%m-%d") n
+ "#+HUGO_BASE_DIR: ../" n
+ "#+HUGO_WEIGHT: auto" n
+ "#+HUGO_TAGS: emacs" n
+ n>
+ "* " (p "Start..."))
+
+
+yaml-mode
+
+;; Ansible
+
+(atask "- name: " (p "Task Description") n> (p "module") ":")
+
+;; HTML
+
+html-mode
+
+(bigtag "<" (s env) ">" > n> r> n "</" (s env) ">")
+(style "<link rel=\"" (p "stylesheet") "\" href=\"" (p "url") "\" type=\"" (p "text/css") "\">")
+
+html-mode tsx-ts-mode
+(tag "<" (s env) ">" r "</" (s env) ">")
+
+python-mode
+(def "def " (p "function_name") "():" n> (p "return"))
+
+hy-mode
+
+(defn "(defn " (p "function-name") " [ " p " ]"
+      p
+      n> ")")
+
+(defn/a "(defn/a " (p "function-name") " [ " p " ]"
+        p
+        n> ")")
+
+ledger-mode
+
+(entry (p (format-time-string "%Y/%m/%d")) " "
+       (p "description") n>)
