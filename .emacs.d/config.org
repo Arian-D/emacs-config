@@ -563,6 +563,13 @@ Put line numbers for buffers that should have it.
     :straight (:type built-in)
     :config (electric-pair-mode))
 #+end_src
+
+** Tree sitter
+#+begin_src emacs-lisp
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode))
+#+end_src
 ** ☮ Zen
 Is this the cure for ADHD?
 #+begin_src emacs-lisp
@@ -595,13 +602,6 @@ I use [[https://github.com/ajc/nginx-mode][this]] to edit nginx config files
     :straight
     (nginx-mode :host github :repo "ajc/nginx-mode"))
 #+end_src
-** Yaml
-DevOps is the future, amirite?
-#+begin_src emacs-lisp
-  (use-package yaml-ts-mode
-    :straight (:type built-in))
-#+end_src
-
 ** K8s
 #+begin_src emacs-lisp
   (use-package kubernetes
