@@ -602,15 +602,6 @@ I use [[https://github.com/ajc/nginx-mode][this]] to edit nginx config files
     :straight
     (nginx-mode :host github :repo "ajc/nginx-mode"))
 #+end_src
-** K8s
-#+begin_src emacs-lisp
-  (use-package kubernetes
-    :commands (kubernetes-overview))
-
-  (use-package kubernetes-evil
-    :after kubernetes)
-#+end_src
-
 ** Projectile
 #+begin_src emacs-lisp
   (use-package projectile
@@ -1034,16 +1025,6 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
     :straight
     (org-ql :host github :repo "alphapapa/org-ql"))
 #+end_src
-** Noter
-[[https://github.com/weirdNox/org-noter][org-noter]] is a nice document annotation tool.
-#+begin_src emacs-lisp
-  (use-package org-noter
-    :after evil
-    :config
-    (evil-define-key nil "i" org-noter-doc-mode-map 'org-noter-insert-note))
-
-#+end_src
-
 ** TODO 📆 Agenda
 
 #+begin_src emacs-lisp
