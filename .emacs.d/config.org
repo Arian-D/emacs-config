@@ -29,19 +29,21 @@ Just simple stuff to get the ball rolling.
 Following [[https://www.emacswiki.org/emacs/BackupDirectory][this]], I'm moving the save files to one location rather than
 cluttering the system.
 #+begin_src emacs-lisp
-(setq
-   backup-by-copying t      ; don't clobber symlinks
-   backup-directory-alist
-    '(("." . "~/.saves/"))    ; don't litter my fs tree
-   delete-old-versions t
-   kept-new-versions 6
-   kept-old-versions 2
-   version-control t)       ; use versioned backups
+  (setq
+     backup-by-copying t      ; don't clobber symlinks
+     backup-directory-alist
+      '(("." . "~/.saves/"))    ; don't litter my fs tree
+     delete-old-versions t
+     kept-new-versions 6
+     kept-old-versions 2
+     version-control t)       ; use versioned backups
 
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
+  (setq  straight-disable-native-compile t)
+
+  (setq backup-directory-alist
+	`((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+	`((".*" ,temporary-file-directory t)))
 #+end_src
 
 Emacs also creates [[https://www.emacswiki.org/emacs/LockFiles][lock files]], which are a huge pain to deal with.
@@ -1209,6 +1211,13 @@ Org mode, but for the average pleb.
 #+end_src
 
 * 🧰 Misc
+
+** EXWM
+#+begin_src emacs-lisp
+  (use-package exwm
+    :when (eq 'x (framep (selected-frame)))
+    :config (exwm-enable))
+#+end_src
 
 ** Matrix
 Ement
