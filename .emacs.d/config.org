@@ -748,9 +748,8 @@ Have you read your SICP today?
 #+begin_src emacs-lisp
   (use-package geiser)
   (use-package geiser-guile
-    :when (executable-find "guile"))
-  (use-package geiser-chez
-    :when (executable-find "scheme"))
+    :when (executable-find "guile")
+    :after geiser)
 #+end_src
 *** Common Lisp
 This is mostly for configuring Nyxt browser. I don't use CL for
