@@ -99,14 +99,15 @@ What is EMACS without the /MACroS/.
       "<leader> ;" #'comment-line
       "<leader> s" #'save-buffer
       "<leader> h v" #'describe-variable
-      "<leader> h f" #'describe-function))
+      "<leader> h f" #'describe-function
+      "<leader> h i" #'info))
     #+end_src
 
 Along with surroud
 #+begin_src emacs-lisp
-(use-package evil-surround
-  :config
-  (global-evil-surround-mode 1))
+  (use-package evil-surround
+    :config
+    (global-evil-surround-mode 1))
 #+end_src
 
 **** Collection
