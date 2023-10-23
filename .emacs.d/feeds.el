@@ -1,6 +1,5 @@
 (setq elfeed-feeds
   '(("https://nullprogram.com/feed/" blog emacs general)
-    ("https://news.ycombinator.com/rss" hn general)
     ("https://drewdevault.com/feed.xml" blog linux sway general)
     ;; Dev
     ("https://www.tweag.io/rss.xml" tweag haskell dev)

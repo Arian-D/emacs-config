@@ -1275,7 +1275,7 @@ I may be illiterate, but I still read children's books.
     :straight
     (screenshot :host github :repo "tecosaur/screenshot"))
 #+end_src
-** 📰 Elfeed
+** 📰 News
 Daily dose of rabbit holes.
 #+begin_src emacs-lisp
   (use-package nnhackernews
@@ -1285,11 +1285,11 @@ Daily dose of rabbit holes.
      (add-to-list 'gnus-secondary-select-methods '(nnhackernews "")))
 #+end_src
 
-Elfeed, which I no longer use.
+
+Elfeed
 #+begin_src emacs-lisp
   (use-package elfeed
-    :general ("C-x w"  #'elfeed)
-    :disabled
+    :general ("<leader> F"  #'elfeed)
     :config
     (let ((feeds-file (expand-file-name "feeds.el" user-emacs-directory)))
       (when (file-exists-p feeds-file)
