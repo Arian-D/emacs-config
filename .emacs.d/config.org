@@ -526,11 +526,6 @@ Use it for completion
     :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
 #+end_src
 
-And emojis
-#+begin_src emacs-lisp
-  (use-package emojify)
-#+end_src
-
 *** Battery
 Display battery in modeline.
 #+begin_src emacs-lisp
