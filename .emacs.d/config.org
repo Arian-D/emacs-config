@@ -454,17 +454,17 @@ check if they're there or not before loading them.
 
 #+begin_src emacs-lisp
   (let ((default-font "Fantasque Sans Mono")
-	(variable-font "ETBembo"))
+        (variable-font "Noto Serif"))
     (when window-system
-    (when (x-list-fonts default-font)
-      (set-face-attribute
-       'default nil
-       :family default-font
-       :height 200))
-    (when (x-list-fonts variable-font)
-      (set-face-attribute
-       'variable-pitch nil
-       :family variable-font))))
+      (when (x-list-fonts default-font)
+        (set-face-attribute
+         'default nil
+         :family default-font
+         :height 200))
+      (when (x-list-fonts variable-font)
+        (set-face-attribute
+         'variable-pitch nil
+         :family variable-font))))
 #+end_src
 
 ** 🎨Theme
