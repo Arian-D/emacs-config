@@ -472,7 +472,7 @@ Doom themes are very nice.
 #+begin_src emacs-lisp
   (use-package doom-themes
     :init
-    (load-theme 'doom-feather-dark t)
+    (load-theme 'doom-gruvbox-light t)
     (doom-themes-visual-bell-config)
     (doom-themes-org-config))
 #+end_src
