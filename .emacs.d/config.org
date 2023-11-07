@@ -441,8 +441,19 @@ Replace the default splash screen with an org buffer
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t
         inhibit-splash-screen t
-        initial-major-mode 'org-mode
-        initial-scratch-message "#+TITLE: Arian's Emacs ")
+        initial-major-mode 'org-mode)
+
+  (setq initial-scratch-message
+        (pcase-let* ((title "Emacs")
+                     (`(,month ,day ,year) (calendar-current-date))
+                     (init-time (emacs-init-time))
+                     (current-user user-login-name))
+          (string-join
+           (list (format "#+title: %s" title)
+                 (format "#+date: %d/%d/%d" month day year)
+                 (format "#+author: %s" current-user)
+                 (format "- Startup time :: %s" init-time))
+           "\n")))
 #+end_src
 
 ** 🥰 Face
