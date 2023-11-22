@@ -1243,6 +1243,14 @@ Ement
      :states '(normal visual)
      "RET" #'ement-room-list-RET))
 #+end_src
+** IRC
+#+begin_src emacs-lisp
+  (use-package erc
+    :straight (:type built-in)
+    :general
+    (erc-mode-map
+     "<leader> j" #'erc-join-channel))
+#+end_src
 ** 📒Ledger
 Crypto-bros don't look in here:
 #+begin_src emacs-lisp
