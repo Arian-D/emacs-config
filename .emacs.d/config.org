@@ -1017,6 +1017,7 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
             ("p" "🔒 Private Todo" entry (file+headline "~/Org/agenda/life.org.gpg" "💡 Thoughts") "* %?\n%T %i\n")
             ("T" "🧠 Thought" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %?\n%U %i\n")
             ("?" "❓ Question" entry (file+headline "~/Org/shared/tmp.org" "❓ Questions") "* %?\n%U %i\n")
+            ("l" "📚 Learn" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %? :learn:\n%U %i\n")
             ("i" "💡 Idea" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %? :idea:\n%U %i\n")))
     :straight (:type built-in))
 #+end_src
