@@ -679,6 +679,7 @@ lol no generics
     :when (and (executable-find "go")
                (file-executable-p "~/go/bin/gopls"))
     :after eglot
+    :custom (go-ts-mode-indent-offset tab-width)
     :config
     (add-to-list 'eglot-server-programs `(go-ts-mode . ("~/go/bin/gopls")))
     :straight (:type built-in)
