@@ -1219,6 +1219,19 @@ Org mode, but for the average pleb.
 
 * 🧰 Misc
 
+** AI
+No hope is left for me; let the llama write these org files now.
+#+begin_src emacs-lisp
+  (use-package gptel
+    :custom (gptel-backend
+             (gptel-make-openai
+              "llama-cpp"
+              :stream t
+              :protocol "http"
+              :host "localhost:8080"
+              :key nil
+              :models '("test"))))
+#+end_src
 ** EXWM
 #+begin_src emacs-lisp
   (use-package exwm
