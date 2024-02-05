@@ -537,12 +537,6 @@ Use it for completion
     :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
 #+end_src
 
-*** Battery
-Display battery in modeline.
-#+begin_src emacs-lisp
-  (display-battery-mode 1)
-#+end_src
-
 ** Shorter boolean prompt
 Instead of having to type =yes=, you can just say =y=.
 #+begin_src emacs-lisp
