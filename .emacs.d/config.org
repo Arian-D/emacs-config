@@ -666,6 +666,16 @@ AI-accelerated GPT-powered lisp???
   (use-package ess)
 #+end_src
 
+** PHP
+I get to pay the bills and you get a software vulnerable to SQL
+injections, XSS, zero safety features, and all of that is okay,
+because there are no decent debugging tools for it.
+
+#+begin_src emacs-lisp
+  (use-package php-ts-mode
+    :straight (:host github :repo "emacs-php/php-ts-mode"))
+#+end_src
+
 ** Go
 lol no generics
 #+begin_src emacs-lisp
