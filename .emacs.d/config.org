@@ -483,7 +483,7 @@ Doom themes are very nice.
 #+begin_src emacs-lisp
   (use-package doom-themes
     :init
-    (load-theme 'doom-gruvbox-light t)
+    (load-theme 'doom-dracula t)
     (doom-themes-visual-bell-config)
     (doom-themes-org-config))
 #+end_src
@@ -827,22 +827,19 @@ I'm a formal methodist.
 #+begin_src emacs-lisp
   (use-package proof-general
     :after evil
-    :config
-    (evil-define-key 'normal coq-mode-map
-      (kbd "<leader> ;") 'proof-goto-point)
-    (evil-define-key 'normal coq-mode-map
-      (kbd "<leader> n") 'proof-assert-next-command-interactive))
+    :general
+    (coq-mode-map
+     "<leader> ;" #'proof-goto-point
+     "<leader> n" #'proof-assert-next-command-interactive))
 #+end_src
 
 ** Idris
-And just when you thought I could learn useful languages.
+And just when you thought I could learn useful languages...
 #+begin_src emacs-lisp
   (use-package idris2-mode
+    :when (executable-find "idris2")
     :straight
-    (idris2-mode :type git :host github :repo "idris-community/idris2-mode")
-  
-    ;; :custom (idris-interpreter-path "idris2")
-    )
+    (:type git :host github :repo "idris-community/idris2-mode"))
 #+end_src
 ** ❄ Nix
 #+begin_src emacs-lisp
@@ -1310,7 +1307,7 @@ Daily dose of rabbit holes.
     :after gnus
     :straight (:type git :host nil :repo "https://gitawonk.com/dickmao/nnhackernews.git")
     :config
-     (add-to-list 'gnus-secondary-select-methods '(nnhackernews "")))
+    (add-to-list 'gnus-secondary-select-methods '(nnhackernews "")))
 #+end_src
 
 
@@ -1327,6 +1324,7 @@ Elfeed
 #+begin_src emacs-lisp
   (use-package gnus
     :straight (:type built-in)
+    :when (file-readable-p (file-truename "~/.authinfo.gpg"))
     :custom
     (gnus-summary-line-format "%o%U%R%z%I%(%[%f%]%) %s\n")
     (gnus-select-method '(nnimap "imap.gmail.com")))
