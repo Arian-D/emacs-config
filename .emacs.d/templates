@@ -106,8 +106,8 @@ html-mode
 html-mode tsx-ts-mode
 (tag "<" (s env) ">" r "</" (s env) ">")
 
-python-mode
-(def "def " (p "function_name") "():" n> (p "return"))
+python-mode python-ts-mode
+(def "def " (p "f") "(" (p "x") "):" n> (p "..."))
 
 hy-mode
 
