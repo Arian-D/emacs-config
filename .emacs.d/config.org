@@ -1235,11 +1235,11 @@ No hope is left for me; let the llama write these org files now.
                :endpoint "/chat/completions"
                :stream t
                :models 
-               '("codellama-70b-instruct"
+               '(
+                 "codellama-70b-instruct"
                  "pplx-7b-chat"
                  "pplx-70b-chat"
-                 "pplx-7b-online"
-                 "pplx-70b-online"))))
+                 "pplx-7b-online"))))
 #+end_src
 ** EXWM
 #+begin_src emacs-lisp
