@@ -673,6 +673,7 @@ because there are no decent debugging tools for it.
 
 #+begin_src emacs-lisp
   (use-package php-ts-mode
+    :disabled
     :straight (:host github :repo "emacs-php/php-ts-mode"))
 #+end_src
 
