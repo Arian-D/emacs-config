@@ -1481,7 +1481,10 @@ I need a fast terminal like [[https://github.com/akermu/emacs-libvterm][this]].
     :config
     (add-to-list 'eshell-modules-list 'eshell-rebind)
     :custom
-    (eshell-banner-message (shell-command-to-string "curl -s icanhazip.com")))
+    (eshell-banner-message
+     (if (executable-find "curl")
+         (shell-command-to-string "curl -s icanhazip.com")
+       (format "Hi, %s!" user-login-name))))
 #+end_src
 
 *** pcmpl-args
