@@ -9,6 +9,11 @@ It only works on the master branch of Emacs right now. Until
 I get [[./flake.nix]] to be as I want it to be, it'll break pretty much
 every time.
 
+
+#+begin_src bash
+podman load -i $(nix build .#dockerImage --print-out-paths)
+#+end_src
+
 * 🤔 Understanding this
 ** 🤓 Literate
 This configuration is [[https://en.wikipedia.org/wiki/Literate_programming][literate]], as in, the file you're reading /is/ the
