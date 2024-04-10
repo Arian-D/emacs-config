@@ -10,10 +10,6 @@ I get [[./flake.nix]] to be as I want it to be, it'll break pretty much
 every time.
 
 
-#+begin_src bash
-podman load -i $(nix build .#dockerImage --print-out-paths)
-#+end_src
-
 * 🤔 Understanding this
 ** 🤓 Literate
 This configuration is [[https://en.wikipedia.org/wiki/Literate_programming][literate]], as in, the file you're reading /is/ the
@@ -462,25 +458,20 @@ Replace the default splash screen with an org buffer
 #+end_src
 
 ** 🥰 Face
-This the default [[https://www.emacswiki.org/emacs/Face][face]]. It uses a patched version of [[https://fontlibrary.org/en/font/fantasque-sans-mono][Fantasque]] from
-[[https://github.com/ryanoasis/nerd-fonts][nerd fonts]].
-
-These fonts may not always be available, so there's [[https://www.reddit.com/r/emacs/comments/1xe7vr/check_if_font_is_available_before_setting/][a function]] to
-check if they're there or not before loading them.
+This the default [[https://www.emacswiki.org/emacs/Face][face]]. I use [[https://fontlibrary.org/en/font/fantasque-sans-mono][Fantasque]] as my font.
 
 #+begin_src emacs-lisp
   (let ((default-font "Fantasque Sans Mono")
-        (variable-font "Noto Serif"))
-    (when window-system
-      (when (x-list-fonts default-font)
-        (set-face-attribute
-         'default nil
-         :family default-font
-         :height 200))
-      (when (x-list-fonts variable-font)
-        (set-face-attribute
-         'variable-pitch nil
-         :family variable-font))))
+        (variable-font "Latin Modern Roman Unslanted"))
+    (when (x-list-fonts default-font)
+      (set-face-attribute
+       'default nil
+       :family default-font
+       :height 150)
+      (set-face-attribute
+       'variable-pitch nil
+       :family variable-font
+       :height 150)))
 #+end_src
 
 ** 🎨Theme
