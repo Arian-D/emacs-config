@@ -5,6 +5,8 @@
 (specifications->manifest
   (list "emacs-pgtk@29.3"
         ; "git"
+        "rust" "rust-cargo"
+        "rust-analyzer"
         "ripgrep"
         "bash"
         "findutils"
