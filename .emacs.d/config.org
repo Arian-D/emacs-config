@@ -479,9 +479,14 @@ Doom themes are very nice.
 #+begin_src emacs-lisp
   (use-package doom-themes
     :init
-    (load-theme 'doom-dracula t)
-    (doom-themes-visual-bell-config)
-    (doom-themes-org-config))
+    (let* ((time (decode-time (current-time)))
+           (current-hour (caddr time))
+           (dark-theme 'doom-moonlight)
+           (light-theme 'doom-oksolar-light)
+           (theme (if (>= current-hour 17) dark-theme light-theme)))
+      (load-theme theme t)
+      (doom-themes-visual-bell-config)
+      (doom-themes-org-config)))
 #+end_src
 
 ** → Modeline
