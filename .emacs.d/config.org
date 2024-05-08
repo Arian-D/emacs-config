@@ -479,14 +479,16 @@ Doom themes are very nice.
 #+begin_src emacs-lisp
   (use-package doom-themes
     :init
-    (let* ((time (decode-time (current-time)))
-           (current-hour (caddr time))
-           (dark-theme 'doom-moonlight)
-           (light-theme 'doom-oksolar-light)
-           (theme (if (>= current-hour 17) dark-theme light-theme)))
-      (load-theme theme t)
-      (doom-themes-visual-bell-config)
-      (doom-themes-org-config)))
+    (doom-themes-visual-bell-config)
+    (doom-themes-org-config))
+
+  (use-package circadian
+    :after doom-themes
+    :custom
+    (circadian-themes '(("7:00" . doom-plain)
+                        ("17:00" . doom-moonlight)))
+    :config
+    (circadian-setup))
 #+end_src
 
 ** → Modeline
