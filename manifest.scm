@@ -11,6 +11,7 @@
         "bash"
         "findutils"
         "coreutils"
+        "texlive"
         "font-fantasque-sans"
         "font-latin-modern"
         "unicode-emoji"
