@@ -1332,15 +1332,28 @@ Daily dose of rabbit holes.
 #+end_src
 
 
-Elfeed
+Newsticker
+#+begin_src emacs-lisp
+  (use-package newsticker
+    :straight (:type built-in)
+    :general
+    ("<leader> n" #'newsticker-show-news)
+    (newsticker-treeview-mode-map
+     "q" #'newsticker-treeview-quit))
+#+end_src
+
+Elfeed, which I no longer use.
 #+begin_src emacs-lisp
   (use-package elfeed
-    :general ("<leader> F"  #'elfeed)
+    :disabled
     :config
     (let ((feeds-file (expand-file-name "feeds.el" user-emacs-directory)))
       (when (file-exists-p feeds-file)
         (load-file feeds-file))))
 #+end_src
+
+
+
 ** 📧 Gnus
 #+begin_src emacs-lisp
   (use-package gnus
