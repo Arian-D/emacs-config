@@ -4,14 +4,17 @@
 
 (specifications->manifest
   (list "emacs-pgtk@29.3"
+        ;; Guix git acts weird around straight.el
         ; "git"
         "rust" "rust-cargo"
         "rust-analyzer"
         "ripgrep"
+        "fd"
         "bash"
         "findutils"
         "coreutils"
         "texlive"
+        "mpv"
         "font-fantasque-sans"
         "font-latin-modern"
         "unicode-emoji"
