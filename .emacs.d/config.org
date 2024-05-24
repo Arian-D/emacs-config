@@ -489,7 +489,7 @@ Doom themes are very nice.
   (use-package circadian
     :after doom-themes
     :custom
-    (circadian-themes '(("7:00" . doom-plain)
+    (circadian-themes '(("7:00" . doom-oksolar-light)
                         ("17:00" . doom-moonlight)))
     :config
     (circadian-setup))
