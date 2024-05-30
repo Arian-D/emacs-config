@@ -1251,7 +1251,7 @@ No hope is left for me; let the llama write these org files now.
     :when (eq 'x (framep (selected-frame)))
     :config (exwm-enable))
 #+end_src
-
+** 
 ** Matrix
 Ement
 #+begin_src emacs-lisp
@@ -1418,12 +1418,19 @@ Playing music has never been easier.
   (use-package empv
     :straight (empv :host github :repo "isamert/empv.el")
     :when (executable-find "mpv")
-    :general ("<XF86AudioPlay>" #'empv-toggle
-              "<XF86AudioPause>" #'empv-toggle
-              "C-<XF86AudioPlay>" #'empv-youtube
-              "C-<XF86AudioPause>" #'empv-youtube
-              "<XF86AudioNext>" #'empv-playlist-next
-              "<XF86AudioPrev>" #'empv-playlist-prev)
+    :general
+    ;; X11 keys
+    ("<XF86AudioPlay>" #'empv-toggle
+     "<XF86AudioPause>" #'empv-toggle
+     "C-<XF86AudioPlay>" #'empv-youtube
+     "C-<XF86AudioPause>" #'empv-youtube
+     "<XF86AudioNext>" #'empv-playlist-next
+     "<XF86AudioPrev>" #'empv-playlist-prev
+     ;; Wayland keys
+     "<AudioPause>" #'empv-toggle
+     "<AudioPlay>" #'empv-toggle
+     "C-<AudioPlay>" #'empv-youtube
+     "C-<AudioPause>" #'empv-youtube)
     :custom
     (empv-invidious-instance "https://vid.puffyan.us/api/v1"))
 #+end_src
