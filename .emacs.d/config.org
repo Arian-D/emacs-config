@@ -1418,6 +1418,8 @@ Playing music has never been easier.
   (use-package empv
     :straight (empv :host github :repo "isamert/empv.el")
     :when (executable-find "mpv")
+    :config
+    (add-to-list 'empv-mpv-args "--ytdl-format=best")
     :general
     ;; X11 keys
     ("<XF86AudioPlay>" #'empv-toggle
