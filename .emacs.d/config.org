@@ -1251,8 +1251,10 @@ No hope is left for me; let the llama write these org files now.
     :when (eq 'x (framep (selected-frame)))
     :config (exwm-enable))
 #+end_src
-** 
-** Matrix
+** 💌 Messaging
+# TODO: Add a function to check which is running and make the
+# <Messenger> key behave accordingly.
+*** Matrix
 Ement
 #+begin_src emacs-lisp
   (use-package ement
@@ -1270,14 +1272,17 @@ Ement
      :states '(normal visual)
      "RET" #'ement-room-list-RET))
 #+end_src
-** IRC
+
+*** IRC
 #+begin_src emacs-lisp
   (use-package erc
     :straight (:type built-in)
     :general
+    ("<Messenger>" #'erc-switch-to-buffer)
     (erc-mode-map
      "<leader> j" #'erc-join-channel))
 #+end_src
+
 ** 📒Ledger
 Crypto-bros don't look in here:
 #+begin_src emacs-lisp
