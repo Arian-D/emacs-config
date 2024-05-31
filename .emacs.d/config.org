@@ -1432,14 +1432,7 @@ Playing music has never been easier.
      "C-<AudioPlay>" #'empv-youtube
      "C-<AudioPause>" #'empv-youtube)
     :custom
-    (empv-invidious-instance "https://vid.puffyan.us/api/v1"))
-#+end_src
-
-** Terminal
-I need a fast terminal like [[https://github.com/akermu/emacs-libvterm][this]].
-#+begin_src emacs-lisp
-    (use-package vterm
-      :disabled)
+    (empv-invidious-instance "https://inv.tux.pizza/api/v1"))
 #+end_src
 
 ** Shell
@@ -1498,10 +1491,16 @@ I need a fast terminal like [[https://github.com/akermu/emacs-libvterm][this]].
 *** Eat
 #+begin_src emacs-lisp
   (use-package eat
-    :disabled
     :unless (version< emacs-version "28.1")
     :hook ((eshell-load . eat-eshell-mode)
-           (eshell-load . eat-eshell-visual-command-mode))
+           (eshell-load . eat-eshell-visual-command-mode)
+           (eat-mode . (lambda ()
+                         (when (featurep 'evil)
+                           (call-interactively #'evil-insert)))))
+    :custom (eat-kill-buffer-on-exit t)
+    :general (eat-mode-map
+              :states '(insert)
+              "C-d" #'eat-kill-process)
     :straight
     (eat :type git
          :host codeberg
