@@ -1228,6 +1228,27 @@ Org mode, but for the average pleb.
   (use-package ox-hugo)
 #+end_src
 
+** Spell
+Dis seams two bee grate.
+#+begin_src emacs-lisp
+  (use-package ispell
+    :straight (:type built-in)
+    :when (executable-find "hunspell")
+    :custom
+    (ispell-program-name "hunspell")
+    (ispell-dictionary "en_US"))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package flyspell
+    :straight (:type built-in)
+    :after ispell
+    :hook
+    (org-mode . flyspell-mode)
+    (markdown-mode . flyspell-mode))
+#+end_src
+
+
 * 🧰 Misc
 
 ** AI
@@ -1334,8 +1355,7 @@ I may be illiterate, but I still read children's books.
     (elfeed-feeds
      '("https://arian-d.github.io/blog/index.xml"
        "https://nullprogram.com/feed/"
-       "https://karthinks.com/index.xml"
-       "https://www.phoronix.com/phoronix-rss.php")))
+       "https://karthinks.com/index.xml")))
 #+end_src
 
 ** 📧 Gnus
@@ -1470,7 +1490,7 @@ Playing music has never been easier.
   (use-package eshell
     :after evil
     :general
-    ("<leader> e" #'eshell)
+    ("<leader> E" #'eshell)
     ;; (eshell-mode-map
     ;;  "C-d" #'eshell/exit)
     :config
@@ -1505,9 +1525,11 @@ Playing music has never been easier.
                          (when (featurep 'evil)
                            (call-interactively #'evil-insert)))))
     :custom (eat-kill-buffer-on-exit t)
-    :general (eat-mode-map
-              :states '(insert)
-              "C-d" #'eat-kill-process)
+    :general
+    ("<leader> e" #'eat)
+    (eat-mode-map
+     :states '(insert)
+     "C-d" #'eat-kill-process)
     :straight
     (eat :type git
          :host codeberg

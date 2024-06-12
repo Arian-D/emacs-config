@@ -14,6 +14,8 @@
         "findutils"
         "coreutils"
         "texlive"
+        "hunspell"
+        "hunspell-dict-en-us"
         "mpv"
         "font-fantasque-sans"
         "font-latin-modern"
