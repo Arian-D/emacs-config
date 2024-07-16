@@ -1301,6 +1301,7 @@ Ement
 #+end_src
 
 *** IRC
+- [[info:erc][ERC info page]]
 #+begin_src emacs-lisp
   (use-package erc
     :straight (:type built-in)
@@ -1311,8 +1312,25 @@ Ement
 
   (use-package erc-desktop-notifications
     :straight (:type built-in)
+    :after erc
     :config
-    (add-to-list 'erc-modules 'desktop-notifications))
+    (add-to-list 'erc-modules 'notifications))
+
+  (use-package erc-join
+    :straight (:type built-in)
+    :after erc
+    :custom
+    (erc-autojoin-channels-alist
+     '((Libera.Chat
+        "#gentoo"
+        "#freebsd"
+        "#emacs"
+        "#org-mode"
+        "##tech-tangents")))
+    :config
+    (add-to-list 'erc-modules 'join))
+
+
 #+end_src
 
 ** 📒Ledger
