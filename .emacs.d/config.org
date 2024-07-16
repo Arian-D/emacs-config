@@ -1023,7 +1023,7 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
           '(("t"
              "✅ Todo"
              entry
-             (file+headline "~/Org/shared/tasks.org" "🤔 Tasks") "** TODO %?\nDEADLINE: %t %i\n"
+             (file+headline "~/Org/shared/tasks.org" "🤔 Tasks") "** TODO %?\n%T\n %i\n"
              :empty-lines 1)
             ("p" "🔒 Private Todo" entry (file+headline "~/Org/agenda/life.org.gpg" "💡 Thoughts") "* %?\n%T %i\n")
             ("T" "🧠 Thought" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %?\n%U %i\n")
@@ -1067,7 +1067,6 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
     ;; Hide useless stuff
     (org-agenda-skip-scheduled-if-done t)
     (org-agenda-skip-timestamp-if-done t)
-    (org-agenda-remove-tags t)
     (org-agenda-skip-deadline-if-done t)
     (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
     (org-log-done 'time))
