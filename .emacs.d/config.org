@@ -1302,6 +1302,11 @@ Ement
     ("<Messenger>" #'erc-switch-to-buffer)
     (erc-mode-map
      "<leader> j" #'erc-join-channel))
+
+  (use-package erc-desktop-notifications
+    :straight (:type built-in)
+    :config
+    (add-to-list 'erc-modules 'desktop-notifications))
 #+end_src
 
 ** 📒Ledger
