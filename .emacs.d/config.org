@@ -1258,13 +1258,20 @@ No hope is left for me; let the llama write these org files now.
     :general
     (gptel-mode-map
      "<leader> SPC" #'gptel-send)
+    :hook (gptel-post-stream-hook . gptel-auto-scroll)
     :config
-    (unless (string-empty-p (shell-command-to-string "pgrep ollama"))
-      (setq gptel-backend
-            (gptel-make-ollama "Ollama"
-              :host "localhost:11434"
-              :stream t
-              :models '("dolphin-llama3:8b" "dolphin-llama3:70b")))))
+    (setq gptel-backend
+          (cond ((not (string-empty-p (shell-command-to-string "pgrep ollama")))
+                 (gptel-make-ollama "Ollama"
+                   :host "localhost:11434"
+                   :stream t
+                   :models '("dolphin-llama3:256k")))
+                ((not (string-empty-p (shell-command-to-string "pgrep llama-server")))
+                 (gptel-make-openai "llama-cpp"          ;Any name
+                   :stream t                             ;Stream responses
+                   :protocol "http"
+                   :host "localhost:8080"                ;Llama.cpp server location
+                   :models nil)))))
 #+end_src
 ** EXWM
 #+begin_src emacs-lisp
