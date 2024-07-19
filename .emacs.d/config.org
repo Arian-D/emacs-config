@@ -1305,6 +1305,9 @@ Ement
 #+begin_src emacs-lisp
   (use-package erc
     :straight (:type built-in)
+    :custom
+    (erc-prompt "💻 →")
+    (erc-join-buffer 'buffer)
     :general
     ("<Messenger>" #'erc-switch-to-buffer)
     (erc-mode-map
@@ -1325,12 +1328,12 @@ Ement
         "#gentoo"
         "#freebsd"
         "#emacs"
+        "#erc"
+        "#guix"
         "#org-mode"
         "##tech-tangents")))
     :config
-    (add-to-list 'erc-modules 'join))
-
-
+    (add-to-list 'erc-modules 'autojoin))
 #+end_src
 
 ** 📒Ledger
