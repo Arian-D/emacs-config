@@ -3,7 +3,7 @@
 ;; that accepts a '--manifest' (or '-m') option.
 
 (specifications->manifest
-  (list "emacs-pgtk@29.3"
+  (list "emacs-pgtk@29.4"
         ;; Guix git acts weird around straight.el
         ; "git"
         "rust" "rust-cargo"
