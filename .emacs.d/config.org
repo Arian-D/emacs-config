@@ -1304,12 +1304,14 @@ Ement
   #+begin_src emacs-lisp
     (use-package rcirc
       :straight (:type built-in)
+      :custom
+      (rcirc-prompt "→ ")
       :config
-      (let* ((host "irc.libera.net")
-             (matches (auth-source-search :host host))
-             (libera (car matches))
-             (username (plist-get libera :user))
-             (pass-function (plist-get libera :secret)))
+      (when-let* ((host "irc.libera.net")
+                  (matches (auth-source-search :host host))
+                  (libera (car matches))
+                  (username (plist-get libera :user))
+                  (pass-function (plist-get libera :secret)))
         (setopt rcirc-server-alist
                 `(("irc.libera.chat"
                    :channels ("##tech-tangents")
