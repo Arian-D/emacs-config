@@ -1279,63 +1279,55 @@ No hope is left for me; let the llama write these org files now.
     :config (exwm-enable))
 #+end_src
 ** 💌 Messaging
-# TODO: Add a function to check which is running and make the
-# <Messenger> key behave accordingly.
 *** Matrix
 Ement
 #+begin_src emacs-lisp
-  (use-package ement
-    :straight (:host github :repo "alphapapa/ement.el")
-    :general
-    (ement-room-mode-map
-     :states '(normal visual)
-     "RET" #'ement-room-send-message
-     "j" #'ement-room-goto-next
-     "k" #'ement-room-goto-prev
-     "q" #'quit-window
-     "r" #'ement-notify-reply
-     "e" #'ement-room-send-reaction)
-    (ement-room-list-mode-map
-     :states '(normal visual)
-     "RET" #'ement-room-list-RET))
+   (use-package ement
+     :straight (:host github :repo "alphapapa/ement.el")
+     :general
+     (ement-room-mode-map
+      :states '(normal visual)
+      "RET" #'ement-room-send-message
+      "j" #'ement-room-goto-next
+      "k" #'ement-room-goto-prev
+      "q" #'quit-window
+      "r" #'ement-notify-reply
+      "e" #'ement-room-send-reaction
+      "<Messenger>" #'ement-room-view)
+     (ement-room-list-mode-map
+      :states '(normal visual)
+      "RET" #'ement-room-list-RET))
 #+end_src
 
 *** IRC
-- [[info:erc][ERC info page]]
+- [[info:rcirc][RcIRC info page]]
+  #+begin_src emacs-lisp
+    (use-package rcirc
+      :straight (:type built-in)
+      :config
+      (let* ((host "irc.libera.net")
+             (matches (auth-source-search :host host))
+             (libera (car matches))
+             (username (plist-get libera :user))
+             (pass-function (plist-get libera :secret)))
+        (setopt rcirc-server-alist
+                `(("irc.libera.chat"
+                   :channels ("##tech-tangents")
+                   :port 6697
+                   :nick ,username
+                   :user-name ,username
+                   :full-name ,username
+                   :password ,(funcall pass-function)
+                   :encryption tls))))
+      :hook (rcirc-mode . (lambda ()
+                            (rcirc-track-minor-mode 1))))
+  #+end_src
+
+
+*** TODO XMPP
 #+begin_src emacs-lisp
-  (use-package erc
-    :straight (:type built-in)
-    :custom
-    (erc-prompt "💻 →")
-    (erc-join-buffer 'buffer)
-    :general
-    ("<Messenger>" #'erc-switch-to-buffer)
-    (erc-mode-map
-     "<leader> j" #'erc-join-channel))
-
-  (use-package erc-desktop-notifications
-    :straight (:type built-in)
-    :after erc
-    :config
-    (add-to-list 'erc-modules 'notifications))
-
-  (use-package erc-join
-    :straight (:type built-in)
-    :after erc
-    :custom
-    (erc-autojoin-channels-alist
-     '((Libera.Chat
-        "#gentoo"
-        "#freebsd"
-        "#emacs"
-        "#erc"
-        "#guix"
-        "#org-mode"
-        "##tech-tangents")))
-    :config
-    (add-to-list 'erc-modules 'autojoin))
+  ;; (use-package jabber)
 #+end_src
-
 ** 📒Ledger
 Crypto-bros don't look in here:
 #+begin_src emacs-lisp
