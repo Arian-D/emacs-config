@@ -539,6 +539,12 @@ Instead of having to type =yes=, you can just say =y=.
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
+
+** Hide GTK window decoration in River
+As advised [[https://codeberg.org/river/wiki#woraround-for-emacs][here]],
+#+begin_src emacs-lisp
+(setopt default-frame-alist '((undecorated . t)))
+#+end_src
 * 💻 Development
 Afterall, Emacs is a text editor.
 
