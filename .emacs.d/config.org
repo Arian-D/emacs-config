@@ -1475,7 +1475,7 @@ Playing music has never been easier.
      "C-<AudioPlay>" #'empv-youtube
      "C-<AudioPause>" #'empv-youtube)
     :custom
-    (empv-invidious-instance "https://inv.tux.pizza/api/v1"))
+    (empv-invidious-instance "https://invidious.incogniweb.net/api/v1"))
 #+end_src
 
 ** Shell
