@@ -1360,7 +1360,8 @@ I may be illiterate, but I still read children's books.
     (elfeed-feeds
      '("https://arian-d.github.io/blog/index.xml"
        "https://nullprogram.com/feed/"
-       "https://karthinks.com/index.xml")))
+       "https://karthinks.com/index.xml"
+       "https://defcon.org/defconrss.xml")))
 #+end_src
 
 ** 📧 Gnus
