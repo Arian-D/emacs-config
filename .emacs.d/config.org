@@ -81,12 +81,14 @@ it's made for Emacs.
 ** ⌨ Keys
 What is EMACS without the /MACroS/.
 *** General
+- [[https://github.com/noctuid/general.el][GitHub Repo]]
 #+begin_src emacs-lisp
   (use-package general)
 #+end_src
 *** 😈 Evil
-[[https://github.com/emacs-evil/evil][Evil]], along with some cool keybindings.
-- [[https://evil.readthedocs.io/en/latest/overview.html][docs]] 
+- [[https://evil.readthedocs.io/en/latest/overview.html][Online docs]]
+- [[info:evil][Info]]
+- [[https://github.com/emacs-evil/evil][GitHub Repo]]
 #+begin_src emacs-lisp
   (use-package evil
     :unless (version< emacs-version "24.3")
@@ -126,8 +128,7 @@ Along with surroud
 #+end_src
 
 *** Which key
-[[https://github.com/justbur/emacs-which-key][Which-key]] tells me which key to press... hehe
-
+- [[https://github.com/justbur/emacs-which-key][GitHub Repo]] (will soon be included in Emacs)
 #+begin_src emacs-lisp
   (use-package which-key
     :config
@@ -136,9 +137,7 @@ Along with surroud
 #+end_src
 
 ** 🔄 Server
-This turns on the server so that there would only be one instance of
-Emacs running.
-- [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html][The docs]] 
+- [[info:emacs#Emacs Server][Info]] 
 #+begin_src emacs-lisp
   (use-package server
     :config
@@ -150,14 +149,6 @@ Emacs running.
 Rather than cluttering the ~init.el~ file, this uses a separte file for customs.
 #+begin_src emacs-lisp
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-#+end_src
-
-** 📱 Notification
-#+begin_src emacs-lisp
-  (use-package alert
-    :disabled
-    :custom
-    (alert-default-style 'notifications))
 #+end_src
 
 ** 💔 Completion
@@ -433,13 +424,11 @@ The main source of security
                    (expand-file-name ".authinfo.gpg" (getenv "HOME")))))
 #+end_src
 
-** ⚠ Inhibit warnings
-Emacs on master gives too many warnings for a bunch of packages, which
-we can disable:
+** Garbage collection
+Run garbage collection when idle.
 #+begin_src emacs-lisp
-  ;; (setq byte-compile-warnings nil)
+  (run-with-idle-timer (* 60 10) t #'garbage-collect)
 #+end_src
-
 * 🌈 Appearance
 ** ⃢ Splash screen
 Replace the default splash screen with an org buffer
