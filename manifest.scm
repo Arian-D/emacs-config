@@ -1,11 +1,12 @@
-;; What follows is a "manifest" equivalent to the command line you gave.
-;; You can store it in a file that you may then pass to any 'guix' command
-;; that accepts a '--manifest' (or '-m') option.
+#! /usr/bin/env -S sh -c 'guix shell -m "$0" -- emacs'
+!#
 
 (specifications->manifest
   (list "emacs-pgtk@29.4"
         ;; Guix git acts weird around straight.el
         ; "git"
+        "guix"
+        "guile-next"
         "rust" "rust-cargo"
         "rust-analyzer"
         "ripgrep"
@@ -16,7 +17,8 @@
         "texlive"
         "hunspell"
         "hunspell-dict-en-us"
-        "mpv"
+        "sicp"
+        "mpv" "yt-dlp"
         "font-fantasque-sans"
         "font-latin-modern"
         "unicode-emoji"
