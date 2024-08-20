@@ -102,12 +102,14 @@ What is EMACS without the /MACroS/.
     (unless (version< emacs-version "28")
       (setq evil-undo-system 'undo-redo))
     (evil-set-leader '(normal visual) (kbd "SPC"))
-    (general-def "<leader> q" #'kill-current-buffer
-      "<leader> ;" #'comment-line
-      "<leader> s" #'save-buffer
-      "<leader> h v" #'describe-variable
-      "<leader> h f" #'describe-function
-      "<leader> h i" #'info))
+    (general-def
+      :prefix "<leader>"
+      "q" #'kill-current-buffer
+      ";" #'comment-line
+      "s" #'save-buffer
+      "h v" #'describe-variable
+      "h f" #'describe-function
+      "h i" #'info))
     #+end_src
 
 Along with surroud
