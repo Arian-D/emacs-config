@@ -612,22 +612,11 @@ I use [[https://github.com/ajc/nginx-mode][this]] to edit nginx config files
     :straight
     (nginx-mode :host github :repo "ajc/nginx-mode"))
 #+end_src
-** Projectile
+** Project.el
 #+begin_src emacs-lisp
-  (use-package projectile
-    :hook (after-init . projectile-mode)
-    :general ("<leader> p" #'projectile-command-map)
-    :config
-    (setq projectile-project-search-path '("~/src/universe")
-          projectile-auto-discover nil
-          projectile-completion-system 'auto))
-#+end_src
-and counsel
-#+begin_src emacs-lisp
-  (use-package counsel-projectile
-    :disabled
-    :after (counsel projectile)
-    :config (counsel-projectile-mode))
+  (use-package project
+    :straight (:type built-in)
+    :general ("<leader> p" '(:keymap project-prefix-map)))
 #+end_src
 
 ** LSP
