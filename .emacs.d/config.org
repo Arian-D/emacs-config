@@ -1298,14 +1298,13 @@ Ement
       :custom
       (rcirc-prompt "→ ")
       :config
-      (when-let* ((host "irc.libera.net")
+      (when-let* ((host "10.0.0.1")
                   (matches (auth-source-search :host host))
                   (libera (car matches))
                   (username (plist-get libera :user))
                   (pass-function (plist-get libera :secret)))
         (setopt rcirc-server-alist
-                `(("irc.libera.chat"
-                   :channels ("##tech-tangents")
+                `((,host
                    :port 6697
                    :nick ,username
                    :user-name ,username
