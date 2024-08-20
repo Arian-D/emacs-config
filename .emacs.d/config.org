@@ -616,7 +616,9 @@ I use [[https://github.com/ajc/nginx-mode][this]] to edit nginx config files
 #+begin_src emacs-lisp
   (use-package project
     :straight (:type built-in)
-    :general ("<leader> p" '(:keymap project-prefix-map)))
+    :general
+    (project-prefix-map "e" #'eat-project)
+    ("<leader> p" '(:keymap project-prefix-map)))
 #+end_src
 
 ** LSP
