@@ -920,7 +920,6 @@ This is the core config.
     (org-directory "~/Org")
       ;;; Cute lil rice
     (org-startup-with-inline-images t)
-    (org-todo-keywords '((sequence "TODO" "IN-PROGRESS" "|" "DONE")))
     ;; (org-hidden-keywords '(title author email date))
     (org-highlight-latex-and-related '(native))
     (org-startup-with-latex-preview 't)
