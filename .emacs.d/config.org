@@ -5,12 +5,13 @@
 This config has grown over the years, and it will continue to
 grow. Feel free to look around.
 
-To run, it'd be something along the lines of
+To run, it'd be something along the lines of this (on Linux and BSD):
 #+begin_src bash
-emacs_dir="$HOME/src/emacs-config"
-guix shell -m $emacs_dir/manifest.scm \
-        -- \
-        emacs --init-directory=$emacs_dir/.emacs.d
+  # Symlink
+  ln -s $PWD/.emacs.d $HOME
+
+  # Run
+  $PWD/manifest.scm
 #+end_src
 
 
