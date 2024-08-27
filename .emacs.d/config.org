@@ -1099,24 +1099,18 @@ Org-roam might actually help me be able to think eventually
     :custom
     (org-roam-directory (file-truename "~/roam"))
     :general
-    ("<leader> r f" #'org-roam-node-find
-     "<leader> r s" #'org-roam-search
-     "<leader> r c" #'org-roam-dailies-capture-today
-     "<leader> r i" #'org-roam-node-insert)
+    (:prefix "<leader> r"
+     "f" #'org-roam-node-find
+     "S" #'org-roam-search
+     "c" #'org-roam-dailies-capture-today
+     "i" #'org-roam-node-insert)
     :config
-    (setq
+    (setopt
      ;; Default template for new nodes
      org-roam-capture-templates
      '(("d" "default" plain "#+description: %?" :target
         (file+head "${slug}.org" "#+title: ${title}\n")
-        :unnarrowed t))
-
-     ;; Default template for new dailies
-     org-roam-dailies-capture-templates
-     '(("d" "default" entry "* %?\n%U" :target
-        (file+head "%<%Y-%m-%d>.org" "#+title: Daily %<%Y-%m-%d>\n")
         :unnarrowed t)))
-
     ;; Start Auto-sync
     (org-roam-db-autosync-mode))
 #+end_src
