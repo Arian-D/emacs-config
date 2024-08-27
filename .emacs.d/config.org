@@ -1237,6 +1237,8 @@ Dis seams two bee grate.
   (use-package org-crypt
     :after org
     :straight (:type built-in)
+    :custom
+    (org-crypt-key "93E295F479D4280F3CBC16930DA657E4DB2EB03B")
     :config
     (org-crypt-use-before-save-magic))
 #+end_src
