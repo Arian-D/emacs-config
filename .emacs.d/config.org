@@ -1236,6 +1236,17 @@ Dis seams two bee grate.
 #+end_src
 
 
+
+** Encryption
+- [[info:Org#org-crypt][Info page]] 
+#+begin_src emacs-lisp
+  (use-package org-crypt
+    :after org
+    :straight (:type built-in)
+    :config
+    (org-crypt-use-before-save-magic))
+#+end_src
+
 * 🧰 Misc
 
 ** AI
