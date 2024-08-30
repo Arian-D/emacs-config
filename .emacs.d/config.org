@@ -1376,7 +1376,8 @@ I may be illiterate, but I still read children's books.
      '("https://arian-d.github.io/blog/index.xml"
        "https://nullprogram.com/feed/"
        "https://karthinks.com/index.xml"
-       "https://defcon.org/defconrss.xml")))
+       "https://defcon.org/defconrss.xml"
+       "https://undeadly.org/cgi?action=rss")))
 #+end_src
 
 ** 📧 Gnus
