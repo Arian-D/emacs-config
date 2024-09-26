@@ -1253,6 +1253,7 @@ No hope is left for me; let the llama write these org files now.
     (gptel-mode-map
      "<leader> SPC" #'gptel-send)
     :hook (gptel-post-stream-hook . gptel-auto-scroll)
+    :custom (gptel-default-mode #'org-mode)
     :config
     (setq gptel-backend
           (cond ((not (string-empty-p (shell-command-to-string "pgrep ollama")))
@@ -1265,8 +1266,10 @@ No hope is left for me; let the llama write these org files now.
                    :stream t                             ;Stream responses
                    :protocol "http"
                    :host "localhost:8080"                ;Llama.cpp server location
-                   :models nil)))))
+                   :models nil))
+                )))
 #+end_src
+
 ** EXWM
 #+begin_src emacs-lisp
   (use-package exwm
@@ -1377,7 +1380,8 @@ I may be illiterate, but I still read children's books.
        "https://nullprogram.com/feed/"
        "https://karthinks.com/index.xml"
        "https://defcon.org/defconrss.xml"
-       "https://undeadly.org/cgi?action=rss")))
+       "https://undeadly.org/cgi?action=rss"
+       "https://www.evilsocket.net/atom.xml")))
 #+end_src
 
 ** 📧 Gnus
@@ -1563,6 +1567,20 @@ Playing music has never been easier.
                  (:exclude ".dir-locals.el" "*-tests.el"))))
 #+end_src
 
+
+
+** OSM
+#+begin_src emacs-lisp
+  (use-package osm)
+#+end_src
+** Helpers
+#+begin_src emacs-lisp
+  (defun 🎲 ()
+    "Roll a die"
+    (interactive)
+    (princ 
+     (seq-random-elt '(⚀ ⚁ ⚂ ⚃ ⚄ ⚅))))
+#+end_src
 * My content
 #+begin_src emacs-lisp
   (defun edit-my-config (&optional config)
