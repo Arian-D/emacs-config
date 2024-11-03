@@ -281,11 +281,11 @@ eyes wouldn't focus the bottom of the window.
     ;; :preview-key on a per-command basis using the `consult-customize' macro.
     (consult-customize
      consult-theme
-     :preview-key '(:debounce 0.2 any)
      consult-ripgrep consult-git-grep consult-grep
      consult-bookmark consult-recent-file consult-xref
      consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
-     :preview-key "M-.")
+     :preview-key '(:debounce 0.2 any)
+     )
 
     ;; Optionally configure the narrowing key.
     ;; Both < and C-+ work reasonably well.
@@ -1299,7 +1299,7 @@ Ement
       :custom
       (rcirc-prompt "→ ")
       :config
-      (when-let* ((host "10.0.0.1")
+      (when-let* ((host "172.16.6.1")
                   (matches (auth-source-search :host host))
                   (libera (car matches))
                   (username (plist-get libera :user))
@@ -1315,7 +1315,7 @@ Ement
       :hook (rcirc-mode . (lambda ()
                             (rcirc-track-minor-mode 1))))
   #+end_src
-
+  
 
 *** TODO XMPP
 #+begin_src emacs-lisp
