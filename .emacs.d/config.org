@@ -886,6 +886,7 @@ text fonts intermix. I love it <3.
      ("=>" . "⇒")
      (":ID:" . "")
      (":PROPERTIES:" . " ")
+     (":CREATED:" . "⏲")
      (":END:" . " ")
      (":ROAM_REFS:" . "🔗")
      (":LOCATION:" . "")))
@@ -1102,8 +1103,12 @@ Org-roam might actually help me be able to think eventually
     (setopt
      ;; Default template for new nodes
      org-roam-capture-templates
-     '(("d" "default" plain "#+description: %?" :target
-        (file+head "${slug}.org" "#+title: ${title}\n")
+     '(("d" "default" plain "- Description :: %?" :target
+        (file+head "${slug}.org" "
+  :PROPERTIES:
+  :CREATED: %T
+  :END:
+  ,#+title: ${title}\n")
         :unnarrowed t)))
     ;; Start Auto-sync
     (org-roam-db-autosync-mode))
