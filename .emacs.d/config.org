@@ -1072,7 +1072,8 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
     (org-agenda-skip-timestamp-if-done t)
     (org-agenda-skip-deadline-if-done t)
     (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
-    (org-log-done 'time))
+    (org-log-done 'time)
+    :hook (after-init . org-agenda-list))
 #+end_src
 
 ** EDNA
