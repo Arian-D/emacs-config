@@ -509,13 +509,6 @@ To hide it occasionally, we can use [[https://github.com/hlissner/emacs-hide-mod
 
 *** Pwettify
 As you see, this package requires ~all-the-icons~ for pretty icons.
-#+begin_src emacs-lisp
-  (use-package all-the-icons
-    :when (display-graphic-p)
-    :init
-    (unless (file-readable-p "~/.local/share/fonts/all-the-icons.ttf")
-      (all-the-icons-install-fonts)))
-#+end_src
 
 #+begin_src emacs-lisp
   (use-package nerd-icons
@@ -524,17 +517,18 @@ As you see, this package requires ~all-the-icons~ for pretty icons.
 
 Use it for dired
 #+begin_src emacs-lisp
-  (use-package all-the-icons-dired
-    :after all-the-icons
-    :hook (dired-mode . all-the-icons-dired-mode))
+  (use-package nerd-icons-dired
+    :after nerd-icons
+    :hook (dired-mode . nerd-icons-dired-mode))
 #+end_src
 
 Use it for completion
 #+begin_src emacs-lisp
-  (use-package all-the-icons-completion
-    :after all-the-icons
-    :init (all-the-icons-completion-mode)
-    :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
+  (use-package nerd-icons-completion
+    :after (nerd-icons marginalia)
+    :config
+    (nerd-icons-completion-mode)
+    :hook (marginalia-mode . nerd-icons-completion-marginalia-setup))
 #+end_src
 
 ** Shorter boolean prompt
