@@ -1500,6 +1500,8 @@ Playing music has never been easier.
      ;; Wayland keys
      "<AudioPause>" #'empv-toggle
      "<AudioPlay>" #'empv-toggle
+     "<AudioNext>" #'empv-playlist-next
+     "<AudioPrev>" #'empv-playlist-prev
      "C-<AudioPlay>" #'empv-youtube
      "C-<AudioPause>" #'empv-youtube)
     :custom
