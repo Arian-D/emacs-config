@@ -1608,6 +1608,31 @@ Playing music has never been easier.
     (princ 
      (seq-random-elt '(⚀ ⚁ ⚂ ⚃ ⚄ ⚅))))
 #+end_src
+** Battery notification
+Run a timer every minute to check if the battery is low.
+#+begin_src emacs-lisp
+  (require 'notifications)
+  (require 'battery)
+
+  (defun notify--low-battery ()
+    "Notify if the battery is below `battery-load-low'"
+    (let* ((battery-status (funcall battery-status-function))
+           (percentage (string-to-number (battery-format "%p" battery-status)))
+           (time-left (battery-format "%t" battery-status))
+           (discharge-status (battery-format "%b" battery-status)))
+      (when (and
+             (or (equal discharge-status "-") (equal discharge-status "!"))
+             (< percentage battery-load-low))
+        (notifications-notify
+         :title "🪫"
+         :body (format "You have %s left." time-left)
+         :urgency (if (< percentage battery-load-critical) "critical" "low")))))
+
+  (notify--low-battery)
+
+  (run-with-timer 0 60
+                  #'notify--low-battery)
+#+end_src
 * My content
 #+begin_src emacs-lisp
   (defun edit-my-config (&optional config)
