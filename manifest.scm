@@ -21,8 +21,8 @@
         "sicp"
         "sbcl"
         "swi-prolog"
-        "mpv" "yt-dlp"
         "font-fantasque-sans"
+        "font-iosevka"
         "font-latin-modern"
         "unicode-emoji"
         "fontconfig"))
