@@ -453,11 +453,12 @@ Replace the default splash screen with an org buffer
            "\n")))
 #+end_src
 
-** 🥰 Face
-This the default [[https://www.emacswiki.org/emacs/Face][face]]. I use [[https://fontlibrary.org/en/font/fantasque-sans-mono][Fantasque]] as my font.
+** ✍ Face and Fonts
+- This the default [[info:emacs#Faces][face]].
+- I use Iosevka Term and Latin Modern (LaTeX-esque font)
 
 #+begin_src emacs-lisp
-  (let ((default-font "Fantasque Sans Mono")
+  (let ((default-font "Iosevka Term")
         (variable-font "Latin Modern Roman Unslanted"))
     (when (x-list-fonts default-font)
       (set-face-attribute
