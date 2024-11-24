@@ -1338,8 +1338,10 @@ Ement
                    :full-name ,username
                    :password ,(funcall pass-function)
                    :encryption tls))))
-      :hook (rcirc-mode . (lambda ()
-                            (rcirc-track-minor-mode 1))))
+      :hook
+      (rcirc-mode . (lambda ()
+                            (rcirc-track-minor-mode 1)))
+      (rcirc-mode . evil-normal-state))
   #+end_src
   
 
