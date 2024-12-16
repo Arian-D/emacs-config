@@ -234,7 +234,7 @@ eyes wouldn't focus the bottom of the window.
 #+end_src
 
 *** Consult
-[[https://github.com/minad/consult][consult]] is for nicer completing.
+[[https://github.com/minad/consult][consult]] is for nicer completion.
 #+begin_src emacs-lisp
   (use-package consult
     :general 
@@ -692,13 +692,12 @@ lol no generics
 
 #+begin_src emacs-lisp
   (use-package elixir-ts-mode
-    :when (and (featurep 'elixir-ts-mode)
-               (executable-find "elixir-ls"))
-    :straight (:type built-in)
+    :straight (:host github :repo "wkirschbaum/elixir-ts-mode")
     :mode ((rx (or ".ex" ".exs") string-end) . elixir-ts-mode)
     :hook (elixir-ts-mode . eglot-ensure)
-    :config
-    (add-to-list 'eglot-server-programs `(elixir-ts-mode . ("elixir-ls"))))
+    ;; :config
+    ;; (add-to-list 'eglot-server-programs `(elixir-ts-mode . ("elixir-ls")))
+    )
 #+end_src
 
 ** Python
@@ -1158,14 +1157,14 @@ This is a really nice web UI for org-roam.
 [[https://github.com/minad/org-modern][Org-modern]] makes org easier on the eyes.
 
 #+begin_src emacs-lisp
-  (use-package org-modern
-    :straight
-    (:host github :repo "minad/org-modern")
-    :hook
-    (org-mode . org-modern-mode)
-    (org-agenda-finalize . org-modern-agenda)
-    :custom
-    (org-modern-hide-stars t))
+   (use-package org-modern
+     :straight
+     (:host github :repo "minad/org-modern")
+     :hook
+     (org-mode . org-modern-mode)
+     (org-agenda-finalize . org-modern-agenda)
+     :custom
+     (org-modern-hide-stars t))
 #+end_src
 
 Along with this, [[https://github.com/jdtsmith/org-modern-indent][org-modern-indent]] is also a nice complementary
