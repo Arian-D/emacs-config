@@ -459,7 +459,7 @@ Replace the default splash screen with an org buffer
 
 #+begin_src emacs-lisp
   (let ((default-font "Iosevka Term")
-        (variable-font "Latin Modern Roman Unslanted"))
+        (variable-font "Latin Modern Roman dunhill"))
     (when (x-list-fonts default-font)
       (set-face-attribute
        'default nil
