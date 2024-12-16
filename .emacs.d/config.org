@@ -881,6 +881,12 @@ Ugh.
   (use-package ebuild-mode)
 #+end_src
 
+
+** Zig
+#+begin_src emacs-lisp
+(use-package zig-ts-mode
+  :straight (:host codeberg :repo "meow_king/zig-ts-mode"))
+#+end_src
 ** TODO LaTeX
 Soon...
 #+begin_src emacs-lisp
