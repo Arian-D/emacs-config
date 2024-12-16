@@ -1381,6 +1381,15 @@ I may be illiterate, but I still read children's books.
   (use-package pdf-tools)
 #+end_src
 
+
+*** RFC
+- https://github.com/galdor/rfc-mode
+
+
+#+begin_src emacs-lisp
+  (use-package rfc-mode
+    :straight (:host github :repo "galdor/rfc-mode"))
+#+end_src
 ** 📸 Pwetty screenshots
 #+begin_src emacs-lisp
   (use-package screenshot
