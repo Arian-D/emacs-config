@@ -727,9 +727,6 @@ Python in +a trench coat+ parentheses
     :init
     (add-to-list 'treesit-language-source-alist
                  '(nu . ("https://github.com/nushell/tree-sitter-nu")))
-    :config
-    (add-to-list 'eglot-server-programs
-                 `(nushell-ts-mode . ("nix" "run" "nixpkgs#nushell" "--" "--lsp")))
     ;; TODO: Make this only run when the grammar is not installed
     (treesit-install-language-grammar 'nu))
 #+end_src
