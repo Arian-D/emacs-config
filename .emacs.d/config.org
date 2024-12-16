@@ -1411,7 +1411,9 @@ I may be illiterate, but I still read children's books.
        "https://undeadly.org/cgi?action=rss"
        "https://www.evilsocket.net/atom.xml"
        "https://www.openmymind.net/atom.xml"
-       "https://www.marginalia.nu/log/index.xml")))
+       "https://www.marginalia.nu/log/index.xml"
+       "https://henrikwarne.com/feed/"
+       )))
 #+end_src
 
 ** 📧 Gnus
