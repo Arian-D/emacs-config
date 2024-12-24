@@ -1454,15 +1454,9 @@ These are some interactive functions that I use occasionally.
 #+end_src
 
 ** 🐋 Docker
-Docker do be cool.
 #+begin_src emacs-lisp
-  ;; (use-package docker
-  ;;   :when (executable-find "docker"))
-#+end_src
-and I also need this for syntax highlighting, and building images in
-buffer.
-#+begin_src emacs-lisp
-  (use-package dockerfile-mode)
+  (use-package dockerfile-ts-mode
+    :straight (:type built-in))
 #+end_src
 
 ** Bluetooth
