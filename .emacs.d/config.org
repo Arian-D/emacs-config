@@ -645,6 +645,12 @@ All thanks to eglot
 
 #+end_src
 
+
+** YAML
+#+begin_src emacs-lisp
+  (use-package yaml-ts-mode
+    :straight (:type built-in))
+#+end_src
 ** Data science
 AI-accelerated GPT-powered lisp???
 #+begin_src emacs-lisp
