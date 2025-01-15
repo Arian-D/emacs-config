@@ -36,25 +36,25 @@ Following [[https://www.emacswiki.org/emacs/BackupDirectory][this]], I'm moving 
 cluttering the system.
 #+begin_src emacs-lisp
   (setq
-     backup-by-copying t      ; don't clobber symlinks
-     backup-directory-alist
-      '(("." . "~/.saves/"))    ; don't litter my fs tree
-     delete-old-versions t
-     kept-new-versions 6
-     kept-old-versions 2
-     version-control t)       ; use versioned backups
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+   '(("." . "~/.saves/"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
 
   (setq  straight-disable-native-compile t)
 
   (setq backup-directory-alist
-	`((".*" . ,temporary-file-directory)))
+        `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms
-	`((".*" ,temporary-file-directory t)))
+        `((".*" ,temporary-file-directory t)))
 #+end_src
 
 Emacs also creates [[https://www.emacswiki.org/emacs/LockFiles][lock files]], which are a huge pain to deal with.
 #+begin_src emacs-lisp
-(setq create-lockfiles nil)
+  (setq create-lockfiles nil)
 #+end_src
 
 ** 📦 Straight
@@ -64,16 +64,16 @@ it's made for Emacs.
 #+begin_src emacs-lisp
   (defvar bootstrap-version)
   (let ((bootstrap-file
-	 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-	(bootstrap-version 6))
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 6))
     (setq straight-repository-branch "master")
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
-	  (url-retrieve-synchronously
-	   "https://raw.githubusercontent.com/radian-software/straight.el/master/install.el"
-	   'silent 'inhibit-cookies)
-	(goto-char (point-max))
-	(eval-print-last-sexp)))
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/master/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage)
     (straight-use-package 'use-package)
     (setq straight-use-package-by-default t))
@@ -111,11 +111,12 @@ What is EMACS without the /MACroS/.
       "h v" #'describe-variable
       "h f" #'describe-function
       "h i" #'info))
-    #+end_src
+#+end_src
 
-Along with surroud
+Along with surround
 #+begin_src emacs-lisp
   (use-package evil-surround
+    :disabled
     :config
     (global-evil-surround-mode 1))
 #+end_src
@@ -569,9 +570,9 @@ Put line numbers for buffers that should have it.
 
 ** Tree sitter
 #+begin_src emacs-lisp
-(use-package treesit-auto
-  :config
-  (global-treesit-auto-mode))
+  (use-package treesit-auto
+    :config
+    (global-treesit-auto-mode))
 #+end_src
 ** ☮ Zen
 Is this the cure for ADHD?
@@ -892,8 +893,8 @@ Ugh.
 
 ** Zig
 #+begin_src emacs-lisp
-(use-package zig-ts-mode
-  :straight (:host codeberg :repo "meow_king/zig-ts-mode"))
+  (use-package zig-ts-mode
+    :straight (:host codeberg :repo "meow_king/zig-ts-mode"))
 #+end_src
 ** TODO LaTeX
 Soon...
