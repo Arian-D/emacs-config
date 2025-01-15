@@ -86,13 +86,114 @@ What is EMACS without the /MACroS/.
 #+begin_src emacs-lisp
   (use-package general)
 #+end_src
+
+*** 🐱 Meow
+
+#+begin_src emacs-lisp
+  (defun meow-setup ()
+    (meow-motion-overwrite-define-key
+     '("j" . meow-next)
+     '("k" . meow-prev)
+     '("<escape>" . ignore))
+    (meow-leader-define-key
+     ;; SPC j/k will run the original command in MOTION state.
+     '("j" . "H-j")
+     '("k" . "H-k")
+     ;; Use SPC (0-9) for digit arguments.
+     '("1" . meow-digit-argument)
+     '("2" . meow-digit-argument)
+     '("3" . meow-digit-argument)
+     '("4" . meow-digit-argument)
+     '("5" . meow-digit-argument)
+     '("6" . meow-digit-argument)
+     '("7" . meow-digit-argument)
+     '("8" . meow-digit-argument)
+     '("9" . meow-digit-argument)
+     '("0" . meow-digit-argument)
+     '("/" . meow-keypad-describe-key)
+     '("?" . meow-cheatsheet))
+    (meow-normal-define-key
+     '("0" . meow-expand-0)
+     '("9" . meow-expand-9)
+     '("8" . meow-expand-8)
+     '("7" . meow-expand-7)
+     '("6" . meow-expand-6)
+     '("5" . meow-expand-5)
+     '("4" . meow-expand-4)
+     '("3" . meow-expand-3)
+     '("2" . meow-expand-2)
+     '("1" . meow-expand-1)
+     '("-" . negative-argument)
+     '(";" . meow-reverse)
+     '("," . meow-inner-of-thing)
+     '("." . meow-bounds-of-thing)
+     '("[" . meow-beginning-of-thing)
+     '("]" . meow-end-of-thing)
+     '("a" . meow-append)
+     '("A" . meow-open-below)
+     '("b" . meow-back-word)
+     '("B" . meow-back-symbol)
+     '("c" . meow-change)
+     '("d" . meow-delete)
+     '("D" . meow-backward-delete)
+     '("e" . meow-next-word)
+     '("E" . meow-next-symbol)
+     '("f" . meow-find)
+     '("g" . meow-cancel-selection)
+     '("G" . meow-grab)
+     '("h" . meow-left)
+     '("H" . meow-left-expand)
+     '("i" . meow-insert)
+     '("I" . meow-open-above)
+     '("j" . meow-next)
+     '("J" . meow-next-expand)
+     '("k" . meow-prev)
+     '("K" . meow-prev-expand)
+     '("l" . meow-right)
+     '("L" . meow-right-expand)
+     '("m" . meow-join)
+     '("n" . meow-search)
+     '("o" . meow-block)
+     '("O" . meow-to-block)
+     '("p" . meow-yank)
+     '("q" . meow-quit)
+     '("Q" . meow-goto-line)
+     '("r" . meow-replace)
+     '("R" . meow-swap-grab)
+     '("s" . meow-kill)
+     '("t" . meow-till)
+     '("u" . meow-undo)
+     '("U" . meow-undo-in-selection)
+     '("v" . meow-visit)
+     '("w" . meow-mark-word)
+     '("W" . meow-mark-symbol)
+     '("x" . meow-line)
+     '("X" . meow-goto-line)
+     '("y" . meow-save)
+     '("Y" . meow-sync-grab)
+     '("z" . meow-pop-selection)
+     '("'" . repeat)
+     '("<escape>" . ignore))
+    ;; My own config
+    (meow-leader-define-key
+     '("y" . "C-y"))
+    (meow-normal-define-key
+     '("(" . insert-pair)))
+
+  (use-package meow
+    :straight (:host github :repo "meow-edit/meow" :branch "v1.5.0")
+    :custom (meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+    :config
+    (meow-setup)
+    (meow-global-mode 1))
+#+end_src
 *** 😈 Evil
 - [[https://evil.readthedocs.io/en/latest/overview.html][Online docs]]
 - [[info:evil][Info]]
 - [[https://github.com/emacs-evil/evil][GitHub Repo]]
 #+begin_src emacs-lisp
   (use-package evil
-    :unless (version< emacs-version "24.3")
+    :disabled
     :custom
     (evil-want-integration t)
     (evil-want-fine-undo t)
@@ -125,6 +226,7 @@ Along with surround
 [[https://github.com/emacs-evil/evil-collection][evil-collection]] provides more bindings for specific modes.
 #+begin_src emacs-lisp
   (use-package evil-collection
+    :disabled
     :after evil
     :custom (evil-want-keybinding nil)
     :config
@@ -165,12 +267,10 @@ more minimalistic, and it relies on the built-in Emacs completion framework.
                      :repo "minad/vertico"
                      :includes vertico-mouse
                      :files (:defaults "extensions/vertico-mouse.el"))
-    :after evil
     :init
     (vertico-mode)
-    :general
-    ("<leader> TAB" #'execute-extended-command
-     "<print>" #'execute-extended-command)
+    :bind
+    (("<print>" . execute-extended-command))
     ;; DifferentDifferent scroll margin
     ;; (setq vertico-scroll-margin 0)
     :custom
@@ -238,18 +338,24 @@ eyes wouldn't focus the bottom of the window.
 [[https://github.com/minad/consult][consult]] is for nicer completion.
 #+begin_src emacs-lisp
   (use-package consult
-    :general 
-    ("<leader> b" #'consult-buffer
-     "<leader> RET" #'consult-org-agenda
-     "<leader> /" #'consult-line
-     "<leader> r g" #'consult-ripgrep
-     "<leader> i" #'consult-imenu)
-    (org-mode-map
-     "<leader> i" #'consult-org-heading)
+    ;; :general
+    ;; ("<leader> b" #'consult-buffer
+    ;;  "<leader> RET" #'consult-org-agenda
+    ;;  "<leader> /" #'consult-line
+    ;;  "<leader> r g" #'consult-ripgrep
+    ;;  "<leader> i" #'consult-imenu)
+    ;; (org-mode-map
+    ;;  "<leader> i" #'consult-org-heading)
+    :bind
+    (("C-x b" . consult-buffer)
+     ("M-g i" . consult-imenu)
+     ("M-g r g" . consult-ripgrep)
+      :map org-mode-map
+     ("M-g i" . consult-org-heading))
     ;; Enable automatic preview at point in the *Completions* buffer. This is
     ;; relevant when you use the default completion UI. You may want to also
     ;; enable `consult-preview-at-point-mode` in Embark Collect buffers.
-    :hook (completion-list-mode . consult-preview-at-point-mode)
+
     :init
     ;; Improve ripgrep with ripgrep-all
     (when (executable-find "rga")
@@ -610,9 +716,9 @@ I use [[https://github.com/ajc/nginx-mode][this]] to edit nginx config files
 #+begin_src emacs-lisp
   (use-package project
     :straight (:type built-in)
-    :general
-    (project-prefix-map "e" #'eat-project)
-    ("<leader> p" '(:keymap project-prefix-map)))
+    :bind
+    (:map project-prefix-map
+          ("e" . #'eat-project)))
 #+end_src
 
 ** LSP
@@ -1089,6 +1195,7 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
     (org-agenda-skip-deadline-if-done t)
     (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
     (org-log-done 'time)
+    :bind ("C-c a" . org-agenda)
     :hook (after-init . org-agenda-list))
 #+end_src
 
@@ -1350,15 +1457,14 @@ Ement
                    :encryption tls))))
       :hook
       (rcirc-mode . (lambda ()
-                            (rcirc-track-minor-mode 1)))
-      (rcirc-mode . evil-normal-state))
+                            (rcirc-track-minor-mode 1))))
   #+end_src
   
-
 *** TODO XMPP
 #+begin_src emacs-lisp
   ;; (use-package jabber)
 #+end_src
+
 ** 📒Ledger
 Crypto-bros don't look in here:
 #+begin_src emacs-lisp
@@ -1414,7 +1520,6 @@ I may be illiterate, but I still read children's books.
 ** 📰 News
 #+begin_src emacs-lisp
   (use-package elfeed
-    :general ("<leader> r s s" #'elfeed)
     :custom
     (elfeed-feeds
      '("https://arian-d.github.io/blog/index.xml"
@@ -1587,16 +1692,10 @@ Playing music has never been easier.
   (use-package eat
     :unless (version< emacs-version "28.1")
     :hook ((eshell-load . eat-eshell-mode)
-           (eshell-load . eat-eshell-visual-command-mode)
-           (eat-mode . (lambda ()
-                         (when (featurep 'evil)
-                           (call-interactively #'evil-insert)))))
+           (eshell-load . eat-eshell-visual-command-mode))
     :custom (eat-kill-buffer-on-exit t)
-    :general
-    ("<leader> e" #'eat)
-    (eat-mode-map
-     :states '(insert)
-     "C-d" #'eat-kill-process)
+    :bind
+    (("H-e" . #'eat))
     :straight
     (eat :type git
          :host codeberg
