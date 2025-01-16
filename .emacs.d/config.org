@@ -84,7 +84,8 @@ What is EMACS without the /MACroS/.
 *** General
 - [[https://github.com/noctuid/general.el][GitHub Repo]]
 #+begin_src emacs-lisp
-  (use-package general)
+  (use-package general
+    :disabled)
 #+end_src
 
 *** 🐱 Meow
@@ -327,9 +328,9 @@ eyes wouldn't focus the bottom of the window.
 [[https://github.com/minad/marginalia/][Marginalia]] is for annotations in the completion buffer.
 #+begin_src emacs-lisp
   (use-package marginalia
-    :general
-    (minibuffer-local-map
-     "M-A" #'marginalia-cycle)
+    ;; :general
+    ;; (minibuffer-local-map
+    ;;  "M-A" #'marginalia-cycle)
     :init
     (marginalia-mode))
 #+end_src
@@ -422,10 +423,10 @@ eyes wouldn't focus the bottom of the window.
 *** Embark
 #+begin_src emacs-lisp
   (use-package embark
-    :general
-    ("C-." #'embark-act         ;; pick some comfortable binding
-     "C-;"  #'embark-dwim        ;; good alternative: M-.
-     "C-h B" #'embark-bindings) ;; alternative for `describe-bindings'
+    ;; :general
+    ;; ("C-." #'embark-act         ;; pick some comfortable binding
+    ;;  "C-;"  #'embark-dwim        ;; good alternative: M-.
+    ;;  "C-h B" #'embark-bindings) ;; alternative for `describe-bindings'
     :init
     ;; Optionally replace the key help with a completing-read interface
     (setq prefix-help-command #'embark-prefix-help-command)
@@ -693,9 +694,8 @@ Is this the cure for ADHD?
   (use-package magit
     :when (executable-find "git")
     :straight (:host github :repo "magit/magit" :branch "main")
-    :general
-    ("C-x g" #'magit-status)
-    ("<leader> g" #'magit-status))
+    :bind
+    ("C-x g" . #'magit-status))
 #+end_src
 
 ** Forge
@@ -718,17 +718,14 @@ I use [[https://github.com/ajc/nginx-mode][this]] to edit nginx config files
     :straight (:type built-in)
     :bind
     (:map project-prefix-map
-          ("e" . #'eat-project)))
+          "e" #'eat-project))
 #+end_src
 
 ** LSP
 All thanks to eglot
 #+begin_src emacs-lisp
   (use-package eglot
-    :straight (:type built-in)
-    :general ("<leader> l r" #'eglot-rename
-              "<leader> l f" #'eglot-format
-              "<leader> l c a" #'eglot-code-actions))
+    :straight (:type built-in))
 #+end_src
 
 ** 🛕 Tempel 
@@ -777,7 +774,6 @@ because there are no decent debugging tools for it.
 
 #+begin_src emacs-lisp
   (use-package php-ts-mode
-    :disabled
     :straight (:host github :repo "emacs-php/php-ts-mode"))
 #+end_src
 
@@ -961,12 +957,7 @@ But lsp-haskell is something that I might replace it with in the near future.
 ** Proof General
 I'm a formal methodist.
 #+begin_src emacs-lisp
-  (use-package proof-general
-    :after evil
-    :general
-    (coq-mode-map
-     "<leader> ;" #'proof-goto-point
-     "<leader> n" #'proof-assert-next-command-interactive))
+  (use-package proof-general)
 #+end_src
 
 ** Idris
@@ -1099,32 +1090,7 @@ This is the core config.
        (shell . t)
        (C . t)
        (R . t)
-       (dot . t)))
-    :general
-    ("<leader> a" #'org-agenda
-     "<leader> c" #'org-capture)
-    (org-src-mode-map
-     "<leader> k" #'org-edit-src-abort
-     "<leader> '" #'org-edit-src-exit)
-    (org-mode-map
-     "<leader> '" #'org-edit-special
-     "<leader> C t" #'org-babel-tangle
-     "<leader> C s" #'org-insert-structure-template
-     "<leader> l" #'org-insert-link
-     "<leader> t" #'org-todo
-     "<leader> S" #'org-schedule
-     "<leader> d" #'org-deadline
-     "<leader> SPC" #'org-ctrl-c-ctrl-c
-     :states '(normal visual)
-     "M-l" #'org-shiftright
-     "M-h" #'org-shiftright
-     "M-k" #'org-shiftup
-     "M-j" #'org-shiftdown
-     "M-K" #'org-metaup
-     "M-J" #'org-metadown
-     "M-L" #'org-metaright
-     "M-H" #'org-metaleft
-     "<tab>" #'org-cycle))
+       (dot . t))))
 #+end_src
 ** Contrib
 There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in the main org repo.
@@ -1139,10 +1105,6 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
   (use-package org-capture
     :after org
     :when (file-directory-p org-directory)
-    :general
-    (org-capture-mode-map
-     "<leader> c" #'org-capture-finalize
-     "<leader> k" #'org-capture-kill)
     :custom
     (org-capture-templates
           '(("t"
@@ -1237,12 +1199,6 @@ Org-roam might actually help me be able to think eventually
     :after (org evil)
     :custom
     (org-roam-directory (file-truename "~/roam"))
-    :general
-    (:prefix "<leader> r"
-     "f" #'org-roam-node-find
-     "S" #'org-roam-search
-     "c" #'org-roam-dailies-capture-today
-     "i" #'org-roam-node-insert)
     :config
     (setopt
      ;; Default template for new nodes
@@ -1304,10 +1260,6 @@ Org mode, but for the average pleb.
 #+begin_src emacs-lisp
   (use-package markdown-mode
     :mode ("README\\.md\\'" . gfm-mode)
-    :general
-    (markdown-mode-map
-     "<leader> o" #'markdown-follow-thing-at-point
-     "<leader> l" #'markdown-insert-link)
     :hook
     (markdown-mode . auto-fill-mode)
     :custom
@@ -1392,9 +1344,6 @@ Dis seams two bee grate.
 No hope is left for me; let the llama write these org files now.
 #+begin_src emacs-lisp
   (use-package gptel
-    :general
-    (gptel-mode-map
-     "<leader> c" #'gptel-send)
     :hook
     (gptel-post-stream-hook . gptel-auto-scroll)
     (gptel-post-response-functions-hook . gptel-end-of-response)
@@ -1417,21 +1366,8 @@ No hope is left for me; let the llama write these org files now.
 *** Matrix
 Ement
 #+begin_src emacs-lisp
-   (use-package ement
-     :straight (:host github :repo "alphapapa/ement.el")
-     :general
-     (ement-room-mode-map
-      :states '(normal visual)
-      "RET" #'ement-room-send-message
-      "j" #'ement-room-goto-next
-      "k" #'ement-room-goto-prev
-      "q" #'quit-window
-      "r" #'ement-notify-reply
-      "e" #'ement-room-send-reaction
-      "<Messenger>" #'ement-room-view)
-     (ement-room-list-mode-map
-      :states '(normal visual)
-      "RET" #'ement-room-list-RET))
+  (use-package ement
+    :straight (:host github :repo "alphapapa/ement.el"))
 #+end_src
 
 *** IRC
@@ -1480,11 +1416,7 @@ Crypto-bros don't look in here:
 ** 📁 Dired
 #+begin_src emacs-lisp
   (use-package dired
-    :straight (:type built-in)
-    :general
-    (dired-mode-map
-    :states '(normal)
-     "<leader>" #'evil-send-leader))
+    :straight (:type built-in))
 #+end_src
 ** 👓 Readin'
 *** 📚 Novel
@@ -1615,56 +1547,16 @@ Playing music has never been easier.
     :when (executable-find "mpv")
     :config
     (add-to-list 'empv-mpv-args "--ytdl-format=best")
-    :general
-    ;; X11 keys
-    ("<XF86AudioPlay>" #'empv-toggle
-     "<XF86AudioPause>" #'empv-toggle
-     "C-<XF86AudioPlay>" #'empv-youtube
-     "C-<XF86AudioPause>" #'empv-youtube
-     "<XF86AudioNext>" #'empv-playlist-next
-     "<XF86AudioPrev>" #'empv-playlist-prev
-     ;; Wayland keys
-     "<AudioPause>" #'empv-toggle
-     "<AudioPlay>" #'empv-toggle
-     "<AudioNext>" #'empv-playlist-next
-     "<AudioPrev>" #'empv-playlist-prev
-     "C-<AudioPlay>" #'empv-youtube
-     "C-<AudioPause>" #'empv-youtube)
     :custom
-    (empv-invidious-instance "https://inv.tux.pizza/api/v1"))
+    (empv-invidious-instance "https://inv.nadeko.net/api/v1"))
 #+end_src
 
 ** Shell
 
 *** Eshell
 #+begin_src emacs-lisp
-  (defun my/bubblify (text background-color)
-    "Make things look bubbly"
-    (concat
-     (propertize "" 'face `(:foreground ,background-color))
-     (propertize text 'face `(:background ,background-color))
-     (propertize "" 'face `(:foreground ,background-color))))
-
-  (defun my/eshell-prompt ()
-    (let ((background-color "#3A3F4B")
-          (foreground-color "#ABB2BF")
-          (time-color "#C678DD"))
-      (concat
-       (my/bubblify
-        (replace-regexp-in-string (getenv "HOME") "⌂" (eshell/pwd))
-        background-color)
-       " "
-       (my/bubblify
-        (format-time-string "%-I:%M %p")
-        time-color)
-       (propertize " " 'face `(:foreground ,foreground-color)))))
-
   (use-package eshell
     :after evil
-    :general
-    ("<leader> E" #'eshell)
-    ;; (eshell-mode-map
-    ;;  "C-d" #'eshell/exit)
     :config
     (add-to-list 'eshell-modules-list 'eshell-rebind)
     :custom
