@@ -875,6 +875,13 @@ For old versions of Emacs
 
 #+end_src
 
+** Dart
+#+begin_src emacs-lisp
+  (use-package dart-ts-mode
+    :straight (:host github :repo "50ways2sayhard/dart-ts-mode")
+    :config
+    (add-to-list 'treesit-language-source-alist '(dart "https://github.com/UserNobody14/tree-sitter-dart")))
+#+end_src
 ** Lisps
 *** Geiser
 Have you read your SICP today?
