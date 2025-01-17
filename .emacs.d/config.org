@@ -1124,7 +1124,8 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
             ("?" "❓ Question" entry (file+headline "~/Org/shared/tmp.org" "❓ Questions") "* %?\n%U %i\n")
             ("l" "📚 Learn" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %? :learn:\n%U %i\n")
             ("i" "💡 Idea" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %? :idea:\n%U %i\n")))
-    :straight (:type built-in))
+    :straight (:type built-in)
+    :bind ("C-c c" . org-capture))
 #+end_src
 
 ** Transclusion
@@ -1653,14 +1654,10 @@ Run a timer every minute to check if the battery is low.
     (find-file (or config
                    (expand-file-name "config.org" user-emacs-directory))))
 
-
-  (general-def "<leader> ." #'edit-my-config)
-
   (defun vine-boom ()
     (interactive)
     (when-let* ((path (expand-file-name "vine-boom.m4a" user-emacs-directory))
                 (mpv (executable-find "mpv")))
       (start-process "boom" nil mpv path)))
 
-  ;; (advice-add #'evil-send-leader :before #'vine-boom)
 #+end_src
