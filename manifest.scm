@@ -2,7 +2,7 @@
 !#
 
 (specifications->manifest
-  (list "emacs-pgtk@29.4"
+  (list "emacs-next-pgtk"
         ;; Guix git acts weird around straight.el
         ; "git"
         "guix"
