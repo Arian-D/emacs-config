@@ -1470,8 +1470,21 @@ I may be illiterate, but I still read children's books.
        "https://www.evilsocket.net/atom.xml"
        "https://www.openmymind.net/atom.xml"
        "https://www.marginalia.nu/log/index.xml"
-       "https://henrikwarne.com/feed/"
-       )))
+       "https://henrikwarne.com/feed/")))
+#+end_src
+** 📹 YouTube
+#+begin_src emacs-lisp
+  (use-package elfeed-tube
+    :straight (elfeed-tube :host github :repo "karthink/elfeed-tube")
+    :after elfeed
+    :config
+    (elfeed-tube-setup))
+
+  (use-package elfeed-tube-mpv
+    :straight (elfeed-tube-mpv :host github :repo "karthink/elfeed-tube")
+    :bind (:map elfeed-show-mode-map
+                ("C-c C-f" . elfeed-tube-mpv-follow-mode)
+                ("C-c C-w" . elfeed-tube-mpv-where)))
 #+end_src
 
 ** 📧 Gnus
