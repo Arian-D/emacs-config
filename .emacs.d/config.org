@@ -840,9 +840,7 @@ Python in +a trench coat+ parentheses
     :after eglot
     :init
     (add-to-list 'treesit-language-source-alist
-                 '(nu . ("https://github.com/nushell/tree-sitter-nu")))
-    ;; TODO: Make this only run when the grammar is not installed
-    (treesit-install-language-grammar 'nu))
+                 '(nu . ("https://github.com/nushell/tree-sitter-nu"))))
 #+end_src
 
 #+begin_src emacs-lisp
