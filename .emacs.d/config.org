@@ -718,7 +718,7 @@ I use [[https://github.com/ajc/nginx-mode][this]] to edit nginx config files
     :straight (:type built-in)
     :bind
     (:map project-prefix-map
-          "e" #'eat-project))
+          ("e" . #'eat-project)))
 #+end_src
 
 ** LSP
