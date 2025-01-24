@@ -1358,7 +1358,11 @@ No hope is left for me; let the llama write these org files now.
                      :stream t
                      :protocol "http"
                      :host "localhost:8080"
-                     :models nil)))
+                     :models '(test)))
+    ;; Replace thinking blocks for deepseek
+    :hook (gptel-post-response . (lambda (begin end)
+                                   (replace-string "<think>" "#+begin_thought" nil begin end)
+                                   (replace-string "</think>" "#+end_thought" nil begin end))))
 #+end_src
 
 ** EXWM
