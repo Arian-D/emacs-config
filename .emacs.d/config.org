@@ -188,6 +188,19 @@ What is EMACS without the /MACroS/.
     (meow-setup)
     (meow-global-mode 1))
 #+end_src
+
+Meow Tree Sitter
+#+begin_src emacs-lisp
+  (use-package meow-tree-sitter
+    :straight (meow-tree-sitter
+               :host github :repo "skissue/meow-tree-sitter"
+               :files
+               (:defaults "queries"))
+    :config
+    (meow-tree-sitter-register-defaults)
+    (add-to-list 'meow-tree-sitter-major-mode-language-alist '("dart" . "dart")))
+#+end_src
+
 *** 😈 Evil
 - [[https://evil.readthedocs.io/en/latest/overview.html][Online docs]]
 - [[info:evil][Info]]
