@@ -1579,10 +1579,17 @@ Playing music has never been easier.
   (use-package empv
     :straight (empv :host github :repo "isamert/empv.el")
     :when (executable-find "mpv")
-    :config
-    (add-to-list 'empv-mpv-args "--ytdl-format=best")
     :custom
-    (empv-invidious-instance "https://inv.nadeko.net/api/v1"))
+    (empv-invidious-instance "https://inv.tux.pizza/api/v1"))
+#+end_src
+
+A lil function to play the clipboard
+#+begin_src emacs-lisp
+  (defun empv-clipbard ()
+    (interactive)
+    (let ((clipboard (gui-get-selection)))
+      (when (string-match "youtube.com" clipboard)
+        (empv-play clipboard))))
 #+end_src
 
 ** Shell
