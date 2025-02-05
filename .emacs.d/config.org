@@ -1626,7 +1626,13 @@ A lil function to play the clipboard
     :unless (version< emacs-version "28.1")
     :hook ((eshell-load . eat-eshell-mode)
            (eshell-load . eat-eshell-visual-command-mode))
-    :custom (eat-kill-buffer-on-exit t)
+    :custom
+    (eat-kill-buffer-on-exit t)
+    :config
+    (when (equal system-type 'windows-nt)
+      (setopt eat-shell
+              (or (executable-find "nu")
+                  (executable-find "powershell"))))
     :bind
     (("H-e" . #'eat))
     :straight
