@@ -531,6 +531,9 @@ Keychain for saving the ssh-passphrase
 *** Pinentry
 #+begin_src emacs-lisp
   (use-package pinentry
+    ;; Only load on systems with local socket support (Linux, BSD, etc)
+    :when
+    (featurep 'make-network-process '(:family local))
     :custom
     (epa-pinentry-mode 'loopback)
     :config
