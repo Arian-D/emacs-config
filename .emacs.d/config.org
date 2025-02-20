@@ -1011,8 +1011,12 @@ Ugh.
 ** Zig
 #+begin_src emacs-lisp
   (use-package zig-ts-mode
-    :straight (:host codeberg :repo "meow_king/zig-ts-mode"))
+    :straight (:host codeberg :repo "meow_king/zig-ts-mode")
+    :config
+    (add-to-list 'eglot-server-programs '(zig-ts-mode . ("zls")))
+    :hook (zig-ts-mode . eglot-ensure))
 #+end_src
+
 ** TODO LaTeX
 Soon...
 #+begin_src emacs-lisp
