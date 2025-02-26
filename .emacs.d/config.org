@@ -696,13 +696,6 @@ Put line numbers for buffers that should have it.
     :config
     (global-treesit-auto-mode))
 #+end_src
-** ☮ Zen
-Is this the cure for ADHD?
-#+begin_src emacs-lisp
-  (use-package zen-mode
-    :straight (:host github :repo "aki237/zen-mode"))
-#+end_src
-
 ** Git
 [[https://magit.vc/][Magit]] is the greatest Git client. 
 #+begin_src emacs-lisp
@@ -875,25 +868,13 @@ Python in +a trench coat+ parentheses
     :when (executable-find "exercism")
     :straight (:host github :repo "elken/exercism-modern"))
 #+end_src
-** (J|T)S
-For old versions of Emacs
-#+begin_src emacs-lisp
-  (when (version< emacs-version "30") 
-    (use-package web-mode
-      :after eglot)
-    (use-package typescript-mode))
-#+end_src
-
-#+begin_src emacs-lisp
-
-#+end_src
-
 ** Dart
 #+begin_src emacs-lisp
   (use-package dart-ts-mode
     :straight (:host github :repo "50ways2sayhard/dart-ts-mode")
     :config
-    (add-to-list 'treesit-language-source-alist '(dart "https://github.com/UserNobody14/tree-sitter-dart")))
+    (add-to-list 'treesit-language-source-alist '(dart "https://github.com/UserNobody14/tree-sitter-dart"))
+    :hook (dart-ts-mode . eglot-ensure))
 #+end_src
 ** Lisps
 *** Geiser
