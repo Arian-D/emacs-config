@@ -5,13 +5,7 @@
   (list "emacs-next-pgtk"
         ;; Guix git acts weird around straight.el
         ; "git"
-        "guix"
         "guile-next"
-        "ripgrep"
-        "fd"
-        "bash"
-        "findutils"
-        "coreutils"
         "texlive"
         "gnuplot"
         "enchant"
@@ -25,5 +19,4 @@
         "font-iosevka"
         "font-latin-modern"
         "unicode-emoji"
-        "imagemagick"
         "fontconfig"))
