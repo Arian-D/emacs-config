@@ -1201,7 +1201,7 @@ Org-roam might actually help me be able to think eventually
 #+begin_src emacs-lisp
   (use-package org-roam
     :if (file-directory-p "~/roam")
-    :after (org evil)
+    :after org
     :custom
     (org-roam-directory (file-truename "~/roam"))
     :config
