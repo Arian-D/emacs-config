@@ -1137,8 +1137,9 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
     :straight
     (org-ql :host github :repo "alphapapa/org-ql"))
 #+end_src
-** TODO 📆 Agenda
-
+** 📆 Agenda
+- Org agenda acts as my calendar. It is _not_ tied to [[🧠 Roam]]
+- Tasks and events are fetched from directories that reside in my =~/Org= directory.
 #+begin_src emacs-lisp
   (use-package org-agenda
     :after org
@@ -1163,15 +1164,16 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
     (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
     (org-log-done 'time)
     :bind ("C-c a" . org-agenda)
-    :hook (after-init . org-agenda-list))
+    :hook (emacs-startup . org-agenda-list))
 #+end_src
 
 ** EDNA
-This is just too much
+- An advanced dependency and trigger management for org tasks
 #+begin_src emacs-lisp
   (use-package org-edna
     :after org)
 #+end_src
+
 ** TODO Calendar
 Sync the calendar with my online one. The settings are in =caldav.el=.
 #+begin_src emacs-lisp
