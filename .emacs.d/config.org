@@ -1609,15 +1609,20 @@ A lil function to play the clipboard
 
 *** Eshell
 #+begin_src emacs-lisp
+  (defun my/eshell-prompt ()
+    ;; TODO: Make it red when user is root
+    (concat
+     "λ "
+     (abbreviate-file-name (eshell/pwd))
+     " → "))
+
   (use-package eshell
-    :after evil
     :config
     (add-to-list 'eshell-modules-list 'eshell-rebind)
     :custom
-    (eshell-banner-message
-     (if (executable-find "curl")
-         (shell-command-to-string "curl -s icanhazip.com")
-       (format "Hi, %s!" user-login-name))))
+    (eshell-banner-message (format "Hi, %s!\n"
+                                   user-login-name))
+    (eshell-prompt-function #'my/eshell-prompt))
 #+end_src
 
 *** pcmpl-args
