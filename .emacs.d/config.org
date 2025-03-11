@@ -1611,10 +1611,16 @@ A lil function to play the clipboard
 #+begin_src emacs-lisp
   (defun my/eshell-prompt ()
     ;; TODO: Make it red when user is root
-    (concat
-     "λ "
-     (abbreviate-file-name (eshell/pwd))
-     " → "))
+    (let ((pwd (abbreviate-file-name (eshell/pwd))))
+      (string-join
+       `("λ"
+         ,pwd
+         ,(when (vc-git-root pwd)
+            (format "( %s)"
+                  (car (vc-git-branches))))
+         "→"
+         " ")
+       " ")))
 
   (use-package eshell
     :config
