@@ -1194,7 +1194,8 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
 - An advanced dependency and trigger management for org tasks
 #+begin_src emacs-lisp
   (use-package org-edna
-    :after org)
+    :after org
+    :hook (org-load . org-edna-mode))
 #+end_src
 
 ** TODO Calendar
