@@ -1671,7 +1671,12 @@ A lil function to play the clipboard
                  (:exclude ".dir-locals.el" "*-tests.el"))))
 #+end_src
 
-
+*** ielm
+#+begin_src emacs-lisp
+  (use-package ielm
+    :straight (:type built-in)
+    :custom (ielm-prompt "(λ) → "))
+#+end_src
 
 ** OSM
 #+begin_src emacs-lisp
