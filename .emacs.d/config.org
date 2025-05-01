@@ -280,7 +280,8 @@ more minimalistic, and it relies on the built-in Emacs completion framework.
     :straight (:host github
                      :repo "minad/vertico"
                      :includes vertico-mouse
-                     :files (:defaults "extensions/vertico-mouse.el"))
+                     :files (:defaults "extensions/vertico-mouse.el"
+                                       "extensions/vertico-multiform.el"))
     :init
     (vertico-mode)
     :bind
@@ -298,27 +299,26 @@ more minimalistic, and it relies on the built-in Emacs completion framework.
     (read-file-name-completion-ignore-case t)
     (read-buffer-completion-ignore-case t)
     (completion-ignore-case t))
-
 #+end_src
 
 There's no shame in using the mouse.
 #+begin_src emacs-lisp
   (use-package vertico-mouse
     :after vertico
-    :when (display-graphic-p))
+    :when (display-graphic-p)
+    :hook (after-init . vertico-mouse-mode))
 #+end_src
 
 [[https://github.com/tumashu/vertico-posframe][vertico-posframe]] is for bringing a window-like completion, so that my
 eyes wouldn't focus the bottom of the window.
 #+begin_src emacs-lisp
   (use-package vertico-posframe
-    :disabled
     :when (display-graphic-p)
     :init
     (vertico-posframe-mode 1))
 #+end_src
 
-[[https://www.emacswiki.org/emacs/SaveHist][Save history]] 
+[[https://www.emacswiki.org/emacs/SaveHist][Save history]]
 #+begin_src emacs-lisp
   (use-package savehist
     :init
