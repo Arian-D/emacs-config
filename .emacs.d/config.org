@@ -767,7 +767,16 @@ All thanks to eglot
 ** YAML
 #+begin_src emacs-lisp
   (use-package yaml-ts-mode
-    :straight (:type built-in))
+    :straight (:type built-in)
+    :mode ((rx
+            string-start
+            (or "talosconfig"
+                "kubeconfig"
+                (or ".yaml"
+                    ".yml"
+                    ".bu"
+                    ".butane"))
+            string-end) . yaml-ts-mode))
 #+end_src
 ** Data science
 AI-accelerated GPT-powered lisp???
