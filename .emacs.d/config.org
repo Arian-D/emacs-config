@@ -1,4 +1,4 @@
-#+title: Arian's Emacs Config
+﻿#+title: Arian's Emacs Config
 #+property: header-args :results silent
 #+startup: fold
 
@@ -26,9 +26,9 @@ Although this is a custom config from scratch, a lot of it is heavily
 inspired by many other people such as:
 - [[https://github.com/tecosaur/emacs-config][Tecosaur]]'s [[https://github.com/hlissner/doom-emacs][Doom Emacs]] config
 - [[https://github.com/hlissner/doom-emacs][Doom Emacs itself]]
-- [[https://github.com/daviwil][daviwil]]'s [[https://www.youtube.com/playlist?list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ][Emacs from scratch]] Youtube series, and his [[https://github.com/daviwil/dotfiles][config]] 
+- [[https://github.com/daviwil][daviwil]]'s [[https://www.youtube.com/playlist?list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ][Emacs from scratch]] Youtube series, and his [[https://github.com/daviwil/dotfiles][config]]
 - [[https://github.com/joseph8th/literatemacs][joseph8th]]'s config
-  
+
 * 🧱 Foundation
 Just simple stuff to get the ball rolling.
 ** © Backup
@@ -257,7 +257,7 @@ Along with surround
 #+end_src
 
 ** 🔄 Server
-- [[info:emacs#Emacs Server][Info]] 
+- [[info:emacs#Emacs Server][Info]]
 #+begin_src emacs-lisp
   (use-package server
     :config
@@ -556,7 +556,15 @@ Run garbage collection when idle.
 #+begin_src emacs-lisp
   (run-with-idle-timer (* 60 10) t #'garbage-collect)
 #+end_src
-* 🌈 Appearance
+** Tramp
+#+begin_src emacs-lisp
+  (use-package tramp
+    :straight (:type built-in)
+    :config
+    (add-to-list 'tramp-remote-path "/snap/bin"))
+#+end_src
+
+* 🌈 UI
 ** ⃢ Splash screen
 Replace the default splash screen with an org buffer
 #+begin_src emacs-lisp
@@ -576,13 +584,16 @@ Replace the default splash screen with an org buffer
                  (format "- Startup time :: %s" init-time))
            "\n")))
 #+end_src
-
+** Hide title bar
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(undecorated . t))
+#+end_src
 ** ✍ Face and Fonts
 - This the default [[info:emacs#Faces][face]].
 - I use Iosevka Term and Latin Modern (LaTeX-esque font)
 
 #+begin_src emacs-lisp
-  (let ((default-font "Iosevka Term")
+  (let ((default-font "Fantasque Sans Mono")
         (variable-font "Latin Modern Roman dunhill"))
     (when (x-list-fonts default-font)
       (set-face-attribute
@@ -596,7 +607,7 @@ Replace the default splash screen with an org buffer
 #+end_src
 
 ** 🎨Theme
-Doom themes are very nice. 
+Doom themes are very nice.
 #+begin_src emacs-lisp
   (use-package doom-themes
     :init
@@ -632,7 +643,7 @@ This also comes from the nice doom people
     (display-time-mode -1))
 #+end_src
 
-To hide it occasionally, we can use [[https://github.com/hlissner/emacs-hide-mode-line][this]]: 
+To hide it occasionally, we can use [[https://github.com/hlissner/emacs-hide-mode-line][this]]:
 #+begin_src emacs-lisp
   (use-package hide-mode-line)
 #+end_src
@@ -696,8 +707,9 @@ Put line numbers for buffers that should have it.
     :config
     (global-treesit-auto-mode))
 #+end_src
+
 ** Git
-[[https://magit.vc/][Magit]] is the greatest Git client. 
+[[https://magit.vc/][Magit]] is the greatest Git client.
 #+begin_src emacs-lisp
   (use-package magit
     :when (executable-find "git")
@@ -736,7 +748,7 @@ All thanks to eglot
     :straight (:type built-in))
 #+end_src
 
-** 🛕 Tempel 
+** 🛕 Tempel
 [[https://github.com/minad/tempel][Tempel]] is what I use instead of [[https://github.com/joaotavora/yasnippet][Yasnippet]] since it's lispy.
 #+begin_src emacs-lisp
   (use-package tempel
@@ -754,7 +766,7 @@ All thanks to eglot
     ;;   ;; often when you don't expect it.
     ;;   (add-hook 'completion-at-point-functions #'tempel-expand -1 'local))
     (add-to-list 'completion-at-point-functions #'tempel-complete)
-  
+
 
     ;; ;; :hook
     ;; ((prog-mode . tempel-setup-capf)
@@ -1015,7 +1027,7 @@ Ugh.
     :custom
     ;; Use emacs for previewing PDFs, since I don't want browser
     ;; flatpaks seeing my directories outside of ~/Downloads.
-    (typst-ts-mode-preview-function . #'browse-url-emacs)
+    (typst-ts-mode-preview-function #'browse-url-emacs)
     :config
     ;; While tinymist is not in Gentoo, I'll use the one from nixpkgs
     (when (and (executable-find "nix")
@@ -1079,54 +1091,57 @@ You oughtta be sure the org-mode syntax is correct:
 
 This is the core config.
 #+begin_src emacs-lisp :noweb yes
-  (use-package org
-    :straight (:type built-in)
-    :custom
-    (org-directory "~/Org")
-      ;;; Cute lil rice
-    (org-startup-with-inline-images t)
-    ;; (org-hidden-keywords '(title author email date))
-    (org-highlight-latex-and-related '(native))
-    (org-ellipsis "⤵")
-    (org-pretty-entities t)
-    (org-imenu-depth 5)
-    (org-hide-emphasis-markers t)
-    (org-hide-block-startup t)
-    (org-hide-macro-markers t)
-    (org-fontify-whole-heading-line t)
-    (org-fontify-done-headline t)
-    (org-fontify-quote-and-verse-blocks t)
-    (org-default-notes-file (concat org-directory "/notes.org"))
-    ;; LaTeX
-    (org-format-latex-options
-     '(:foreground default
-                   :background "Transparent"
-                   :scale 2.0
-                   :html-foreground "Black"
-                   :html-background "Transparent"
-                   :html-scale 1.0
-                   :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
-      ;;; Code blocks
-    (org-src-tab-acts-natively t)
-    (org-confirm-babel-evaluate nil)
-    :hook
-    ((org-mode . auto-fill-mode)
-     (org-mode . prettify-symbols-mode)
-     (org-babel-after-execute . org-redisplay-inline-images)
-     (org-mode . my/org-mode-linter-hook))
-    :config
-    <<org-faces>>
-      ;;; Evaluate code blocks
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((haskell . t)
-       (scheme . t)
-       (emacs-lisp . t)
-       (python . t)
-       (shell . t)
-       (C . t)
-       (R . t)
-       (dot . t))))
+    (use-package org
+      :straight (:type built-in)
+      :custom
+      (org-directory "~/Org")
+        ;;; Cute lil rice
+      (org-startup-with-inline-images t)
+      (org-display-remote-inline-images 'download)
+      ;; (org-hidden-keywords '(title author email date))
+      (org-highlight-latex-and-related '(native))
+      (org-ellipsis "⤵")
+      (org-pretty-entities t)
+      (org-imenu-depth 5)
+      (org-hide-emphasis-markers t)
+      (org-hide-block-startup t)
+      (org-hide-macro-markers t)
+      (org-fontify-whole-heading-line t)
+      (org-fontify-done-headline t)
+      (org-fontify-quote-and-verse-blocks t)
+      (org-default-notes-file (concat org-directory "/notes.org"))
+      ;; LaTeX
+      (org-format-latex-options
+       '(:foreground default
+                     :background "Transparent"
+                     :scale 1.0
+                     :html-foreground "Black"
+                     :html-background "Transparent"
+                     :html-scale 1.0
+                     :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+      (org-preview-latex-default-process 'dvisvgm)
+        ;;; Code blocks
+      (org-src-tab-acts-natively t)
+      (org-confirm-babel-evaluate nil)
+      :hook
+      ((org-mode . auto-fill-mode)
+       (org-mode . prettify-symbols-mode)
+       (org-babel-after-execute . org-redisplay-inline-images)
+       (org-mode . my/org-mode-linter-hook))
+      :config
+      <<org-faces>>
+        ;;; Evaluate code blocks
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((haskell . t)
+         (
+  scheme . t)
+         (emacs-lisp . t)
+         (python . t)
+         (shell . t)
+         (C . t)
+         (R . t)
+         (dot . t))))
 #+end_src
 ** Contrib
 There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in the main org repo.
@@ -1146,7 +1161,7 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
           '(("t"
              "✅ Todo"
              entry
-             (file+headline "~/Org/shared/tasks.org" "🤔 Tasks") "** TODO %?\n%U\n %i\n"
+             (file+headline "~/Org/shared/tasks.org" "🤔 Tasks") "** TODO %?\n%U\n %i%x\n"
              :empty-lines 1)
             ("p" "🔒 Private Todo" entry (file+headline "~/Org/agenda/life.org.gpg" "💡 Thoughts") "* %?\n%T %i\n")
             ("T" "🧠 Thought" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %?\n%U %i\n")
@@ -1339,7 +1354,7 @@ Org mode, but for the average pleb.
 #+begin_src emacs-lisp
   (use-package pandoc-mode)
 #+end_src
-** Hugo 
+** Hugo
 #+begin_src emacs-lisp
   (use-package ox-hugo)
 #+end_src
@@ -1482,7 +1497,6 @@ I may be illiterate, but I still read children's books.
 *** RFC
 - https://github.com/galdor/rfc-mode
 
-
 #+begin_src emacs-lisp
   (use-package rfc-mode
     :straight (:host github :repo "galdor/rfc-mode"))
@@ -1505,8 +1519,9 @@ I may be illiterate, but I still read children's books.
        "https://undeadly.org/cgi?action=rss"
        "https://www.evilsocket.net/atom.xml"
        "https://www.openmymind.net/atom.xml"
-       "https://www.marginalia.nu/log/index.xml"
-       "https://henrikwarne.com/feed/")))
+       ("https://www.marginalia.nu/log/index.xml" zig)
+       "https://henrikwarne.com/feed/"
+       ("https://planet.emacslife.com/atom.xml" emacs))))
 #+end_src
 ** 📹 YouTube
 #+begin_src emacs-lisp
@@ -1628,8 +1643,7 @@ A lil function to play the clipboard
          ,(when (vc-git-root pwd)
             (format "( %s)"
                   (car (vc-git-branches))))
-         "→"
-         " ")
+         "→ ")
        " ")))
 
   (use-package eshell
@@ -1645,7 +1659,7 @@ A lil function to play the clipboard
 [[https://github.com/JonWaltman/pcmpl-args.el][This]] is a magical package to get completion for commands
 #+begin_src emacs-lisp
   (use-package pcmpl-args
-    :config	
+    :config
     (cl-loop for command in
              (list "fd" "rg" "exa" "emacsclient")
              do
@@ -1667,8 +1681,6 @@ A lil function to play the clipboard
       (setopt eat-shell
               (or (executable-find "nu")
                   (executable-find "powershell"))))
-    :bind
-    (("H-e" . #'eat))
     :straight
     (eat :type git
          :host codeberg
@@ -1691,12 +1703,13 @@ A lil function to play the clipboard
 #+begin_src emacs-lisp
   (use-package osm)
 #+end_src
+
 ** Helpers
 #+begin_src emacs-lisp
   (defun 🎲 ()
     "Roll a die"
     (interactive)
-    (princ 
+    (princ
      (seq-random-elt '(⚀ ⚁ ⚂ ⚃ ⚄ ⚅))))
 #+end_src
 ** Battery notification
