@@ -790,6 +790,17 @@ All thanks to eglot
                     ".butane"))
             string-end) . yaml-ts-mode))
 #+end_src
+
+** KDL
+For [[https://github.com/YaLTeR/niri][Niri]].
+#+begin_src emacs-lisp
+  (use-package kdl-ts-mode
+    :straight (:host github :repo "merrickluo/kdl-ts-mode")
+    :config
+    (add-to-list 'treesit-language-source-alist
+                 '(kdl . ("https://github.com/tree-sitter-grammars/tree-sitter-kdl"))))
+#+end_src
+
 ** Data science
 AI-accelerated GPT-powered lisp???
 #+begin_src emacs-lisp
