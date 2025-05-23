@@ -561,6 +561,9 @@ Run garbage collection when idle.
   (use-package tramp
     :straight (:type built-in)
     :config
+    (dolist (method '("flatpak" "distrobox" "toolbox"))
+      (when (executable-find method)
+        (tramp-enable-method method)))
     (add-to-list 'tramp-remote-path "/snap/bin"))
 #+end_src
 
