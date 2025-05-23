@@ -1204,6 +1204,7 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
 #+begin_src emacs-lisp
   (use-package org-agenda
     :after org
+    :when (file-directory-p org-directory)
     :straight (:type built-in)
     :custom
     (org-agenda-files (cl-remove-if-not
