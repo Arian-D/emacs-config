@@ -589,15 +589,17 @@ Replace the default splash screen with an org buffer
 #+end_src
 ** Hide title bar
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(undecorated . t))
+  (unless (equal system-type 'windows-nt)
+      (add-to-list 'default-frame-alist
+                   '(undecorated . t)))
 #+end_src
 ** ✍ Face and Fonts
 - This the default [[info:emacs#Faces][face]].
 - I use Iosevka Term and Latin Modern (LaTeX-esque font)
 
 #+begin_src emacs-lisp
-  (let ((default-font "Fantasque Sans Mono")
-        (variable-font "Latin Modern Roman dunhill"))
+  (let ((default-font "Iosevka Fixed")
+        (variable-font "Latin Modern Roman"))
     (when (x-list-fonts default-font)
       (set-face-attribute
        'default nil
