@@ -786,14 +786,22 @@ All thanks to eglot
   (use-package yaml-ts-mode
     :straight (:type built-in)
     :mode ((rx
-            string-start
             (or "talosconfig"
                 "kubeconfig"
-                (or ".yaml"
-                    ".yml"
-                    ".bu"
-                    ".butane"))
-            string-end) . yaml-ts-mode))
+                ".yaml"
+                ".yml"
+                ".bu"
+                ".butane")
+            string-end) . yaml-ts-mode)
+    :config
+    (unless (executable-find "yaml-language-server")
+      (add-to-list
+       'eglot-server-programs
+       '(yaml-ts-mode . ("nix"
+                         "run"
+                         "nixpkgs/nixos-unstable#yaml-language-server"
+                         "--"
+                         "--stdio")))))
 #+end_src
 
 ** KDL
