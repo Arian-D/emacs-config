@@ -845,7 +845,14 @@ because there are no decent debugging tools for it.
 
 #+begin_src emacs-lisp
   (use-package php-ts-mode
-    :straight (:host github :repo "emacs-php/php-ts-mode"))
+    :straight (:host github :repo "emacs-php/php-ts-mode")
+    :after eglot
+    :config
+    (when (equal system-type 'windows-nt)
+      (add-to-list 'eglot-server-programs
+                   '((php-ts-mode)
+                     "intelephense.cmd"
+                     "--stdio"))))
 #+end_src
 
 ** Go
