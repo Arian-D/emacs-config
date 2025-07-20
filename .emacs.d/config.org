@@ -519,6 +519,12 @@ use [[https://github.com/company-mode/company-mode][company-mode]] but this seem
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
 
+*** Recentf mode
+#+begin_src emacs-lisp
+  (use-package recentf
+    :straight (:type built-in)
+    :hook (after-init . recentf-mode))
+#+end_src
 ** 🔒 Encryption and authentication
 *** Keychain
 Keychain for saving the ssh-passphrase
