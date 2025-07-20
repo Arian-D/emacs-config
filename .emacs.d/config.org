@@ -683,12 +683,30 @@ Instead of having to type =yes=, you can just say =y=.
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
+** Smooth Scrolling
+#+begin_src emacs-lisp
+  (use-package pixel-scroll
+    :straight (:type built-in)
+    :when (display-graphic-p)
+    :hook (after-init . pixel-scroll-precision-mode))
+#+end_src
+
 * 💻 Development
 Afterall, Emacs is a text editor.
 
+Let's use sane tabbing.
 #+begin_src emacs-lisp
   (setq-default indent-tabs-mode nil
                 tab-width 2)
+#+end_src
+
+And get rid of trailing white space
+#+begin_src emacs-lisp
+  (add-hook
+   'prog-mode-hook
+   (apply-partially #'add-hook
+                    'before-save-hook
+                    #'delete-trailing-whitespace))
 #+end_src
 
 ** 🔢 Line numbers
