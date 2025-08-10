@@ -1563,37 +1563,24 @@ I may be illiterate, but I still read children's books.
     :straight
     (screenshot :host github :repo "tecosaur/screenshot"))
 #+end_src
+
 ** 📰 News
 #+begin_src emacs-lisp
   (use-package elfeed
     :custom
     (elfeed-feeds
      '("https://arian-d.github.io/blog/index.xml"
-       "https://nullprogram.com/feed/"
-       "https://karthinks.com/index.xml"
-       "https://defcon.org/defconrss.xml"
-       "https://undeadly.org/cgi?action=rss"
-       "https://www.evilsocket.net/atom.xml"
-       "https://www.openmymind.net/atom.xml"
+       ("https://nullprogram.com/feed/" emacs c)
+       ("https://karthinks.com/index.xml" emacs org-mode)
+       ("https://defcon.org/defconrss.xml" security)
+       ("https://undeadly.org/cgi?action=rss" openbsd)
+       ("https://www.evilsocket.net/atom.xml" security)
+       ("https://www.openmymind.net/atom.xml" zig)
        ("https://www.marginalia.nu/log/index.xml" zig)
        "https://henrikwarne.com/feed/"
-       ("https://planet.emacslife.com/atom.xml" emacs))))
+       "https://martinfowler.com/feed.atom"
+       ("https://simonwillison.net/atom/everything/" llm))))
 #+end_src
-** 📹 YouTube
-#+begin_src emacs-lisp
-  (use-package elfeed-tube
-    :straight (elfeed-tube :host github :repo "karthink/elfeed-tube")
-    :after elfeed
-    :config
-    (elfeed-tube-setup))
-
-  (use-package elfeed-tube-mpv
-    :straight (elfeed-tube-mpv :host github :repo "karthink/elfeed-tube")
-    :bind (:map elfeed-show-mode-map
-                ("C-c C-f" . elfeed-tube-mpv-follow-mode)
-                ("C-c C-w" . elfeed-tube-mpv-where)))
-#+end_src
-
 ** 📧 Gnus
 #+begin_src emacs-lisp
   (use-package gnus
