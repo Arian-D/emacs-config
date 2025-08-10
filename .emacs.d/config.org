@@ -256,6 +256,17 @@ Along with surround
     :hook (after-init . which-key-mode))
 #+end_src
 
+
+*** Embrace
+- A temporary solution for surround-like features in [[*🐱 Meow][meow]].
+#+begin_src emacs-lisp
+  (use-package embrace
+    :straight (embrace
+               :host github
+               :repo "cute-jumper/embrace.el"
+               :commit "c7e748603151d7d91c237fd2d9cdf56e9f3b1ea8"))
+#+end_src
+
 ** 🔄 Server
 - [[info:emacs#Emacs Server][Info]]
 #+begin_src emacs-lisp
