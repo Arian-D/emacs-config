@@ -320,15 +320,6 @@ There's no shame in using the mouse.
     :hook (after-init . vertico-mouse-mode))
 #+end_src
 
-[[https://github.com/tumashu/vertico-posframe][vertico-posframe]] is for bringing a window-like completion, so that my
-eyes wouldn't focus the bottom of the window.
-#+begin_src emacs-lisp
-  (use-package vertico-posframe
-    :when (display-graphic-p)
-    :init
-    (vertico-posframe-mode 1))
-#+end_src
-
 [[https://www.emacswiki.org/emacs/SaveHist][Save history]]
 #+begin_src emacs-lisp
   (use-package savehist
