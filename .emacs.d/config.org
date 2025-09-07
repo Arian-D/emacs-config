@@ -1232,7 +1232,9 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
 ** Transclusion
 #+begin_src emacs-lisp
   (use-package org-transclusion
-    :straight (:host github :repo "nobiot/org-transclusion"))
+    :straight (:host github :repo "nobiot/org-transclusion")
+    :after org
+    :hook (org-mode . org-transclusion-mode))
 #+end_src
 
 ** QL
