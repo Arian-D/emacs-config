@@ -1581,9 +1581,11 @@ I may be illiterate, but I still read children's books.
        ("https://www.evilsocket.net/atom.xml" security)
        ("https://www.openmymind.net/atom.xml" zig)
        ("https://www.marginalia.nu/log/index.xml" zig)
+       ("https://cqstia.com/blog/index.xml" security)
        "https://henrikwarne.com/feed/"
        "https://martinfowler.com/feed.atom"
-       ("https://simonwillison.net/atom/everything/" llm))))
+       ("https://simonwillison.net/atom/everything/" llm)
+       ("https://samueloph.dev/atom.xml" debian))))
 #+end_src
 ** 📧 Gnus
 #+begin_src emacs-lisp
