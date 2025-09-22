@@ -924,6 +924,8 @@ Python in +a trench coat+ parentheses
   (use-package nushell-ts-mode
     :straight (:host github :repo "herbertjones/nushell-ts-mode")
     :after eglot
+    :hook eglot-ensure
+    :mode ((rx ".nu" string-end) . nushell-ts-mode)
     :init
     (add-to-list 'treesit-language-source-alist
                  '(nu . ("https://github.com/nushell/tree-sitter-nu"))))
