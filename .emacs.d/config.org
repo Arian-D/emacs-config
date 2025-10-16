@@ -1796,6 +1796,18 @@ Run a timer every minute to check if the battery is low.
     (find-file (or config
                    (expand-file-name "config.org" user-emacs-directory))))
 
+  (defun web-search ()
+    "Search the web."
+    (interactive)
+    (let ((term (if (use-region-p)
+                    (buffer-substring (region-beginning) (region-end))
+                  (read-string "→ "))))
+      (browse-url
+     (format "https://kagi.com/search?q=%s" term))))
+
+  (meow-leader-define-key
+   '("s" . web-search))
+
   (defun vine-boom ()
     (interactive)
     (when-let* ((path (expand-file-name "vine-boom.m4a" user-emacs-directory))
