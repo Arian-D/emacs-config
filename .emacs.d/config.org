@@ -630,8 +630,8 @@ Doom themes are very nice.
   (use-package circadian
     :after doom-themes
     :custom
-    (circadian-themes '(("7:00" . doom-oksolar-light)
-                        ("17:00" . doom-moonlight)))
+    (circadian-themes '(("7:00" . doom-feather-light)
+                        ("17:00" . doom-feather-dark)))
     :config
     (circadian-setup))
 #+end_src
