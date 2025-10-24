@@ -643,7 +643,8 @@ Doom themes are very nice.
 #+end_src
 
 ** → Modeline
-This also comes from the nice doom people
+- https://seagle0128.github.io/doom-modeline/
+-
 #+begin_src emacs-lisp
   (use-package doom-modeline
     :after nerd-icons
@@ -653,12 +654,14 @@ This also comes from the nice doom people
           doom-modeline-buffer-encoding nil
           doom-modeline-percent-position '(-3 "")
           doom-modeline-buffer-file-name-style 'truncate-all))
+#+end_src
 
+#+begin_src emacs-lisp
   (advice-add
    #'toggle-frame-fullscreen
    :after
-   (lambda ()
-     (let* ((fullscreen (frame-parameter (selected-frame)
+   (lambda (&optional frame)
+     (let* ((fullscreen (frame-parameter frame
                                          'fullscreen))
             (arg (if fullscreen t -1)))
        (display-time-mode arg)
