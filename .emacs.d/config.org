@@ -862,6 +862,9 @@ because there are no decent debugging tools for it.
     :straight (:host github :repo "emacs-php/php-ts-mode")
     :after eglot
     :config
+    ;; Alias for org-babel
+    (defalias 'php-mode #'php-ts-mode)
+    ;; Unholy LSP for the unholy OS
     (when (equal system-type 'windows-nt)
       (add-to-list 'eglot-server-programs
                    '((php-ts-mode)
