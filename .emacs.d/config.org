@@ -602,21 +602,20 @@ Replace the default splash screen with an org buffer
                    '(undecorated . t)))
 #+end_src
 ** ✍ Face and Fonts
-- This the default [[info:emacs#Faces][face]].
-- I use Iosevka Term and Latin Modern (LaTeX-esque font)
+- The default [[info:emacs#Faces][face]] fonts are selected based on the lists below.
 
 #+begin_src emacs-lisp
-  (let ((default-font "Iosevka Fixed")
-        (variable-font "Latin Modern Roman"))
-    (when (x-list-fonts default-font)
-      (set-face-attribute
-       'default nil
-       :family default-font
-       :height 150)
-      (set-face-attribute
-       'variable-pitch nil
-       :family variable-font
-       :height 150)))
+  (when-let ((font-picker (apply-partially #'seq-filter #'x-list-fonts))
+             (mono-font (car (funcall font-picker '("Fantasque Sans Mono" "Iosevka Fixed"))))
+             (variable-font (car (funcall font-picker '("Latin Modern Roman" "EB Garamond")))))
+    (set-face-attribute
+     'default nil
+     :family mono-font
+     :height 150)
+    (set-face-attribute
+     'variable-pitch nil
+     :family variable-font
+     :height 150))
 #+end_src
 
 ** 🎨Theme
@@ -697,12 +696,17 @@ Instead of having to type =yes=, you can just say =y=.
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-** Smooth Scrolling
+** Scrolling
+Tiktok brain can't line scrool amirite
 #+begin_src emacs-lisp
   (use-package pixel-scroll
     :straight (:type built-in)
     :when (display-graphic-p)
     :hook (after-init . pixel-scroll-precision-mode))
+#+end_src
+
+#+begin_src emacs-lisp
+  (setopt scroll-error-top-bottom t)
 #+end_src
 
 * 💻 Development
@@ -1470,21 +1474,52 @@ Dis seams two bee grate.
 No hope is left for me; let the llama write these org files now.
 #+begin_src emacs-lisp
   (use-package gptel
+    :vc (gptel :url "https://github.com/karthink/gptel"
+               :rev "v0.9.9")
     :hook
-    (gptel-post-stream-hook . gptel-auto-scroll)
-    (gptel-post-response-functions-hook . gptel-end-of-response)
+    (gptel-post-stream . gptel-auto-scroll)
+    (gptel-post-response-functions . gptel-end-of-response)
+    :config
+    (require 'gptel-integrations)
     :custom
+    (gptel-model nil)
     (gptel-default-mode #'org-mode)
-    (gptel-backend (gptel-make-openai "llama-cpp"
-                     :stream t
+    (gptel-backend (gptel-make-openai "OpenWebUI"
+                     :host "localhost:3000"
                      :protocol "http"
-                     :host "localhost:8080"
-                     :models '(test)))
-    ;; Replace thinking blocks for deepseek
-    :hook (gptel-post-response . (lambda (begin end)
-                                   (replace-string "<think>" "#+begin_thought" nil begin end)
-                                   (replace-string "</think>" "#+end_thought" nil begin end))))
+                     :key "sk-366b032d319b48c6bcdada8735e90ab6"
+                     :endpoint "/api/chat/completions"
+                     :stream t
+                     :models '("qwen3:4b" "qwen3:1.7b" "qwen3:0.6b"))))
 #+end_src
+
+#+begin_src emacs-lisp
+  (use-package mcp
+    :after gptel
+    :custom
+    (gptel-confirm-tool-calls t)
+    (mcp-hub-servers
+     `(("playwright" . (:command "podman"
+                                 :args ("run"
+                                        "-i"
+                                        "--rm"
+                                        "--pull=newer"
+                                        "mcr.microsoft.com/playwright/mcp")))
+       ("time" . (:command "podman"
+                           :args ("run"
+                                  "-i"
+                                  "--rm"
+                                  "--pull=newer"
+                                  "docker.io/mcp/time")))
+       ("Wikipedia" . (:command "podman"
+                           :args ("run"
+                                  "-i"
+                                  "--rm"
+                                  "--pull=newer"
+                                  "docker.io/mcp/wikipedia-mcp")))
+       ("deepwiki" . (:url "https://mcp.deepwiki.com/sse"))))
+    :config (require 'mcp-hub))
+#+END_SRC
 
 ** EXWM
 #+begin_src emacs-lisp
