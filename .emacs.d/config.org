@@ -1474,23 +1474,23 @@ Dis seams two bee grate.
 No hope is left for me; let the llama write these org files now.
 #+begin_src emacs-lisp
   (use-package gptel
-    :vc (gptel :url "https://github.com/karthink/gptel"
-               :rev "v0.9.9")
+    :straight (gptel
+               :host github
+               :repo "karthink/gptel"
+               :branch "master")
     :hook
     (gptel-post-stream . gptel-auto-scroll)
     (gptel-post-response-functions . gptel-end-of-response)
     :config
     (require 'gptel-integrations)
-    :custom
-    (gptel-model nil)
-    (gptel-default-mode #'org-mode)
-    (gptel-backend (gptel-make-openai "OpenWebUI"
-                     :host "localhost:3000"
-                     :protocol "http"
-                     :key "sk-366b032d319b48c6bcdada8735e90ab6"
-                     :endpoint "/api/chat/completions"
-                     :stream t
-                     :models '("qwen3:4b" "qwen3:1.7b" "qwen3:0.6b"))))
+    (setopt gptel-default-mode #'org-mode
+            gptel-backend (gptel-make-ollama "Ollama"
+                            :host "localhost:11434"
+                            :stream t
+                            :models '(qwen3:4b
+                                      gpt-oss:20b
+                                      mistral
+                                      ministral-3:8b))))
 #+end_src
 
 #+begin_src emacs-lisp
