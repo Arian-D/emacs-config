@@ -1807,6 +1807,23 @@ A lil function to play the clipboard
     (princ
      (seq-random-elt '(⚀ ⚁ ⚂ ⚃ ⚄ ⚅))))
 #+end_src
+* My content
+** Niri refresh rate
+#+begin_src emacs-lisp
+  (defun adjust-refresh-rate ()
+    "Adjust Niri's refresh rate based on charging status"
+    (when (equal system-type 'gnu/linux)
+      (when-let* ((🕯️-pid (shell-command-to-string "pgrep niri"))
+                  (🕯️-running (not (string-empty-p 🕯️-pid)))
+                  (battery-status (funcall battery-status-function))
+                  (🪫 (battery-format "%B" battery-status))
+                  (refresh-rate (if (equal 🪫 "discharging") "60.001" "90.001"))
+                  (command (format "niri msg output eDP-1 mode 2880x1800@%s" refresh-rate)))
+        (shell-command command))))
+
+  (run-with-timer 0 60
+                  #'adjust-refresh-rate)
+#+end_src
 ** Battery notification
 Run a timer every minute to check if the battery is low.
 #+begin_src emacs-lisp
@@ -1832,7 +1849,7 @@ Run a timer every minute to check if the battery is low.
   (run-with-timer 0 60
                   #'notify--low-battery)
 #+end_src
-* My content
+** Etc
 #+begin_src emacs-lisp
   (defun edit-my-config (&optional config)
     "Edit my config"
