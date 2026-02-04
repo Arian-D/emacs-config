@@ -1713,7 +1713,7 @@ Playing music has never been easier.
     :straight (empv :host github :repo "isamert/empv.el")
     :when (executable-find "mpv")
     :custom
-    (empv-invidious-instance "https://inv.tux.pizza/api/v1"))
+    (empv-invidious-instance "https://invidious.reallyaweso.me/api/v1"))
 #+end_src
 
 A lil function to play the clipboard
