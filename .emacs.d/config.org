@@ -1062,6 +1062,14 @@ And just when you thought I could learn useful languages...
     :straight
     (:type git :host github :repo "idris-community/idris2-mode"))
 #+end_src
+
+** Lean
+Not the purple drink.
+#+begin_src emacs-lisp
+  (use-package nael
+    :straight (:host codeberg :repo "mekeor/nael" :files ("nael/*.el")))
+#+end_src
+
 ** ❄ Nix
 #+begin_src emacs-lisp
   (use-package nix-mode
