@@ -1771,6 +1771,13 @@ A lil function to play the clipboard
                'pcmpl-args-pcomplete-on-man)))
 #+end_src
 
+*** Ghostty
+#+begin_src emacs-lisp
+  (use-package gterm
+    :straight (:host github :repo "rwc9u/emacs-libgterm" :files ("*"))
+    :custom (gterm-shell "/usr/bin/bash"))
+#+end_src
+
 *** Eat
 #+begin_src emacs-lisp
   (use-package eat
