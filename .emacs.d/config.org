@@ -1681,12 +1681,26 @@ These are some interactive functions that I use occasionally.
 ** 🐋 Docker
 #+begin_src emacs-lisp
   (use-package dockerfile-ts-mode
-    :straight (:type built-in))
+    ;; This helps with "dockerfile" org codeblocks
+    :init
+    (defalias 'dockerfile-mode 'dockerfile-ts-mode))
 #+end_src
 
 ** Bluetooth
 #+begin_src emacs-lisp
-  (use-package bluetooth)
+  (use-package bluetooth
+    :config
+    (advice-add #'bluetooth-list-devices
+                :before
+                (lambda nil
+                  (when-let* ((called-interactive (called-interactively-p))
+                              (rc-service (executable-find "rc-service")) ; 󰣨 only
+                              (command (format "%s bluetooth start" rc-service))
+                              (󰂯 (shell-command-to-string "pgrep -ia bluetooth"))
+                              (󰂯? (string-empty-p 󰂯))
+                              (confirm (y-or-n-p "Start 󰂯?"))
+                              (default-directory "/sudo::")) ; Escalate
+                    (shell-command command)))))
 #+end_src
 ** System
 A function to shut down the machine.
