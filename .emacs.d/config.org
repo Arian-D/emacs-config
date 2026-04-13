@@ -201,70 +201,22 @@ Meow Tree Sitter
     (add-to-list 'meow-tree-sitter-major-mode-language-alist '("dart" . "dart")))
 #+end_src
 
-*** 😈 Evil
-- [[https://evil.readthedocs.io/en/latest/overview.html][Online docs]]
-- [[info:evil][Info]]
-- [[https://github.com/emacs-evil/evil][GitHub Repo]]
-#+begin_src emacs-lisp
-  (use-package evil
-    :disabled
-    :custom
-    (evil-want-integration t)
-    (evil-want-fine-undo t)
-    (evil-want-keybinding nil)
-    (evil-flash-delay 1)
-    :config
-    (evil-mode 1)
-    (unless (version< emacs-version "28")
-      (setq evil-undo-system 'undo-redo))
-    (evil-set-leader '(normal visual) (kbd "SPC"))
-    (general-def
-      :prefix "<leader>"
-      "q" #'kill-current-buffer
-      ";" #'comment-line
-      "s" #'save-buffer
-      "h v" #'describe-variable
-      "h f" #'describe-function
-      "h i" #'info))
-#+end_src
-
-Along with surround
-#+begin_src emacs-lisp
-  (use-package evil-surround
-    :disabled
-    :config
-    (global-evil-surround-mode 1))
-#+end_src
-
-**** Collection
-[[https://github.com/emacs-evil/evil-collection][evil-collection]] provides more bindings for specific modes.
-#+begin_src emacs-lisp
-  (use-package evil-collection
-    :disabled
-    :after evil
-    :custom (evil-want-keybinding nil)
-    :config
-    (evil-collection-init))
-#+end_src
-
 *** Which key
-- [[https://github.com/justbur/emacs-which-key][GitHub Repo]] (will soon be included in Emacs)
 #+begin_src emacs-lisp
   (use-package which-key
-    :config
-    (setq which-key-idle-delay 0)
+    :custom (which-key-idle-delay 0)
     :hook (after-init . which-key-mode))
 #+end_src
-
 
 *** Embrace
 - A temporary solution for surround-like features in [[*🐱 Meow][meow]].
 #+begin_src emacs-lisp
   (use-package embrace
+    ;; :vc (embrace :url "https://github.com/cute-jumper/embrace.el"
+    ;;              :rev "c7e748603151d7d91c237fd2d9cdf56e9f3b1ea8")
     :straight (embrace
                :host github
-               :repo "cute-jumper/embrace.el"
-               :commit "c7e748603151d7d91c237fd2d9cdf56e9f3b1ea8"))
+               :repo "cute-jumper/embrace.el"))
 #+end_src
 
 ** 🔄 Server
@@ -366,6 +318,7 @@ There's no shame in using the mouse.
     (("C-x b" . consult-buffer)
      ("M-g i" . consult-imenu)
      ("M-g r g" . consult-ripgrep)
+     ("M-g a" . consult-org-agenda)
       :map org-mode-map
      ("M-g i" . consult-org-heading))
     ;; Enable automatic preview at point in the *Completions* buffer. This is
