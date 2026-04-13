@@ -518,14 +518,55 @@ Run garbage collection when idle.
   (run-with-idle-timer (* 60 10) t #'garbage-collect)
 #+end_src
 ** Tramp
+- Some tricks from [[https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./][here]] and the [[https://www.gnu.org/software/tramp/#Frequently-Asked-Questions-1][info manual]]
 #+begin_src emacs-lisp
   (use-package tramp
     :straight (:type built-in)
+    :defer t
+    :custom
+    (remote-file-name-inhibit-locks t)
+    (remote-file-name-inhibit-auto-save-visited t)
     :config
     (dolist (method '("flatpak" "distrobox" "toolbox"))
       (when (executable-find method)
         (tramp-enable-method method)))
     (add-to-list 'tramp-remote-path "/snap/bin"))
+#+end_src
+** EWM
+We are so back.
+#+begin_src emacs-lisp
+  (defmacro $ (&rest tokens)
+    "Run command"
+    (pcase-let* ((stringify
+                  (lambda (s) (format (if (stringp s) "\"%s\"" "%s") s)))
+                 (tokens (mapcar stringify tokens))
+                 (`(,command ,_) tokens)
+                 (shell-command (string-join tokens " ")))
+      (start-process command
+                     nil
+                     "bash"
+                     "-c"
+                     shell-command)))
+
+  ;; TODO: Use use-package instead of this
+  (with-eval-after-load 'ewm
+    (setopt ewm-output-config
+            '(("eDP-1" :scale 1.5))
+            ewm-input-config
+            '((touchpad
+               :natural-scroll t
+               :tap t
+               :dwt t
+               :accel-speed 0.3
+               :accel-profile "adaptive")))
+    (add-to-list 'ewm-intercept-prefixes (kbd "s-SPC"))
+    (add-to-list 'ewm-intercept-prefixes (kbd "s-p"))
+    (define-key ewm-mode-map (kbd "s-<return>") #'ghostel)
+    (define-key ewm-mode-map (kbd "s-SPC") #'consult-buffer)
+    (define-key ewm-mode-map (kbd "s-p")
+                (lambda ()
+                  (interactive)
+                  ($ grim -g "$(slurp)" - | wl-copy))))
 #+end_src
 
 * 🌈 UI
@@ -556,15 +597,15 @@ Replace the default splash screen with an org buffer
 #+end_src
 ** ✍ Face and Fonts
 - The default [[info:emacs#Faces][face]] fonts are selected based on the lists below.
-
 #+begin_src emacs-lisp
-  (when-let ((font-picker (apply-partially #'seq-filter #'x-list-fonts))
-             (mono-font (car (funcall font-picker '("Fantasque Sans Mono" "Iosevka Fixed"))))
-             (variable-font (car (funcall font-picker '("Latin Modern Roman" "EB Garamond")))))
+  (when-let* ((is-gui (display-graphic-p))
+  	          (font-picker (apply-partially #'seq-filter #'x-list-fonts))
+              (mono-font (car (funcall font-picker '("Maple Mono NF" "Fantasque Sans Mono" "Iosevka Fixed"))))
+              (variable-font (car (funcall font-picker '("Latin Modern Roman" "EB Garamond")))))
     (set-face-attribute
      'default nil
      :family mono-font
-     :height 150)
+     :height 125)
     (set-face-attribute
      'variable-pitch nil
      :family variable-font
@@ -589,25 +630,23 @@ Doom themes are very nice.
 #+end_src
 
 #+begin_src emacs-lisp
-  (set-frame-parameter nil 'alpha-background 95)
-
-  (add-to-list 'default-frame-alist '(alpha-background . 95))
+  ;; (set-frame-parameter nil 'alpha-background 95)
+  ;; (add-to-list 'default-frame-alist '(alpha-background . 95))
 #+end_src
 
 ** → Modeline
 - https://seagle0128.github.io/doom-modeline/
--
 #+begin_src emacs-lisp
   (use-package doom-modeline
     :after nerd-icons
     :hook (after-init . doom-modeline-mode)
-    :config
-    (setq doom-modeline-height 1
-          doom-modeline-buffer-encoding nil
-          doom-modeline-percent-position '(-3 "")
-          doom-modeline-buffer-file-name-style 'truncate-all))
+    :custom
+    (doom-modeline-height 2)
+    (doom-modeline-buffer-file-name-style 'truncate-all))
 #+end_src
 
+*** F11 detail
+- Since the bar becomes invisible
 #+begin_src emacs-lisp
   (advice-add
    #'toggle-frame-fullscreen
@@ -1360,16 +1399,6 @@ Org mode, but for the average pleb.
     :after markdown-mode)
 #+end_src
 
-** Visual column mode
-[[https://codeberg.org/joostkremers/visual-fill-column][This]] is for
-#+begin_src emacs-lisp
-  (use-package visual-fill-column
-    :hook (org-mode . (lambda ()
-                        (setq visual-fill-column-width 150
-                              visual-fill-column-center-text t)
-                        (visual-fill-column-mode 1))))
-#+end_src
-
 ** Org Pandoc Import
 [[https://github.com/tecosaur/org-pandoc-import][This]] can help me not view markdown files in markdown.
 #+begin_src emacs-lisp
@@ -1476,18 +1505,27 @@ No hope is left for me; let the llama write these org files now.
                            :args ("run"
                                   "-i"
                                   "--rm"
-                                  "--pull=newer"
                                   "docker.io/mcp/wikipedia-mcp")))
-       ("deepwiki" . (:url "https://mcp.deepwiki.com/sse"))))
+       ("deepwiki" . (:url "https://mcp.deepwiki.com/mcp"))
+       ("nushell" . (:command "nu"
+                              :args ("--mcp")))))
     :config (require 'mcp-hub))
 #+END_SRC
 
-** EXWM
 #+begin_src emacs-lisp
-  (use-package exwm
-    :when (eq 'x (framep (selected-frame)))
-    :config (exwm-enable))
+  (use-package gptel-agent
+    :after (gptel mcp)
+    :straight (:host github :repo "karthink/gptel-agent")
+    :config (gptel-agent-update))
 #+end_src
+
+#+begin_src emacs-lisp
+  (defun gptel-ollama-refresh-models ()
+    "Fetch the most recent models"
+    (interactive)
+    (message "TODO"))
+#+end_src
+
 ** 💌 Messaging
 *** Matrix
 Ement
