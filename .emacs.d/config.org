@@ -1778,9 +1778,18 @@ A lil function to play the clipboard
 
 *** Ghostty
 #+begin_src emacs-lisp
-  (use-package gterm
-    :straight (:host github :repo "rwc9u/emacs-libgterm" :files ("*"))
-    :custom (gterm-shell "/usr/bin/bash"))
+  (use-package ghostel
+    :straight (:host github :repo "dakra/ghostel" :files ("*"))
+    :custom (ghostel-shell
+             (car
+              (mapcar
+               #'executable-find
+               (list "nu"
+                     "bash"
+                     "powershell"
+                     "zsh"
+                     "fish"
+                     "sh")))))
 #+end_src
 
 *** Eat
