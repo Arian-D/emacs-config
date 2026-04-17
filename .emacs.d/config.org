@@ -536,17 +536,21 @@ Run garbage collection when idle.
 We are so back.
 #+begin_src emacs-lisp
   (defmacro $ (&rest tokens)
-    "Run command"
-    (pcase-let* ((stringify
-                  (lambda (s) (format (if (stringp s) "\"%s\"" "%s") s)))
+    "Return elisp command from bash command"
+    (pcase-let* ((stringify (lambda (s)
+                              (format
+                               (if (stringp s) "\"%s\"" "%s")
+                               s)))
                  (tokens (mapcar stringify tokens))
                  (`(,command ,_) tokens)
                  (shell-command (string-join tokens " ")))
-      (start-process command
-                     nil
-                     "bash"
-                     "-c"
-                     shell-command)))
+      `(lambda ()
+         (interactive)
+         (start-process ,command
+                        nil
+                        "bash"
+                        "-c"
+                        ,shell-command))))
 
   ;; TODO: Use use-package instead of this
   (with-eval-after-load 'ewm
@@ -563,10 +567,8 @@ We are so back.
     (add-to-list 'ewm-intercept-prefixes (kbd "s-p"))
     (define-key ewm-mode-map (kbd "s-<return>") #'ghostel)
     (define-key ewm-mode-map (kbd "s-SPC") #'consult-buffer)
-    (define-key ewm-mode-map (kbd "s-p")
-                (lambda ()
-                  (interactive)
-                  ($ grim -g "$(slurp)" - | wl-copy))))
+    (define-key ewm-mode-map (kbd "s-p") ($ grim -g "$(slurp)" - | wl-copy))
+    (define-key ewm-mode-map (kbd "s-l") ($ swaylock -c "000000")))
 #+end_src
 
 * 🌈 UI
