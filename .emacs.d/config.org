@@ -1541,10 +1541,11 @@ Ement
   #+begin_src emacs-lisp
     (use-package rcirc
       :straight (:type built-in)
+      :defer t
       :custom
       (rcirc-prompt "→ ")
       :config
-      (when-let* ((host "172.16.6.1")
+      (when-let* ((host "192.168.1.69")
                   (matches (auth-source-search :host host))
                   (libera (car matches))
                   (username (plist-get libera :user))
@@ -1560,8 +1561,33 @@ Ement
       :hook
       (rcirc-mode . (lambda ()
                             (rcirc-track-minor-mode 1))))
+
+
+    (defun my/close-rcirc ()
+      "Little helper to clean up rcirc buffers"
+      (interactive)
+      (when-let* ((rcirc-buffer? (apply-partially
+                                  #'buffer-match-p
+                                  '(derived-mode . rcirc-mode)))
+                  (buffers (buffer-list))
+                  (rcirc-buffers (seq-filter rcirc-buffer? buffers)))
+        (mapc #'kill-buffer rcirc-buffers)))
   #+end_src
-  
+
+  #+begin_src emacs-lisp
+    (use-package erc
+      :straight (:type built-in)
+      ;; (rcirc-prompt "→ ")
+      :custom
+      (erc-default-server "172.16.6.1"))
+
+    (use-package erc-services
+      :straight (:type built-in)
+      :after erc
+      :custom
+      (erc-use-auth-source-for-nickserv-password t))
+  #+end_src
+
 *** TODO XMPP
 #+begin_src emacs-lisp
   ;; (use-package jabber)
