@@ -1873,7 +1873,7 @@ A lil function to play the clipboard
   (use-package osm)
 #+end_src
 
-** Helpers
+** Jestergooning
 #+begin_src emacs-lisp
   (defun 🎲 ()
     "Roll a die"
@@ -1881,6 +1881,21 @@ A lil function to play the clipboard
     (princ
      (seq-random-elt '(⚀ ⚁ ⚂ ⚃ ⚄ ⚅))))
 #+end_src
+
+#+begin_src emacs-lisp
+  (when (executable-find "kokoro-tts")
+    (defun speak-region (beg end)
+      "Use `kokoro-tts' for TTSing the region"
+      (interactive "r")
+      (call-process-region beg end
+                           "bash"
+                           nil
+                           0
+                           nil
+                           "-c"
+                           "kokoro-tts | mpv -")))
+#+end_src
+
 * My content
 ** Niri refresh rate
 #+begin_src emacs-lisp
