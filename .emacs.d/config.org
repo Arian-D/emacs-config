@@ -542,14 +542,13 @@ Run garbage collection when idle.
     :config
     (dolist (method '("flatpak" "distrobox" "toolbox"))
       (when (executable-find method)
-        (tramp-enable-method method)))
-    (add-to-list 'tramp-remote-path "/snap/bin"))
+        (tramp-enable-method method))))
 #+end_src
 ** EWM
 We are so back.
 #+begin_src emacs-lisp
   (defmacro $ (&rest tokens)
-    "Return elisp command from bash command"
+    "Return interactive elisp function from bash command"
     (pcase-let* ((stringify (lambda (s)
                               (format
                                (if (stringp s) "\"%s\"" "%s")
