@@ -1771,16 +1771,28 @@ Playing music has never been easier.
     :straight (empv :host github :repo "isamert/empv.el")
     :when (executable-find "mpv")
     :custom
-    (empv-invidious-instance "https://invidious.reallyaweso.me/api/v1"))
+    (empv-invidious-instance "https://iv.melmac.space/api/v1"))
 #+end_src
 
-A lil function to play the clipboard
+Silly little advice for "caching"
 #+begin_src emacs-lisp
-  (defun empv-clipbard ()
-    (interactive)
-    (let ((clipboard (gui-get-selection)))
-      (when (string-match "youtube.com" clipboard)
-        (empv-play clipboard))))
+  ;; TODO: Make this recursive for list of URIs
+  (defun save-yt-audio (url)
+    "Save `url' to `~/🎵/∀/' if it's not there."
+    (pcase-let* ((📁 "~/🎵/∀/")
+                 (url-struct (url-generic-parse-url url))
+                 (`("/watch" . ,query) (url-path-and-query url-struct))
+                 (queries (url-parse-query-string query))
+                 (`("v" ,󰗃) (assoc "v" queries))
+                 (glob (expand-file-name (format "*%s*.*" 󰗃) 📁))
+                 (🎵 (file-expand-wildcards glob)))
+      (unless 🎵
+        (when-let* ((󰇚? (y-or-n-p (format "Also download %s? " url)))
+                    (default-directory 📁)
+                    (󰦗 (eval `($ yt-dlp -f bestaudio ,url))))
+          (funcall 󰦗)))))
+
+  (advice-add #'empv-play :before #'save-yt-audio)
 #+end_src
 
 ** Shell
