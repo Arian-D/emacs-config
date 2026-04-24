@@ -545,7 +545,8 @@ Run garbage collection when idle.
         (tramp-enable-method method))))
 #+end_src
 ** EWM
-We are so back.
+
+Silly little helper macro for inlining POSIX shell snippets.
 #+begin_src emacs-lisp
   (defmacro $ (&rest tokens)
     "Return interactive elisp function from bash command"
@@ -563,23 +564,33 @@ We are so back.
                         "bash"
                         "-c"
                         ,shell-command))))
+#+end_src
+You can do stuff like =(funcall ($ cat move.mp4 | mpv - 2> /dev/null))=.
 
+We are so back.
+#+begin_src emacs-lisp
   ;; TODO: Use use-package instead of this
   (with-eval-after-load 'ewm
     (setopt ewm-output-config
-            '(("eDP-1" :scale 1.5))
+            '(("eDP-1"
+               :scale 1.5)
+              ("HDMI-A-1"
+               :refresh 60
+               :scale 1.5))
             ewm-input-config
             '((touchpad
                :natural-scroll t
                :tap t
                :dwt t
                :accel-speed 0.3
-               :accel-profile "adaptive")))
+               :accel-profile "adaptive"))
+            ewm-idle `(300 . "swaylock -f -c 000000"))
     (add-to-list 'ewm-intercept-prefixes (kbd "s-SPC"))
     (add-to-list 'ewm-intercept-prefixes (kbd "s-p"))
     (define-key ewm-mode-map (kbd "s-<return>") #'ghostel)
     (define-key ewm-mode-map (kbd "s-SPC") #'consult-buffer)
     (define-key ewm-mode-map (kbd "s-p") ($ grim -g "$(slurp)" - | wl-copy))
+    (define-key ewm-mode-map (kbd "s-t") ($ grim -g "$(slurp)" - | tesseract - - | wl-copy))
     (define-key ewm-mode-map (kbd "s-l") ($ swaylock -c "000000")))
 #+end_src
 
