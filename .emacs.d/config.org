@@ -1832,20 +1832,29 @@ Silly little advice for "caching"
                'pcmpl-args-pcomplete-on-man)))
 #+end_src
 
-*** Ghostty
+***  👻 Ghostel
 #+begin_src emacs-lisp
   (use-package ghostel
-    :straight (:host github :repo "dakra/ghostel" :files ("*"))
-    :custom (ghostel-shell
-             (car
-              (mapcar
-               #'executable-find
-               (list "nu"
-                     "bash"
-                     "powershell"
-                     "zsh"
-                     "fish"
-                     "sh")))))
+    :straight (ghostel :host github
+                       :repo "dakra/ghostel"
+                       :files (:defaults
+                               "etc"
+                               "src"
+                               "vendor"
+                               "build.zig"
+                               "build.zig.zon"
+                               "symbols.map")
+                       :branch "v0.18.0")
+    :custom
+    (ghostel-shell (car
+                    (mapcar
+                     #'executable-find
+                     (list "nu"
+                           "bash"
+                           "powershell"
+                           "zsh"
+                           "fish"
+                           "sh")))))
 #+end_src
 
 *** Eat
