@@ -565,7 +565,7 @@ Silly little helper macro for inlining POSIX shell snippets.
                         "-c"
                         ,shell-command))))
 #+end_src
-You can do stuff like =(funcall ($ cat move.mp4 | mpv - 2> /dev/null))=.
+You can do stuff like =(funcall ($ cat movie.mp4 | mpv - 2> /dev/null))=.
 
 We are so back.
 #+begin_src emacs-lisp
@@ -584,7 +584,7 @@ We are so back.
                :dwt t
                :accel-speed 0.3
                :accel-profile "adaptive"))
-            ewm-idle `(300 . "swaylock -f -c 000000"))
+            ewm-idle `(300 . "swaylock -c 000000"))
     (add-to-list 'ewm-intercept-prefixes (kbd "s-SPC"))
     (add-to-list 'ewm-intercept-prefixes (kbd "s-p"))
     (define-key ewm-mode-map (kbd "s-<return>") #'ghostel)
