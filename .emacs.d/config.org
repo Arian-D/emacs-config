@@ -571,27 +571,38 @@ We are so back.
 #+begin_src emacs-lisp
   ;; TODO: Use use-package instead of this
   (with-eval-after-load 'ewm
+    ;; Configure (out|in)put
     (setopt ewm-output-config
             '(("eDP-1"
                :scale 1.5)
               ("HDMI-A-1"
                :refresh 60
-               :scale 1.5))
+               :scale 1.25))
             ewm-input-config
             '((touchpad
                :natural-scroll t
                :tap t
                :dwt t
                :accel-speed 0.3
-               :accel-profile "adaptive"))
-            ewm-idle `(300 . "swaylock -c 000000"))
-    (add-to-list 'ewm-intercept-prefixes (kbd "s-SPC"))
-    (add-to-list 'ewm-intercept-prefixes (kbd "s-p"))
+               :accel-profile "adaptive")))
+    ;; Lock screen on idle
+    (setopt ewm-idle `(300 . "swaylock -c 000000"))
+    ;; Reconfigure fonts, since `display-graphic-p' returns nil when ewm is launching
+    (my/configure-fonts)
+    ;; Configure keybindings
     (define-key ewm-mode-map (kbd "s-<return>") #'ghostel)
+    (add-to-list 'ewm-intercept-prefixes (kbd "s-SPC"))
     (define-key ewm-mode-map (kbd "s-SPC") #'consult-buffer)
+    (add-to-list 'ewm-intercept-prefixes (kbd "s-p"))
     (define-key ewm-mode-map (kbd "s-p") ($ grim -g "$(slurp)" - | wl-copy))
-    (define-key ewm-mode-map (kbd "s-t") ($ grim -g "$(slurp)" - | tesseract - - | wl-copy))
-    (define-key ewm-mode-map (kbd "s-l") ($ swaylock -c "000000")))
+    (define-key ewm-mode-map (kbd "s-t") ($ grim -g "$(slurp)" -
+                                            | tesseract - -
+                                            | wl-copy))
+    (define-key ewm-mode-map (kbd "s-l") ($ swaylock -c "000000"))
+    (add-to-list 'ewm-intercept-prefixes "s-<AudioNext>")
+    (define-key ewm-mode-map (kbd "s-<AudioNext>") #'ewm-next-surface-buffer)
+    (add-to-list 'ewm-intercept-prefixes "s-<AudioPrev>")
+    (define-key ewm-mode-map (kbd "s-<AudioPrev>") #'ewm-prev-surface-buffer))
 #+end_src
 
 * 🌈 UI
@@ -623,18 +634,22 @@ Replace the default splash screen with an org buffer
 ** ✍ Face and Fonts
 - The default [[info:emacs#Faces][face]] fonts are selected based on the lists below.
 #+begin_src emacs-lisp
-  (when-let* ((is-gui (display-graphic-p))
-  	          (font-picker (apply-partially #'seq-filter #'x-list-fonts))
-              (mono-font (car (funcall font-picker '("Maple Mono NF" "Fantasque Sans Mono" "Iosevka Fixed"))))
-              (variable-font (car (funcall font-picker '("Latin Modern Roman" "EB Garamond")))))
-    (set-face-attribute
-     'default nil
-     :family mono-font
-     :height 125)
-    (set-face-attribute
-     'variable-pitch nil
-     :family variable-font
-     :height 150))
+  (defun my/configure-fonts ()
+    "Configure fonts"
+    (when-let* ((font-picker (apply-partially #'seq-filter #'x-list-fonts))
+                (mono-font (car (funcall font-picker '("Maple Mono NF" "Fantasque Sans Mono" "Iosevka Fixed"))))
+                (variable-font (car (funcall font-picker '("Latin Modern Roman" "EB Garamond")))))
+      (set-face-attribute
+       'default nil
+       :family mono-font
+       :height 125)
+      (set-face-attribute
+       'variable-pitch nil
+       :family variable-font
+       :height 150)))
+
+  (when (display-graphic-p)
+    (my/configure-fonts))
 #+end_src
 
 ** 🎨Theme
