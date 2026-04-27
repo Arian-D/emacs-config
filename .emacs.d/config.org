@@ -586,23 +586,26 @@ We are so back.
                :accel-speed 0.3
                :accel-profile "adaptive")))
     ;; Lock screen on idle
-    (setopt ewm-idle `(300 . "swaylock -c 000000"))
+    ;; (setopt ewm-idle `(300 . "swaylock -c 000000"))
     ;; Reconfigure fonts, since `display-graphic-p' returns nil when ewm is launching
     (my/configure-fonts)
     ;; Configure keybindings
     (define-key ewm-mode-map (kbd "s-<return>") #'ghostel)
-    (add-to-list 'ewm-intercept-prefixes (kbd "s-SPC"))
-    (define-key ewm-mode-map (kbd "s-SPC") #'consult-buffer)
-    (add-to-list 'ewm-intercept-prefixes (kbd "s-p"))
+    (define-key ewm-mode-map (kbd "s-b") #'consult-buffer)
     (define-key ewm-mode-map (kbd "s-p") ($ grim -g "$(slurp)" - | wl-copy))
     (define-key ewm-mode-map (kbd "s-t") ($ grim -g "$(slurp)" -
                                             | tesseract - -
                                             | wl-copy))
     (define-key ewm-mode-map (kbd "s-l") ($ swaylock -c "000000"))
-    (add-to-list 'ewm-intercept-prefixes "s-<AudioNext>")
+    (define-key ewm-mode-map (kbd "s-SPC") #'meow-keypad)
     (define-key ewm-mode-map (kbd "s-<AudioNext>") #'ewm-next-surface-buffer)
-    (add-to-list 'ewm-intercept-prefixes "s-<AudioPrev>")
-    (define-key ewm-mode-map (kbd "s-<AudioPrev>") #'ewm-prev-surface-buffer))
+    (define-key ewm-mode-map (kbd "s-<AudioPrev>") #'ewm-prev-surface-buffer)
+    (setopt ewm-intercept-prefixes
+            '("C-x" "C-u" "C-h" "M-x" "s-h"
+              "s-SPC"
+              ("s-f" :fullscreen)
+              ("<Print>" :fullscreen)))
+    (ewm--send-intercept-keys))
 #+end_src
 
 * 🌈 UI
