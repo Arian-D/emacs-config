@@ -545,7 +545,6 @@ Run garbage collection when idle.
         (tramp-enable-method method))))
 #+end_src
 ** EWM
-
 Silly little helper macro for inlining POSIX shell snippets.
 #+begin_src emacs-lisp
   (defmacro $ (&rest tokens)
@@ -561,7 +560,7 @@ Silly little helper macro for inlining POSIX shell snippets.
          (interactive)
          (start-process ,command
                         nil
-                        "bash"
+                        "bash"            ; TODO: Dynamically select based on $SHELL
                         "-c"
                         ,shell-command))))
 #+end_src
@@ -569,43 +568,53 @@ You can do stuff like =(funcall ($ cat movie.mp4 | mpv - 2> /dev/null))=.
 
 We are so back.
 #+begin_src emacs-lisp
-  ;; TODO: Use use-package instead of this
-  (with-eval-after-load 'ewm
-    ;; Configure (out|in)put
-    (setopt ewm-output-config
-            '(("eDP-1"
-               :scale 1.5)
-              ("HDMI-A-1"
-               :refresh 60
-               :scale 1.25))
-            ewm-input-config
-            '((touchpad
-               :natural-scroll t
-               :tap t
-               :dwt t
-               :accel-speed 0.3
-               :accel-profile "adaptive")))
-    ;; Lock screen on idle
-    ;; (setopt ewm-idle `(300 . "swaylock -c 000000"))
-    ;; Reconfigure fonts, since `display-graphic-p' returns nil when ewm is launching
-    (my/configure-fonts)
-    ;; Configure keybindings
-    (define-key ewm-mode-map (kbd "s-<return>") #'ghostel)
-    (define-key ewm-mode-map (kbd "s-b") #'consult-buffer)
-    (define-key ewm-mode-map (kbd "s-p") ($ grim -g "$(slurp)" - | wl-copy))
-    (define-key ewm-mode-map (kbd "s-t") ($ grim -g "$(slurp)" -
-                                            | tesseract - -
-                                            | wl-copy))
-    (define-key ewm-mode-map (kbd "s-l") ($ swaylock -c "000000"))
-    (define-key ewm-mode-map (kbd "s-SPC") #'meow-keypad)
-    (define-key ewm-mode-map (kbd "s-<AudioNext>") #'ewm-next-surface-buffer)
-    (define-key ewm-mode-map (kbd "s-<AudioPrev>") #'ewm-prev-surface-buffer)
-    (setopt ewm-intercept-prefixes
-            '("C-x" "C-u" "C-h" "M-x" "s-h"
-              "s-SPC"
-              ("s-f" :fullscreen)
-              ("<Print>" :fullscreen)))
-    (ewm--send-intercept-keys))
+  (setopt
+   my/📸 ($ grim -g "$(slurp)" - | wl-copy)
+   my/ocr ($ grim -g "$(slurp)" -
+             | tesseract - -
+             | wl-copy)
+   my/🔒 ($ swaylock -c "000000"))
+
+  (use-package ewm
+    :straight (:type built-in)
+    :when (getenv "EWM_MODULE_PATH")
+    :custom
+    ;; Configure output
+    (ewm-output-config
+     '(("eDP-1"
+        :scale 1.5)
+       ("HDMI-A-1"
+        :refresh 60
+        :scale 1.25)))
+    ;; Configure inputs
+     (ewm-input-config
+     '((touchpad
+        :natural-scroll t
+        :tap t
+        :dwt t
+        :accel-speed 0.3
+        :accel-profile "adaptive")))
+     ;; Configure passthru prefixes
+     (ewm-intercept-prefixes
+      '("C-x" "C-u" "C-h" "M-x" "s-h"
+        "s-SPC"
+        ("s-f" :fullscreen)
+        ("<print>" :fullscreen)))
+     :bind
+     ("s-<return>" . ghostel)
+     ("s-b" . consult-buffer)
+     ("s-p" . my/📸)
+     ("s-t" . my/ocr)
+     ("s-l" . my/🔒)
+     ("<print>" . meow-keypad)
+     ("s-SPC" . meow-keypad)
+     ("s-<AudioNext>" . ewm-next-surface-buffer)
+     ("s-<AudioPrev>" . ewm-prev-surface-buffer)
+     :config
+     (my/configure-fonts)
+     (ewm--send-intercept-keys)
+     (when (executable-find "gentoo-pipewire-launcher")
+       (funcall ($ gentoo-pipewire-launcher restart &))))
 #+end_src
 
 * 🌈 UI
