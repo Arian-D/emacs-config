@@ -598,6 +598,7 @@ We are so back.
      (ewm-intercept-prefixes
       '("C-x" "C-u" "C-h" "M-x" "s-h"
         "s-SPC"
+        "s-<AudioNext>" "s-<AudioPrev>"
         ("s-f" :fullscreen)
         ("<print>" :fullscreen)))
      :bind
