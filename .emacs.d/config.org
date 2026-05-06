@@ -1882,9 +1882,11 @@ Silly little advice for "caching"
                                "vendor"
                                "build.zig"
                                "build.zig.zon"
-                               "symbols.map")
-                       :branch "v0.18.0")
+                               "symbols.map"
+                               "Makefile")
+                       :branch "v0.22.1")
     :custom
+    (ghostel-module-auto-install 'compile)
     (ghostel-shell (car
                     (mapcar
                      #'executable-find
