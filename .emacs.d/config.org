@@ -1946,8 +1946,11 @@ Silly little advice for "caching"
 #+begin_src emacs-lisp
   (when (executable-find "kokoro-tts")
     (defun speak-region (beg end)
-      "Use `kokoro-tts' for TTSing the region"
-      (interactive "r")
+      "Use `kokoro-tts' + `mpv' for TTSing the region (or buffer if
+  region is inactive)"
+      (interactive (if (region-active-p)
+                     (list (region-beginning) (region-end))
+                   (list (point-min) (point-max))))
       (call-process-region beg end
                            "bash"
                            nil
