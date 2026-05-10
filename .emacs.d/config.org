@@ -254,23 +254,15 @@ more minimalistic, and it relies on the built-in Emacs completion framework.
 #+begin_src emacs-lisp
   (use-package vertico
     :straight (:host github
-                     :repo "minad/vertico"
-                     :includes vertico-mouse
-                     :files (:defaults "extensions/vertico-mouse.el"
-                                       "extensions/vertico-multiform.el"))
-    :init
-    (vertico-mode)
-    :bind
-    (("<print>" . execute-extended-command))
-    ;; DifferentDifferent scroll margin
-    ;; (setq vertico-scroll-margin 0)
+                    :repo "minad/vertico"
+                    :includes vertico-mouse
+                    :files (:defaults "extensions/vertico-mouse.el"
+                                      "extensions/vertico-multiform.el"))
+    :hook (after-init . vertico-mode)
     :custom
-    ;; Grow and shrink the Vertico minibuffer
     (vertico-resize t)
-    ;; I have a big screen :)
-    (vertico-count 20)
+    (vertico-count (/ (window-total-height) 5))
 
-    ;; Optionally enable cycling for `vertico-next' and `vertico-previousvertico-previous'.
     (vertico-cycle t)
     (read-file-name-completion-ignore-case t)
     (read-buffer-completion-ignore-case t)
