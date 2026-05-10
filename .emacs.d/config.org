@@ -549,6 +549,7 @@ Silly little helper macro for inlining POSIX shell snippets.
                  (`(,command ,_) tokens)
                  (shell-command (string-join tokens " ")))
       `(lambda ()
+         ,(format "Runs the command `%s'" shell-command)
          (interactive)
          (start-process ,command
                         nil
@@ -560,15 +561,15 @@ You can do stuff like =(funcall ($ cat movie.mp4 | mpv - 2> /dev/null))=.
 
 We are so back.
 #+begin_src emacs-lisp
-  (setopt
-   my/📸 ($ grim -g "$(slurp)" - | wl-copy)
-   my/ocr ($ grim -g "$(slurp)" -
-             | tesseract - -
-             | wl-copy)
-   my/🔒 ($ swaylock -c "000000"))
+  (fset 'my/📸 ($ grim -g "$(slurp)" - | wl-copy))
+  (fset 'my/ocr ($ grim -g "$(slurp)" -
+                  | tesseract - -
+                  | wl-copy))
+  (fset 'my/🔒 ($ swaylock -c "000000"))
 
   (use-package ewm
     :straight (:type built-in)
+    :defer t
     :when (getenv "EWM_MODULE_PATH")
     :custom
     ;; Configure output
@@ -589,22 +590,22 @@ We are so back.
      ;; Configure passthru prefixes
      (ewm-intercept-prefixes
       '("C-x" "C-u" "C-h" "M-x" "s-h"
-        "s-SPC"
+        "s-SPC" "s-<return>"
         "s-<AudioNext>" "s-<AudioPrev>"
         ("s-f" :fullscreen)
         ("<print>" :fullscreen)))
      :bind
      ("s-<return>" . ghostel)
-     ("s-b" . consult-buffer)
+     ("s-SPC" . consult-buffer)
      ("s-p" . my/📸)
      ("s-t" . my/ocr)
-     ("s-l" . my/🔒)
+     ([remap ewm-lock-session] . my/🔒)
      ("<print>" . meow-keypad)
-     ("s-SPC" . meow-keypad)
      ("s-<AudioNext>" . ewm-next-surface-buffer)
      ("s-<AudioPrev>" . ewm-prev-surface-buffer)
+     ;; :hook
+     ;; (after-init . my/configure-fonts)
      :config
-     (my/configure-fonts)
      (ewm--send-intercept-keys)
      (when (executable-find "gentoo-pipewire-launcher")
        (funcall ($ gentoo-pipewire-launcher restart &))))
