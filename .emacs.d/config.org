@@ -1589,7 +1589,17 @@ Ement
       :custom
       (rcirc-prompt "→ ")
       :config
-      (when-let* ((host "192.168.1.69")
+      ;; Clean up buffers after QUITting
+      (advice-add 'rcirc-cmd-quit
+                :after
+                (lambda (_ _ _)
+                  (when-let* ((rcirc-buffer? (apply-partially
+                                              #'buffer-match-p
+                                              '(derived-mode . rcirc-mode)))
+                              (buffers (buffer-list))
+                              (rcirc-buffers (seq-filter rcirc-buffer? buffers)))
+                    (mapc #'kill-buffer rcirc-buffers))))
+       (when-let* ((host "192.168.1.69")
                   (matches (auth-source-search :host host))
                   (libera (car matches))
                   (username (plist-get libera :user))
@@ -1604,18 +1614,7 @@ Ement
                    :encryption tls))))
       :hook
       (rcirc-mode . (lambda ()
-                            (rcirc-track-minor-mode 1))))
-
-
-    (defun my/close-rcirc ()
-      "Little helper to clean up rcirc buffers"
-      (interactive)
-      (when-let* ((rcirc-buffer? (apply-partially
-                                  #'buffer-match-p
-                                  '(derived-mode . rcirc-mode)))
-                  (buffers (buffer-list))
-                  (rcirc-buffers (seq-filter rcirc-buffer? buffers)))
-        (mapc #'kill-buffer rcirc-buffers)))
+                      (rcirc-track-minor-mode 1))))
   #+end_src
 
   #+begin_src emacs-lisp
