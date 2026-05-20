@@ -199,7 +199,8 @@ What is EMACS without the /MACroS/.
     (meow-global-mode 1)
     ;; https://github.com/meow-edit/meow/issues/317#issuecomment-1233622579
     (meow-define-state disable "dummy state")
-    (add-to-list 'meow-mode-state-list '(ghostel-mode . disable)))
+    ;; (add-to-list 'meow-mode-state-list '(ghostel-mode . disable))
+    )
 #+end_src
 
 Meow Tree Sitter
@@ -1591,15 +1592,16 @@ Ement
       :config
       ;; Clean up buffers after QUITting
       (advice-add 'rcirc-cmd-quit
-                :after
-                (lambda (_ _ _)
-                  (when-let* ((rcirc-buffer? (apply-partially
-                                              #'buffer-match-p
-                                              '(derived-mode . rcirc-mode)))
-                              (buffers (buffer-list))
-                              (rcirc-buffers (seq-filter rcirc-buffer? buffers)))
-                    (mapc #'kill-buffer rcirc-buffers))))
-       (when-let* ((host "192.168.1.69")
+                  :after
+                  (lambda (_ _ _)
+                    (when-let* ((rcirc-buffer? (apply-partially
+                                                #'buffer-match-p
+                                                '(derived-mode . rcirc-mode)))
+                                (buffers (buffer-list))
+                                (rcirc-buffers (seq-filter rcirc-buffer? buffers)))
+                      (mapc #'kill-buffer rcirc-buffers))))
+
+      (when-let* ((host "192.168.1.69")
                   (matches (auth-source-search :host host))
                   (libera (car matches))
                   (username (plist-get libera :user))
