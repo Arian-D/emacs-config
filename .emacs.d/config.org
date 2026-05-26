@@ -868,7 +868,13 @@ All thanks to eglot
                 ".bu"
                 ".butane")
             string-end) . yaml-ts-mode)
+    :hook (yaml-ts-mode . eglot-ensure)
     :config
+    (add-to-list
+     'eglot-workspace-configuration
+     '(:yaml (:schemaStore (:enable t))
+             (:kubernetesCRDStore (:enable t))
+             (:format (:enable t))))
     (unless (executable-find "yaml-language-server")
       (add-to-list
        'eglot-server-programs
