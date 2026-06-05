@@ -2,23 +2,12 @@
 #+property: header-args :results silent
 #+startup: fold
 
-This config has grown over the years, and it will continue to
-grow. Feel free to look around.
-
-To run, it'd be something along the lines of this (on Linux and BSD):
-#+begin_src bash
-  # Symlink
-  ln -s $PWD/.emacs.d $HOME
-
-  # Run
-  $PWD/manifest.scm
-#+end_src
-
+A live document that infects every machine I use.
 
 * 🤔 Understanding this
 ** 🤓 Literate
 This configuration is [[https://en.wikipedia.org/wiki/Literate_programming][literate]], as in, the file you're reading /is/ the
-actual program. Instead of tangling, I load it from [[./.emacs.d/init.el][the init file]]
+actual program. Instead of tangling, I load it from [[./init.el][the init file]]
 directly, which is slower, but more convenient.
 
 ** Inspiration
