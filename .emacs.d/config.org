@@ -1275,9 +1275,14 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
           '(("t"
              "✅ Todo"
              entry
-             (file+headline "~/Org/shared/tasks.org" "🤔 Tasks") "** TODO %?\n%U\n %i%x\n"
+             (file "~/Org/nextcloud/todo.org") "* TODO %?\n%U\n %i%x\n"
+             :empty-lines 1
+             :jump-to-captured t)
+            ("r"
+             "📖 Read"
+             entry
+             (file+headline "~/Org/shared/∀.org" "Reading list") "** TODO %? :read:\n%U\n %i%x\n"
              :empty-lines 1)
-            ("p" "🔒 Private Todo" entry (file+headline "~/Org/agenda/life.org.gpg" "💡 Thoughts") "* %?\n%T %i\n")
             ("T" "🧠 Thought" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %?\n%U %i\n")
             ("?" "❓ Question" entry (file+headline "~/Org/shared/tmp.org" "❓ Questions") "* %?\n%U %i\n")
             ("l" "📚 Learn" entry (file+headline "~/Org/shared/thoughts.org" "💡 Thoughts") "* %? :learn:\n%U %i\n")
