@@ -1888,7 +1888,7 @@ Silly little advice for "caching"
 #+end_src
 
 * My content
-** Niri refresh rate
+** COMMENT Niri refresh rate
 #+begin_src emacs-lisp
   (defun adjust-refresh-rate ()
     "Adjust Niri's refresh rate based on charging status"
@@ -1901,8 +1901,8 @@ Silly little advice for "caching"
                   (command (format "niri msg output eDP-1 mode 2880x1800@%s" refresh-rate)))
         (shell-command command))))
 
-  (run-with-timer 0 60
-                  #'adjust-refresh-rate)
+  ;; (run-with-timer 0 60
+  ;;                 #'adjust-refresh-rate)
 #+end_src
 ** Battery notification
 Run a timer every minute to check if the battery is low.
