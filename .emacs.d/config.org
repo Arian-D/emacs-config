@@ -1830,9 +1830,14 @@ Silly little advice for "caching"
                                "build.zig.zon"
                                "symbols.map"
                                "Makefile")
-                       :branch "v0.22.1")
+                       :branch "v0.31.0")
+    :hook
+    (ghostel-mode . (lambda ()
+                      (when (memq 'meow-global-mode global-minor-modes)
+                        (meow-insert-mode))))
     :custom
     (ghostel-module-auto-install 'compile)
+    (ghostel-enable-osc52 t)
     (ghostel-shell (car
                     (mapcar
                      #'executable-find
