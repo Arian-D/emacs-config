@@ -1849,10 +1849,6 @@ Silly little advice for "caching"
                                "symbols.map"
                                "Makefile")
                        :branch "v0.34.0")
-    :hook
-    (ghostel-mode . (lambda ()
-                      (when (memq 'meow-global-mode global-minor-modes)
-                        (meow-insert-mode))))
     :custom
     (ghostel-module-auto-install 'compile)
     (ghostel-enable-osc52 t)
