@@ -260,13 +260,14 @@ There's no shame in using the mouse.
 [[https://github.com/oantolin/orderless][Orderless]] is for *orderless* completion.
 #+begin_src emacs-lisp
   (use-package orderless
+    :straight (orderless
+               :host github
+               :repo "oantolin/orderless")
     :custom
-    ;; Configure a custom style dispatcher (see the Consult wiki)
-    ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
-    ;;       orderless-component-separator #'orderless-escapable-split-on-space)
-    (completion-styles '(orderless))
-    (completion-category-defaults nil)
-    (completion-category-overrides '((file (styles partial-completion)))))
+    (completion-styles '(orderless basic))
+    (completion-category-overrides '((file (styles partial-completion))))
+    (completion-pcm-leading-wildcard t))
+
 #+end_src
 
 *** Marginalia
