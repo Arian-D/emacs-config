@@ -1849,30 +1849,6 @@ Silly little advice for "caching"
                            "sh")))))
 #+end_src
 
-*** Eat
-#+begin_src emacs-lisp
-  (use-package eat
-    :unless (version< emacs-version "28.1")
-    :hook ((eshell-load . eat-eshell-mode)
-           (eshell-load . eat-eshell-visual-command-mode))
-    :custom
-    (eat-kill-buffer-on-exit t)
-    :config
-    (when (equal system-type 'windows-nt)
-      (setopt eat-shell
-              (or (executable-find "nu")
-                  (executable-find "powershell"))))
-    :straight
-    (eat :type git
-         :host codeberg
-         :repo "akib/emacs-eat"
-         :files ("*.el" ("term" "term/*.el") "*.texi"
-                 "*.ti" ("terminfo/e" "terminfo/e/*")
-                 ("terminfo/65" "terminfo/65/*")
-                 ("integration" "integration/*")
-                 (:exclude ".dir-locals.el" "*-tests.el"))))
-#+end_src
-
 *** ielm
 #+begin_src emacs-lisp
   (use-package ielm
