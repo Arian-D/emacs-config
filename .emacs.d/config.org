@@ -516,6 +516,7 @@ We are so back.
         "s-<AudioNext>" "s-<AudioPrev>"
         ("s-f" :fullscreen)
         ("<print>" :fullscreen)))
+     (ewm-unfocused-alpha 0.95)
      :bind
      ("s-<return>" . ghostel)
      ("s-SPC" . consult-buffer)
