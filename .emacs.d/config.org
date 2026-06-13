@@ -1841,7 +1841,7 @@ Silly little advice for "caching"
                                "build.zig.zon"
                                "symbols.map"
                                "Makefile")
-                       :branch "v0.31.0")
+                       :branch "v0.34.0")
     :hook
     (ghostel-mode . (lambda ()
                       (when (memq 'meow-global-mode global-minor-modes)
