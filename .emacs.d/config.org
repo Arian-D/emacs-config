@@ -877,6 +877,7 @@ lol no generics
     :straight (:type built-in)
     :after eglot
     :mode ((rx ".rs" string-end) . rust-ts-mode)
+    :hook (rust-ts-mode . eglot-ensure)
     :config
     (add-to-list 'eglot-server-programs `(rust-ts-mode . ("rust-analyzer"))))
 #+end_src
@@ -887,10 +888,7 @@ lol no generics
   (use-package elixir-ts-mode
     :straight (:host github :repo "wkirschbaum/elixir-ts-mode")
     :mode ((rx (or ".ex" ".exs") string-end) . elixir-ts-mode)
-    :hook (elixir-ts-mode . eglot-ensure)
-    ;; :config
-    ;; (add-to-list 'eglot-server-programs `(elixir-ts-mode . ("elixir-ls")))
-    )
+    :hook (elixir-ts-mode . eglot-ensure))
 #+end_src
 
 ** Python
@@ -1101,6 +1099,13 @@ Ugh.
                           "--"
                           "lsp"))))
     :hook (typst-ts-mode . eglot-ensure))
+#+end_src
+
+** HCL
+Using this while there's no feasible treesit-based version.
+#+begin_src emacs-lisp
+  (use-package terraform-mode
+    :straight (:host github :repo "hcl-emacs/terraform-mode"))
 #+end_src
 
 ** TODO LaTeX
