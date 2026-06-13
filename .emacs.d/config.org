@@ -1665,14 +1665,27 @@ I may be illiterate, but I still read children's books.
        ("https://simonwillison.net/atom/everything/" llm)
        ("https://samueloph.dev/atom.xml" debian))))
 #+end_src
-** 📧 Gnus
+** 📧 Mail
 #+begin_src emacs-lisp
   (use-package gnus
     :straight (:type built-in)
+    :defer t
     :when (file-readable-p (file-truename "~/.authinfo.gpg"))
     :custom
     (gnus-summary-line-format "%o%U%R%z%I%(%[%f%]%) %s\n")
     (gnus-select-method '(nnimap "imap.gmail.com")))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package smtpmail
+    :straight (:type built-in)
+    :defer t
+    :when (file-readable-p (file-truename "~/.authinfo.gpg"))
+    :custom
+    (smtpmail-smtp-server "smtp.gmail.com")
+    (smtpmail-smtp-service 587)
+    (send-mail-function #'smtpmail-send-it)
+    (message-send-mail-function #'smtpmail-send-it))
 #+end_src
 ** Graphviz
 The Graphviz [[https://graphviz.org/doc/info/lang.html][dot]] language, which I mostly use in org-mode.
