@@ -989,11 +989,7 @@ S-expressions.
 Rainbow delimiters make distinguishing parens much easier when
 dealing with deeply nested expressions.
 #+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :hook
-    ((lisp-mode . rainbow-delimiters-mode)
-     (emacs-lisp-mode . rainbow-delimiters-mode)
-     (scheme-mode . rainbow-delimiters-mode)))
+  (use-package rainbow-delimiters)
 #+end_src
 
 ** Haskell
