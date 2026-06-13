@@ -1761,7 +1761,7 @@ Playing music has never been easier.
 Silly little advice for "caching"
 #+begin_src emacs-lisp
   ;; TODO: Make this recursive for list of URIs
-  (defun save-yt-audio (url)
+  (defun my/save-yt-audio (url)
     "Save `url' to `~/🎵/∀/' if it's not there."
     (pcase-let* ((📁 "~/🎵/∀/")
                  (url-struct (url-generic-parse-url url))
@@ -1770,13 +1770,16 @@ Silly little advice for "caching"
                  (`("v" ,󰗃) (assoc "v" queries))
                  (glob (expand-file-name (format "*%s*.*" 󰗃) 📁))
                  (🎵 (file-expand-wildcards glob)))
-      (unless 🎵
-        (when-let* ((󰇚? (y-or-n-p (format "Also download %s? " url)))
-                    (default-directory 📁)
-                    (󰦗 (eval `($ yt-dlp -f bestaudio ,url))))
-          (funcall 󰦗)))))
+      (pcase 🎵
+        (`(file ,_) (message "TODO: Make %s playable" file))
+        (_
+         (when-let* ((󰇚? (y-or-n-p (format "Also download %s? " url)))
+                     (default-directory 📁)
+                     (󰦗 (eval `($ yt-dlp -f bestaudio ,url))))
+           (funcall 󰦗)
+           )))))
 
-  (advice-add #'empv-play :before #'save-yt-audio)
+  (advice-add #'empv-play :before #'my/save-yt-audio)
 #+end_src
 
 ** Shell
