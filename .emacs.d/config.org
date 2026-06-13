@@ -1533,6 +1533,17 @@ No hope is left for me; let the llama write these org files now.
     (message "TODO"))
 #+end_src
 
+** Whisper
+Yapseshmaxxing
+#+begin_src emacs-lisp
+  (use-package whisper
+    :straight (:host github :repo "natrys/whisper.el")
+    :custom
+    (whisper-model "small")
+    (whisper-language "en")
+    (whisper-use-threads (num-processors))
+    (whisper-install-whispercpp t))
+#+end_src
 ** 💌 Messaging
 *** Matrix
 Ement
