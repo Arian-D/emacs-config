@@ -1459,7 +1459,14 @@ Dis seams two bee grate.
 #+end_src
 
 * 🧰 Misc
-
+** Games
+#+begin_src emacs-lisp
+  (use-package nethack
+    :straight (nethack
+               :host github
+               :repo "Feyorsh/nethack-el"
+               :commit "4c6e483966eee5a210b99ea8de34d20146e21237"))
+#+end_src
 ** AI
 No hope is left for me; let the llama write these org files now.
 #+begin_src emacs-lisp
