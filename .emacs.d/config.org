@@ -1208,7 +1208,6 @@ This is the core config.
 There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in the main org repo.
 #+begin_src emacs-lisp
   (use-package org-contrib
-    :disabled
     :after org
     :straight (:type git :repo "https://git.sr.ht/~bzg/org-contrib"))
 #+end_src
@@ -1259,6 +1258,7 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
   (use-package org-agenda
     :after org
     :when (file-directory-p org-directory)
+    :defer t
     :straight (:type built-in)
     :custom
     (org-agenda-files (cl-remove-if-not
@@ -1272,15 +1272,14 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
                                 "Finance"     ; GNU Ledger literate journals
                                 ))))
     ;; A simple regex to bring gpg-encrypted files into agenda
-    (org-agenda-file-regexp (rx (seq ".org" (? ".gpg") eol)))
+    (org-agenda-file-regexp (rx (: ".org" (? ".gpg") eol)))
     ;; Hide useless stuff
     (org-agenda-skip-scheduled-if-done t)
     (org-agenda-skip-timestamp-if-done t)
     (org-agenda-skip-deadline-if-done t)
     (org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
     (org-log-done 'time)
-    :bind ("C-c a" . org-agenda)
-    :hook (emacs-startup . org-agenda-list))
+    :bind ("C-c a" . org-agenda))
 #+end_src
 
 ** EDNA
@@ -1288,7 +1287,7 @@ There are [[https://git.sr.ht/~bzg/org-contrib][extra stuff]] that are not in th
 #+begin_src emacs-lisp
   (use-package org-edna
     :after org
-    :hook (org-load . org-edna-mode))
+    :hook (org-mode . org-edna-mode))
 #+end_src
 
 ** TODO Calendar
@@ -1319,6 +1318,12 @@ Org-roam might actually help me be able to think eventually
 
 #+begin_src emacs-lisp
   (use-package org-roam
+    ;; :vc (org-roam :url "https://github.com/org-roam/org-roam"
+    ;;               :rev "v2.3.1")
+    :straight (org-roam
+               :host github
+               :repo "org-roam/org-roam"
+               :branch "v2.3.1")
     :if (file-directory-p "~/roam")
     :after org
     :custom
