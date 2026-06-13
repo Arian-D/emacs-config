@@ -1027,7 +1027,7 @@ But lsp-haskell is something that I might replace it with in the near future.
   ;;    (haskell-literate-mode . lsp)))
 #+end_src
 
-** Proof General
+** Proofs
 I'm a formal methodist.
 #+begin_src emacs-lisp
   (use-package proof-general)
@@ -1046,7 +1046,9 @@ And just when you thought I could learn useful languages...
 Not the purple drink.
 #+begin_src emacs-lisp
   (use-package nael
-    :straight (:host codeberg :repo "mekeor/nael" :files ("nael/*.el")))
+    :straight (:host codeberg :repo "mekeor/nael" :files ("nael/*.el"))
+    :hook ((nael-mode . eglot-ensure)
+           (nael-mode . abbrev-mode)))
 #+end_src
 
 ** ❄ Nix
