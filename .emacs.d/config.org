@@ -1762,6 +1762,13 @@ Playing music has never been easier.
   (use-package empv
     :straight (empv :host github :repo "isamert/empv.el")
     :when (executable-find "mpv")
+    :bind
+    ("C-<AudioPause>" . empv-playlist-select)
+    ("C-<AudioPlay>" . empv-playlist-select)
+    ("<AudioNext>" . empv-playlist-next)
+    ("<AudioPrev>" . empv-playlist-prev)
+    ("<AudioPause>" . empv-pause)
+    ("<AudioPlay>" . empv-resume)         ; TODO: Run a dwim behavior where in case of absense search is brought up
     :custom
     (empv-invidious-instance "https://iv.melmac.space/api/v1"))
 #+end_src
