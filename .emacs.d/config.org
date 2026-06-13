@@ -1850,14 +1850,15 @@ Silly little advice for "caching"
     (ghostel-module-auto-install 'compile)
     (ghostel-enable-osc52 t)
     (ghostel-shell (car
-                    (mapcar
-                     #'executable-find
-                     (list "nu"
-                           "bash"
-                           "powershell"
-                           "zsh"
-                           "fish"
-                           "sh")))))
+                    (flatten-list
+                     (mapcar
+                      #'executable-find
+                      (list "nu"
+                            "bash"
+                            "powershell"
+                            "zsh"
+                            "fish"
+                            "sh"))))))
 #+end_src
 
 *** ielm
