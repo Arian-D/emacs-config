@@ -45,8 +45,8 @@ Emacs also creates [[https://www.emacswiki.org/emacs/LockFiles][lock files]], wh
 #+end_src
 
 ** 📦 Straight
-[[https://github.com/raxod502/straight.el][Straight]] is my package manager. It's functional like Nix or Guix, but
-it's made for Emacs.
+[[https://github.com/raxod502/straight.el][Straight]] is like (n|gu)ix, but elispy. The garbo downstairs is the
+bootstrapping process.
 
 #+begin_src emacs-lisp
   (defvar bootstrap-version)
@@ -64,21 +64,21 @@ it's made for Emacs.
         (goto-char (point-max))
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
+#+end_src
 
+Default to straight as the default PM. package.el, my beloathed, is painful.
+#+begin_src emacs-lisp
   (setopt straight-use-package-by-default t)
 #+end_src
 
+Note: There is also package.el's =vc=, but it doesn't make it as easy to
+manage forks or contribute. [[https://github.com/progfolio/elpaca][Elpaca]] is another one that looks cool, but
+I haven't had the time to move to it.
+
 ** ⌨ Keys
 What is EMACS without the /MACroS/.
-*** General
-- [[https://github.com/noctuid/general.el][GitHub Repo]]
-#+begin_src emacs-lisp
-  (use-package general
-    :disabled)
-#+end_src
-
 *** 🐱 Meow
-
+Helixcoded godmode.
 #+begin_src emacs-lisp
   (defun meow-setup ()
     (meow-motion-overwrite-define-key
@@ -192,7 +192,6 @@ What is EMACS without the /MACroS/.
     )
 #+end_src
 
-Meow Tree Sitter
 #+begin_src emacs-lisp
   (use-package meow-tree-sitter
     :straight (meow-tree-sitter
