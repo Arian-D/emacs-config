@@ -200,6 +200,8 @@ Helixcoded godmode.
                (:defaults "queries"))
     :config
     (meow-tree-sitter-register-defaults)
+    (meow-normal-define-key
+     '("o" . meow-tree-sitter-node))
     (add-to-list 'meow-tree-sitter-major-mode-language-alist '("dart" . "dart")))
 #+end_src
 
