@@ -703,6 +703,22 @@ Put line numbers for buffers that should have it.
     (global-treesit-auto-mode))
 #+end_src
 
+** Fold
+#+begin_src emacs-lisp
+  (use-package treesit-fold
+    :straight (treesit-fold
+               :type git
+               :host github
+               :repo "emacs-tree-sitter/treesit-fold"))
+#+end_src
+
+** Combobulate
+#+begin_src emacs-lisp
+  (use-package combobulate
+    :disabled ;; https://github.com/mickeynp/combobulate/issues/121
+    :straight (:host github :repo "mickeynp/combobulate"))
+#+end_src
+
 ** Git
 [[https://magit.vc/][Magit]] is the greatest Git client.
 #+begin_src emacs-lisp
