@@ -553,12 +553,6 @@ Replace the default splash screen with an org buffer
                  (format "- Startup time :: %s" init-time))
            "\n")))
 #+end_src
-** Hide title bar
-#+begin_src emacs-lisp
-  (unless (equal system-type 'windows-nt)
-      (add-to-list 'default-frame-alist
-                   '(undecorated . t)))
-#+end_src
 ** ✍ Face and Fonts
 - The default [[info:emacs#Faces][face]] fonts are selected based on the lists below.
 #+begin_src emacs-lisp
