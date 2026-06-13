@@ -1113,14 +1113,14 @@ Soon...
 I use [[https://orgmode.org][org-mode]] for pretty much everything.
 ** Core
 [[https://gitlab.com/jabranham/mixed-pitch][Mixed-pitch]] tries to be smart about how the whole monospaced fonts and
-text fonts intermix. I love it <3.
+text fonts intermix.
 #+begin_src emacs-lisp :tangle no :noweb-ref org-faces-config
   (use-package mixed-pitch
     :hook
     (org-mode . mixed-pitch-mode)
     (markdown-mode . mixed-pitch-mode))
 
-  ;;; Replace the default blocks with pwetty icons
+  ;;; Emacs can't ligature. This is just a larp.
   (setq-default
    prettify-symbols-alist
    '(("SCHEDULED:" . "📅")
@@ -1131,8 +1131,8 @@ text fonts intermix. I love it <3.
      (":CREATED:" . "⏲")
      (":END:" . " ")
      (":ROAM_REFS:" . "🔗")
+     (":LOGBOOK:" . "📕")
      (":LOCATION:" . "")))
-
 #+end_src
 
 This config needs to be loaded [[https://github.com/daviwil/emacs-from-scratch/issues/34][after ~org-faces~ has loaded]], so we can
