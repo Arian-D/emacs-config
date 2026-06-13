@@ -216,20 +216,9 @@ Helixcoded godmode.
 - A temporary solution for surround-like features in [[*🐱 Meow][meow]].
 #+begin_src emacs-lisp
   (use-package embrace
-    ;; :vc (embrace :url "https://github.com/cute-jumper/embrace.el"
-    ;;              :rev "c7e748603151d7d91c237fd2d9cdf56e9f3b1ea8")
     :straight (embrace
                :host github
                :repo "cute-jumper/embrace.el"))
-#+end_src
-
-** 🔄 Server
-- [[info:emacs#Emacs Server][Info]]
-#+begin_src emacs-lisp
-  (use-package server
-    :config
-    (unless (server-running-p)
-      (server-start)))
 #+end_src
 
 ** 📂 Separate ~custom.el~
@@ -266,13 +255,6 @@ There's no shame in using the mouse.
     :after vertico
     :when (display-graphic-p)
     :hook (after-init . vertico-mouse-mode))
-#+end_src
-
-[[https://www.emacswiki.org/emacs/SaveHist][Save history]]
-#+begin_src emacs-lisp
-  (use-package savehist
-    :init
-    (savehist-mode))
 #+end_src
 
 [[https://github.com/oantolin/orderless][Orderless]] is for *orderless* completion.
