@@ -807,7 +807,8 @@ All thanks to eglot
      'eglot-workspace-configuration
      '(:yaml (:schemaStore (:enable t))
              (:kubernetesCRDStore (:enable t))
-             (:format (:enable t))))
+             (:format (:enable t))
+             (:schemas (:kubernetes ("/*.yaml")))))
     (unless (executable-find "yaml-language-server")
       (add-to-list
        'eglot-server-programs
