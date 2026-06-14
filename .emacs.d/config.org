@@ -1673,8 +1673,10 @@ I may be illiterate, but I still read children's books.
        ("https://cqstia.com/blog/index.xml" security)
        "https://henrikwarne.com/feed/"
        "https://martinfowler.com/feed.atom"
+       "https://blog.feld.me/feeds/all.atom.xml"
        ("https://simonwillison.net/atom/everything/" llm)
-       ("https://samueloph.dev/atom.xml" debian))))
+       ("https://samueloph.dev/atom.xml" debian)
+       ("https://mariozechner.at/rss.xml" ai))))
 #+end_src
 ** 📧 Mail
 #+begin_src emacs-lisp
