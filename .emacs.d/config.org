@@ -1427,27 +1427,16 @@ Org mode, but for the average pleb.
 ** Spell
 Dis seams two bee grate.
 #+begin_src emacs-lisp
-  (use-package ispell
-    :straight (:type built-in)
-    :when (executable-find "hunspell")
-    :custom
-    (ispell-program-name "hunspell")
-    (ispell-dictionary "en_US"))
+  (use-package jinx
+    :straight (:host github :repo "minad/jinx" :branch "1.11")
+    :disabled
+    :hook (emacs-startup . global-jinx-mode)
+    :bind (("M-$" . jinx-correct)
+           ("C-M-$" . jinx-languages)))
 #+end_src
-
-#+begin_src emacs-lisp
-  (use-package flyspell
-    :straight (:type built-in)
-    :after ispell
-    :hook
-    (org-mode . flyspell-mode)
-    (markdown-mode . flyspell-mode))
-#+end_src
-
-
 
 ** Encryption
-- [[info:Org#org-crypt][Info page]] 
+- [[info:Org#org-crypt][Info page]]
 #+begin_src emacs-lisp
   (use-package org-crypt
     :after org
