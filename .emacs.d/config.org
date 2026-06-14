@@ -1994,4 +1994,8 @@ Run a timer every minute to check if the battery is low.
                 (mpv (executable-find "mpv")))
       (start-process "boom" nil mpv path)))
 
+
+  (let ((etc.el (expand-file-name "etc.el" user-emacs-directory)))
+    (when (file-readable-p etc.el)
+      (load-file etc.el)))
 #+end_src
