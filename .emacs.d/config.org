@@ -1459,31 +1459,37 @@ Dis seams two bee grate.
 ** AI
 No hope is left for me; let the llama write these org files now.
 #+begin_src emacs-lisp
-  (use-package gptel
-    :straight (gptel
-               :host github
-               :repo "karthink/gptel"
-               :branch "master")
-    :hook
-    (gptel-post-stream . gptel-auto-scroll)
-    (gptel-post-response-functions . gptel-end-of-response)
-    :config
-    (require 'gptel-integrations)
-    (setopt gptel-default-mode #'org-mode
-            gptel-backend (gptel-make-ollama "Ollama"
-                            :host "localhost:11434"
-                            :stream t
-                            :models '(qwen3:4b
-                                      gpt-oss:20b
-                                      mistral
-                                      ministral-3:8b))))
+    (defun my/gptel--notify-if-unfocused ()
+      (unless (memq 'gptel-mode local-minor-modes)
+        (notifications-notify
+         :title "gptel finished"
+         :body "done")))
+
+    (use-package gptel
+      :straight (gptel
+                 :host github
+                 :repo "karthink/gptel"
+                 :branch "v0.9.9.5")
+      :hook
+      (gptel-post-stream . gptel-auto-scroll)
+      (gptel-post-response-functions . my/gptel--notify-if-unfocused)
+      (gptel-post-response-functions . gptel-end-of-response)
+      :config
+      (require 'gptel-integrations)
+      (setopt gptel-default-mode #'org-mode
+              gptel-model 'qwen3.5:9b
+              gptel-backend (gptel-make-ollama "Ollama"
+                              :host "localhost:11434"
+                              :stream t
+                              :models '(gemma4:12b
+                                        qwen3.5:9b
+                                        qwen3.5:0.8b))))
 #+end_src
 
 #+begin_src emacs-lisp
   (use-package mcp
     :after gptel
     :custom
-    (gptel-confirm-tool-calls t)
     (mcp-hub-servers
      `(("playwright" . (:command "podman"
                                  :args ("run"
@@ -1690,6 +1696,7 @@ I may be illiterate, but I still read children's books.
     (send-mail-function #'smtpmail-send-it)
     (message-send-mail-function #'smtpmail-send-it))
 #+end_src
+
 ** Graphviz
 The Graphviz [[https://graphviz.org/doc/info/lang.html][dot]] language, which I mostly use in org-mode.
 #+begin_src emacs-lisp
