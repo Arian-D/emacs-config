@@ -1631,6 +1631,7 @@ Crypto-bros don't look in here:
 I may be illiterate, but I still read children's books.
 #+begin_src emacs-lisp
   (use-package nov
+    :defer t
     :when (executable-find "unzip")
     :straight (:host nil :type git :repo "https://depp.brause.cc/nov.el.git")
     :mode ("\\.epub\\'" . nov-mode))
