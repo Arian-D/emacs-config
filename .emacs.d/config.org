@@ -1777,7 +1777,9 @@ A [[https://github.com/cbowdon/daemons.el][package]] for controlling services.
     :straight (daemons
                :host github
                :repo "cbowdon/daemons.el"
-               :branch 4900fe1ec64ab339da29082e8fd4545fc6e48ec4))
+               :branch 4900fe1ec64ab339da29082e8fd4545fc6e48ec4)
+    :custom
+    (daemons-always-sudo t))
 #+end_src
 
 ** 🎵 mpv
