@@ -493,6 +493,9 @@ We are so back.
     :straight (:type built-in)
     :defer t
     :when (getenv "EWM_MODULE_PATH")
+    :hook
+    (after-init . display-time-mode)
+    (after-init . display-battery-mode)
     :custom
     ;; Configure output
     (ewm-output-config
