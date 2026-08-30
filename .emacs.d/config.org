@@ -1876,7 +1876,9 @@ Silly little advice for "caching"
                                "build.zig.zon"
                                "symbols.map"
                                "Makefile")
-                       :branch "v0.34.0")
+                       :branch "v0.51.0")
+    :hook
+    (after-init . ghostel-comint-global-mode)
     :custom
     (ghostel-module-auto-install 'compile)
     (ghostel-enable-osc52 t)
