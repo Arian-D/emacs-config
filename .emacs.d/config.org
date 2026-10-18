@@ -525,7 +525,8 @@ We are so back.
      ("s-SPC" . consult-buffer)
      ("s-p" . my/📸)
      ("s-t" . my/ocr)
-     ([remap ewm-lock-session] . my/🔒)
+     ([remap ewm-lock-session] . my/🔒)   ; 
+     ("C-s-q" . my/🔒)                    ; 󰀵
      ("<print>" . meow-keypad)
      ("s-<AudioNext>" . ewm-next-surface-buffer)
      ("s-<AudioPrev>" . ewm-prev-surface-buffer)
