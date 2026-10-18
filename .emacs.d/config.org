@@ -521,7 +521,6 @@ We are so back.
         ("<print>" :fullscreen)))
      (ewm-unfocused-alpha 0.95)
      :bind
-     ("s-<return>" . ghostel)
      ("s-SPC" . consult-buffer)
      ("s-p" . my/📸)
      ("s-t" . my/ocr)
@@ -1880,6 +1879,8 @@ Silly little advice for "caching"
                        :branch "v0.51.0")
     :hook
     (after-init . ghostel-comint-global-mode)
+    :bind
+    ("s-<return>" . ghostel)
     :custom
     (ghostel-module-auto-install 'compile)
     (ghostel-enable-osc52 t)
