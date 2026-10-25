@@ -1876,11 +1876,9 @@ Silly little advice for "caching"
                                "build.zig.zon"
                                "symbols.map"
                                "Makefile")
-                       :branch "v0.51.0")
+                       :branch "v0.59.0")
     :hook
     (after-init . ghostel-comint-global-mode)
-    :bind
-    ("s-<return>" . ghostel)
     :custom
     (ghostel-module-auto-install 'compile)
     (ghostel-enable-osc52 t)
@@ -1894,6 +1892,12 @@ Silly little advice for "caching"
                             "zsh"
                             "fish"
                             "sh"))))))
+
+  (use-package consult-ghostel
+    :after (ghostel consult)
+    :bind
+    ("s-<return>" . consult-ghostel)
+    :config (consult-ghostel-mode))
 #+end_src
 
 *** ielm
